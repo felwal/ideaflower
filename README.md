@@ -1,1 +1,1 @@
-# da232x-ai-hpi-cst
+# Human-plant interaction for speculative slow care in co-creative AI
