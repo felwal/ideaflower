@@ -6,7 +6,13 @@ const MainPresenter = {
   render() {
     const store = useStore();
 
-    return <MainView conversation={store.conversation} />;
+    function onAddPromptAcb(prompt) {
+      store.addPrompt(prompt);
+    }
+
+    return <MainView
+      conversation={store.conversation}
+      onSendPrompt={onAddPromptAcb} />;
   }
 };
 

@@ -4,9 +4,9 @@ import { defineStore } from "pinia";
 export const useStore = defineStore("store", () => {
   const conversation = ref(["Hello!", "How can I help you?"]);
 
-  function addMessage(msg) {
+  function addPrompt(msg) {
     conversation.value.push(msg);
   }
 
-  return { conversation, addMessage };
+  return { conversation, addPrompt };
 });
