@@ -1,10 +1,10 @@
-import { useStore } from "@/stores/store";
+import { useWaterStore } from "@/stores/waterStore";
 
 import MainView from "../views/mainView";
 
 const MainPresenter = {
   render() {
-    const store = useStore();
+    const store = useWaterStore();
 
     function onAddPromptAcb(prompt) {
       store.addPrompt(prompt);
