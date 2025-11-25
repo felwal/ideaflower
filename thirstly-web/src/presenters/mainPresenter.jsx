@@ -4,15 +4,13 @@ import MainView from "../views/mainView";
 
 const MainPresenter = {
   render() {
-    const store = useWaterStore();
-
-    function onAddPromptAcb(prompt) {
-      store.addPrompt(prompt);
+    function onSendPromptAcb(prompt) {
+      useWaterStore().sendPrompt(prompt);
     }
 
     return <MainView
-      conversation={store.conversation}
-      onSendPrompt={onAddPromptAcb} />;
+      conversation={useWaterStore().conversation.sort((a, b) => a.epoch - b.epoch)}
+      onSendPrompt={onSendPromptAcb} />;
   }
 };
 

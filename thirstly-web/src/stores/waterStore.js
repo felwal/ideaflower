@@ -1,16 +1,32 @@
-import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 
-export const useWaterStore = defineStore("water", () => {
-  const conversation = ref(["Hello!", "How can I help you?"]);
+export const useWaterStore = defineStore("water", {
+  state: () => ({
+    user: undefined,
+    waterLevel: 0,
+    conversation: []
+  }),
 
-  function addPrompt(msg) {
-    conversation.value.push(msg);
+  actions: {
+    addMessage(msg) {
+      if (this.conversation.find(m => m.epoch === msg.epoch)) {
+        // don't add duplicates
+        return;
+      }
+
+      this.conversation = [...this.conversation, msg];
+    },
+
+    removeMessage(epoch) {
+      this.conversation = this.conversation.filter(msg => msg.epoch !== epoch);
+    },
+
+    sendPrompt(prompt) {
+      this.addMessage({
+        epoch: Date.now(),
+        text: prompt,
+        generated: false
+      });
+    }
   }
-
-  function addResponse(msg) {
-    conversation.value.push(msg);
-  }
-
-  return { conversation, addPrompt, addResponse };
 });
