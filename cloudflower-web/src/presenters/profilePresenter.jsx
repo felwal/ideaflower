@@ -1,6 +1,6 @@
 import { signOutUser, signUpUser, signInUser } from "@/persistance/firebaseAuth";
 import { createUserData } from "@/persistance/firebaseModel.js";
-import useWaterStore from "@/stores/waterStore";
+import useFlowStore from "@/stores/flowStore";
 import ProfileView from "@/views/ProfileView";
 import resolvePromise from "@/utils/resolvePromise";
 
@@ -14,7 +14,7 @@ const ProfilePresenter = {
   },
 
   render() {
-    const store = useWaterStore();
+    const store = useFlowStore();
 
     function authResultACB() {
       if (this.authPromiseState.error) {

@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-const useWaterStore = defineStore("water", {
+const useFlowStore = defineStore("flow", {
   state: () => ({
     user: undefined,
     waterLevel: 0,
@@ -31,4 +31,4 @@ const useWaterStore = defineStore("water", {
   }
 });
 
-export default useWaterStore;
+export default useFlowStore;

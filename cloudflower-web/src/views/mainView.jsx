@@ -1,4 +1,4 @@
-import useWaterStore from "@/stores/waterStore";
+import useFlowStore from "@/stores/flowStore";
 
 export default function MainView(props) {
   function sendPrompt() {
@@ -28,7 +28,7 @@ export default function MainView(props) {
   return <div>
     <h1>Main</h1>
     <ul>{props.conversation.map(renderMessage)}</ul>
-    <input id="prompt" type="text" placeholder="Enter a prompt ..." onKeydown={addPromptOnKeyACB} disabled={!useWaterStore().user} />
-    <button onClick={addPromptOnClickACB} disabled={!useWaterStore().user}>Send</button>
+    <input id="prompt" type="text" placeholder="Enter a prompt ..." onKeydown={addPromptOnKeyACB} disabled={!useFlowStore().user} />
+    <button onClick={addPromptOnClickACB} disabled={!useFlowStore().user}>Send</button>
   </div>;
 }

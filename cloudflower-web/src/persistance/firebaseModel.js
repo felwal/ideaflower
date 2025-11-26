@@ -1,10 +1,10 @@
 import { getDatabase, ref, set, onChildAdded, onChildRemoved, get, child, onValue } from "firebase/database";
 import { watch } from "vue";
 import { observeAuthState } from "./firebaseAuth";
-import useWaterStore from "@/stores/waterStore";
+import useFlowStore from "@/stores/flowStore";
 
 const db = getDatabase();
-const REF = "waterModel";
+const REF = "flowModel";
 let unsubscribers = [];
 
 // set
@@ -21,7 +21,7 @@ export function createUserData(user) {
 
 export function setUpFirebase() {
   function signedInACB(user) {
-    useWaterStore().user = user;
+    useFlowStore().user = user;
 
     function dataLoadedACB() {
       enableFirebaseSync();
@@ -33,15 +33,15 @@ export function setUpFirebase() {
 
   function signedOutACB() {
     disableFirebaseSync();
-    useWaterStore().user = null;
-    useWaterStore().conversation = [];
+    useFlowStore().user = null;
+    useFlowStore().conversation = [];
   }
 
   observeAuthState(signedInACB, signedOutACB);
 }
 
 function loadFirebaseData(loadedACB) {
-  if (!useWaterStore().user) {
+  if (!useFlowStore().user) {
     // user should always be logged in when calling this, but check just in case
     console.warn("can't load Firebase data when logged out");
   }
@@ -51,12 +51,12 @@ function loadFirebaseData(loadedACB) {
   function dataLoadedFromFirebaseACB(data) {
     if (data.exists()) {
       // load existing user data
-      useWaterStore().conversation = Object.values(data.val().conversation || {});
-      useWaterStore().waterLevel = data.val().waterLevel || 0;
+      useFlowStore().conversation = Object.values(data.val().conversation || {});
+      useFlowStore().waterLevel = data.val().waterLevel || 0;
     }
     else {
       // no existing user data
-      useWaterStore().conversation = [];
+      useFlowStore().conversation = [];
     }
 
     console.log("Firebase account data loaded");
@@ -64,15 +64,15 @@ function loadFirebaseData(loadedACB) {
   }
 
   // load data from Firebase, then set up sync
-  get(child(ref(db), REF + "/users/" + useWaterStore().user.uid))
+  get(child(ref(db), REF + "/users/" + useFlowStore().user.uid))
     .then(dataLoadedFromFirebaseACB)
     .catch((error) => { console.error(error); });
 }
 
 function enableFirebaseSync() {
   // set up sync after first load
-  updateFirebaseFromStore(useWaterStore());
-  updateStoreFromFirebase(useWaterStore());
+  updateFirebaseFromStore(useFlowStore());
+  updateStoreFromFirebase(useFlowStore());
   console.log("Firebase synced");
 }
 
