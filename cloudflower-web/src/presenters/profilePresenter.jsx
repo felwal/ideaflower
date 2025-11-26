@@ -1,8 +1,7 @@
-import { useWaterStore } from "@/stores/waterStore";
-import { signOutUser, signUpUser, signInUser } from "../persistance/firebaseAuth";
+import { signOutUser, signUpUser, signInUser } from "@/persistance/firebaseAuth";
 import { createUserData } from "@/persistance/firebaseModel.js";
-
-import ProfileView from "../views/profileView";
+import useWaterStore from "@/stores/waterStore";
+import ProfileView from "@/views/ProfileView";
 import resolvePromise from "@/utils/resolvePromise";
 
 const ProfilePresenter = {
@@ -17,12 +16,12 @@ const ProfilePresenter = {
   render() {
     const store = useWaterStore();
 
-    function authResultAcb() {
+    function authResultACB() {
       if (this.authPromiseState.error) {
         if (this.authPromiseState.error.code === "auth/email-already-in-use") {
           console.log("user already exists, signing in instead");
           this.isSignedUp = true;
-          resolvePromise(signInUser(this.username), this.authPromiseState, authResultAcb.bind(this));
+          resolvePromise(signInUser(this.username), this.authPromiseState, authResultACB.bind(this));
           return;
         }
 
@@ -35,19 +34,19 @@ const ProfilePresenter = {
       }
     }
 
-    function onSignInAcb(username) {
+    function onSignInACB(username) {
       this.username = username;
-      resolvePromise(signUpUser(username), this.authPromiseState, authResultAcb.bind(this));
+      resolvePromise(signUpUser(username), this.authPromiseState, authResultACB.bind(this));
     }
 
-    function onSignOutAcb() {
+    function onSignOutACB() {
       signOutUser();
     }
 
     return <ProfileView
       username={store.user?.name ?? ""}
-      onSignIn={onSignInAcb.bind(this)}
-      onSignOut={onSignOutAcb.bind(this)}
+      onSignIn={onSignInACB.bind(this)}
+      onSignOut={onSignOutACB.bind(this)}
     />;
   }
 };

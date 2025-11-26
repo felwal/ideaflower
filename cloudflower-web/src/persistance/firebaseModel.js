@@ -1,7 +1,7 @@
 import { getDatabase, ref, set, onChildAdded, onChildRemoved, get, child, onValue } from "firebase/database";
 import { watch } from "vue";
 import { observeAuthState } from "./firebaseAuth";
-import { useWaterStore } from "@/stores/waterStore";
+import useWaterStore from "@/stores/waterStore";
 
 const db = getDatabase();
 const REF = "waterModel";
@@ -20,27 +20,27 @@ export function createUserData(user) {
 // start/stop
 
 export function setUpFirebase() {
-  function signedInAcb(user) {
+  function signedInACB(user) {
     useWaterStore().user = user;
 
-    function dataLoadedAcb() {
+    function dataLoadedACB() {
       enableFirebaseSync();
     }
 
     // load existing data, then start sync
-    loadFirebaseData(dataLoadedAcb);
+    loadFirebaseData(dataLoadedACB);
   }
 
-  function signedOutAcb() {
+  function signedOutACB() {
     disableFirebaseSync();
     useWaterStore().user = null;
     useWaterStore().conversation = [];
   }
 
-  observeAuthState(signedInAcb, signedOutAcb);
+  observeAuthState(signedInACB, signedOutACB);
 }
 
-function loadFirebaseData(loadedAcb) {
+function loadFirebaseData(loadedACB) {
   if (!useWaterStore().user) {
     // user should always be logged in when calling this, but check just in case
     console.warn("can't load Firebase data when logged out");
@@ -48,7 +48,7 @@ function loadFirebaseData(loadedAcb) {
 
   console.log("loading Firebase data ...");
 
-  function dataLoadedFromFirebaseAcb(data) {
+  function dataLoadedFromFirebaseACB(data) {
     if (data.exists()) {
       // load existing user data
       useWaterStore().conversation = Object.values(data.val().conversation || {});
@@ -60,12 +60,12 @@ function loadFirebaseData(loadedAcb) {
     }
 
     console.log("Firebase account data loaded");
-    loadedAcb();
+    loadedACB();
   }
 
   // load data from Firebase, then set up sync
   get(child(ref(db), REF + "/users/" + useWaterStore().user.uid))
-    .then(dataLoadedFromFirebaseAcb)
+    .then(dataLoadedFromFirebaseACB)
     .catch((error) => { console.error(error); });
 }
 
@@ -85,35 +85,35 @@ function disableFirebaseSync() {
 // sync
 
 function updateFirebaseFromStore(store) {
-  function conversationChangedInStoreAcb(newConversation) {
-    function toDateKeyedObjectCb(obj, msg) {
+  function conversationChangedInStoreACB(newConversation) {
+    function toDateKeyedObjectCB(obj, msg) {
       return {...obj, [msg.epoch]: msg};
     }
 
-    const conversationObj = newConversation.reduce(toDateKeyedObjectCb, {});
+    const conversationObj = newConversation.reduce(toDateKeyedObjectCB, {});
     set(ref(db, REF + "/users/" + store.user.uid + "/conversation/"), conversationObj);
   }
 
-  function waterLevelChangedInStoreAcb(newWaterLevel) {
+  function waterLevelChangedInStoreACB(newWaterLevel) {
     set(ref(db, REF + "/users/" + store.user.uid + "/waterLevel"), newWaterLevel);
   }
 
   unsubscribers = [
     ...unsubscribers,
-    watch(() => store.conversation, conversationChangedInStoreAcb),
-    watch(() => store.waterLevel, waterLevelChangedInStoreAcb)];
+    watch(() => store.conversation, conversationChangedInStoreACB),
+    watch(() => store.waterLevel, waterLevelChangedInStoreACB)];
 }
 
 function updateStoreFromFirebase(store) {
-  function msgAddedInFirebaseAcb(data) {
+  function msgAddedInFirebaseACB(data) {
     store.addMessage(data.val());
   }
 
-  function msgRemovedInFirebaseAcb(data) {
+  function msgRemovedInFirebaseACB(data) {
     store.removeMessage(data.val().epoch);
   }
 
-  function waterLevelChangedInFirebaseAcb(data) {
+  function waterLevelChangedInFirebaseACB(data) {
     if (store.waterLevel !== data.val()) {
       store.waterLevel = data.val();
     }
@@ -121,8 +121,8 @@ function updateStoreFromFirebase(store) {
 
   unsubscribers = [
     ...unsubscribers,
-    onChildAdded(ref(db, REF + "/users/" + store.user.uid + "/conversation"), msgAddedInFirebaseAcb),
-    onChildRemoved(ref(db, REF + "/users/" + store.user.uid + "/conversation"), msgRemovedInFirebaseAcb),
-    onValue(ref(db, REF + "/users/" + store.user.uid + "/waterLevel"), waterLevelChangedInFirebaseAcb)
+    onChildAdded(ref(db, REF + "/users/" + store.user.uid + "/conversation"), msgAddedInFirebaseACB),
+    onChildRemoved(ref(db, REF + "/users/" + store.user.uid + "/conversation"), msgRemovedInFirebaseACB),
+    onValue(ref(db, REF + "/users/" + store.user.uid + "/waterLevel"), waterLevelChangedInFirebaseACB)
   ];
 }

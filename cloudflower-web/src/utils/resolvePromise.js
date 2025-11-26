@@ -1,33 +1,33 @@
-export default function resolvePromise(promise, promiseState, notifyAcb) {
+export default function resolvePromise(promise, promiseState, notifyACB) {
   if (!promise) return;
 
   promiseState.promise = promise;
   promiseState.data = null;
   promiseState.error = null;
 
-  if (notifyAcb) notifyAcb();
+  if (notifyACB) notifyACB();
 
-  function saveDataAcb(result) {
+  function saveDataACB(result) {
     if (promiseState.promise !== promise) return;
 
     promiseState.data = result;
-    if (notifyAcb) notifyAcb();
+    if (notifyACB) notifyACB();
   }
 
-  function saveErrorAcb(err) {
+  function saveErrorACB(err) {
     if (promiseState.promise !== promise) return;
 
     promiseState.error = err;
-    if (notifyAcb) notifyAcb();
+    if (notifyACB) notifyACB();
   }
 
-  promise.then(saveDataAcb).catch(saveErrorAcb);
+  promise.then(saveDataACB).catch(saveErrorACB);
 }
 
-export function resolvePromiseMock(response, promiseState, notifyAcb) {
+export function resolvePromiseMock(response, promiseState, notifyACB) {
   promiseState.promise = null;
   promiseState.data = response;
   promiseState.error = null;
 
-  if (notifyAcb) notifyAcb();
+  if (notifyACB) notifyACB();
 }

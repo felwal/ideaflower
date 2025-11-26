@@ -1,6 +1,5 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { PASSWORD } from "./firebaseConfig";
-
 import app from "./firebaseApp";
 
 const auth = getAuth(app);
@@ -28,8 +27,8 @@ export function signOutUser() {
   return auth.signOut();
 }
 
-export function observeAuthState(signedInAcb, signedOutAcb) {
-  function stateChangedAcb(credentialUser) {
+export function observeAuthState(signedInACB, signedOutACB) {
+  function stateChangedACB(credentialUser) {
     if (credentialUser) {
       const user = {
         uid: credentialUser.uid,
@@ -38,13 +37,13 @@ export function observeAuthState(signedInAcb, signedOutAcb) {
       };
 
       console.log("signed in as " + user.name);
-      signedInAcb(user);
+      signedInACB(user);
     }
     else {
       console.log("signed out");
-      signedOutAcb();
+      signedOutACB();
     }
   }
 
-  onAuthStateChanged(auth, stateChangedAcb);
+  onAuthStateChanged(auth, stateChangedACB);
 }

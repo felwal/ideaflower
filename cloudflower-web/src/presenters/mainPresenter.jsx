@@ -1,16 +1,15 @@
-import { useWaterStore } from "@/stores/waterStore";
-
-import MainView from "../views/mainView";
+import useWaterStore from "@/stores/waterStore";
+import MainView from "@/views/MainView";
 
 const MainPresenter = {
   render() {
-    function onSendPromptAcb(prompt) {
+    function onSendPromptACB(prompt) {
       useWaterStore().sendPrompt(prompt);
     }
 
     return <MainView
       conversation={useWaterStore().conversation.sort((a, b) => a.epoch - b.epoch)}
-      onSendPrompt={onSendPromptAcb} />;
+      onSendPrompt={onSendPromptACB} />;
   }
 };
 

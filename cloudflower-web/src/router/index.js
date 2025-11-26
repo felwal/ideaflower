@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-
-import MainPresenter from "../presenters/mainPresenter";
-import ProfilePresenter from "../presenters/profilePresenter";
+import MainPresenter from "@/presenters/MainPresenter";
+import ProfilePresenter from "@/presenters/ProfilePresenter";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

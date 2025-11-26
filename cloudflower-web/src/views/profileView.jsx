@@ -1,26 +1,26 @@
 export default function ProfileView(props) {
 
-  function signInAcb() {
+  function signInACB() {
     const nameInput = document.getElementById("username");
     props.onSignIn(nameInput.value.trim().replaceAll(" ", "_").toLowerCase());
   }
 
-  function signOutAcb() {
+  function signOutACB() {
     props.onSignOut();
   }
 
-  function signOnKeyAcb(evt) {
+  function signOnKeyACB(evt) {
     if (evt.key === "Enter") {
-      props.username ? signOutAcb() : signInAcb();
+      props.username ? signOutACB() : signInACB();
     }
   }
 
   return <div>
     <h1>Profile</h1>
-    <input id="username" type="text" placeholder="Enter username ..." value={props.username} onKeydown={signOnKeyAcb} disabled={props.username !== ""} />
+    <input id="username" type="text" placeholder="Enter username ..." value={props.username} onKeydown={signOnKeyACB} disabled={props.username !== ""} />
 
     {props.username
-        ? <button onClick={signOutAcb}>Sign out</button>
-        : <button onClick={signInAcb}>Sign in</button>}
+        ? <button onClick={signOutACB}>Sign out</button>
+        : <button onClick={signInACB}>Sign in</button>}
   </div>;
 }
