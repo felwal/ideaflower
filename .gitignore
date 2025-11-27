@@ -1,3 +1,4 @@
 # Secrets
 /cloudflower-web/src/persistance/firebaseConfig.js
+/Cloudflower/firebaseSecrets.h
 /Cloudflower/wifiSecrets.h

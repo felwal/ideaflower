@@ -1,4 +1,5 @@
 #include "wifiSecrets.h";
+#include "firebaseSecrets.h";
 #include <SPI.h>;
 #include <WiFiNINA.h>;
 #include <FlowSensor.h>;
@@ -12,9 +13,7 @@ const float VOLUME_THRESHOLD = 0.5;
 const bool DEBUG = true;
 
 FlowSensor flowSensor(700, PIN_IN_FLOW);
-
-WiFiClient client;
-char servername[] = "google.com";
+WiFiSSLClient client;
 
 //
 
@@ -28,6 +27,7 @@ void setup() {
   pinMode(PIN_OUT_LED_3, OUTPUT);
 
   connectWifi();
+  connectFirebase();
 }
 
 void loop() {
@@ -50,10 +50,20 @@ void connectWifi() {
   }
 
   Serial.println(" success");
+}
 
-  Serial.print("connecting to host " + String(servername) + " ...");
-  client.connect(servername, 80);
+void connectFirebase() {
+  Serial.print("connecting to host " + String(FIREBASE_DB_URL) + " ...");
+  client.connect(FIREBASE_DB_URL, 443);
   Serial.println(client.connected() ? " success" : " failed");
+
+  String path = "/myString.json?auth=" + String(FIREBASE_AUTH_TOKEN);
+  client.println("GET " + path + " HTTP/1.1");
+  client.println("Host: " + String(FIREBASE_DB_URL));
+  client.println("Connection: close");
+  client.println();
+  String response = client.readString();
+  Serial.println("response: " + response);
 }
 
 // sensors
