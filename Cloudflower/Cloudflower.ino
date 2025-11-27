@@ -1,4 +1,7 @@
-#include <FlowSensor.h>; // https://github.com/hafidhh/FlowSensor-Arduino
+#include "wifiSecrets.h";
+#include <SPI.h>;
+#include <WiFiNINA.h>;
+#include <FlowSensor.h>;
 
 const int PIN_IN_FLOW = 2;
 const int PIN_OUT_LED_1 = 4;
@@ -10,18 +13,52 @@ const bool DEBUG = true;
 
 FlowSensor flowSensor(700, PIN_IN_FLOW);
 
+WiFiClient client;
+char servername[] = "google.com";
+
 //
 
 void setup() {
   Serial.begin(9600);
+  Serial.println("\n--- NEW RUN ---");
 
   flowSensor.begin(onFlowCount);
   pinMode(PIN_OUT_LED_1, OUTPUT);
   pinMode(PIN_OUT_LED_2, OUTPUT);
   pinMode(PIN_OUT_LED_3, OUTPUT);
+
+  connectWifi();
 }
 
 void loop() {
+  readFlow();
+  delay(500);
+}
+
+// connectivity
+
+void connectWifi() {
+  WiFi.disconnect();
+  delay(1000);
+
+  Serial.print("connecting to wifi " + String(WIFI_SSID) + " ...");
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print(".");
+    delay(500);
+  }
+
+  Serial.println(" success");
+
+  Serial.print("connecting to host " + String(servername) + " ...");
+  client.connect(servername, 80);
+  Serial.println(client.connected() ? " success" : " failed");
+}
+
+// sensors
+
+void readFlow() {
   flowSensor.read();
   int pulse = flowSensor.getPulse();
   float volume = flowSensor.getVolume();
@@ -33,8 +70,6 @@ void loop() {
     //flowSensor.resetVolume();
     d("threshold reached");
   }
-
-  delay(500);
 }
 
 void onFlowCount() {
