@@ -12,7 +12,6 @@ let unsubscribers = [];
 export function createUserData(user) {
   set(ref(db, REF + "/users/" + user.uid + "/name"), user.name);
   set(ref(db, REF + "/users/" + user.uid + "/conversation"), []);
-  set(ref(db, REF + "/users/" + user.uid + "/waterLevel"), 0);
 
   console.log("Firebase user data created");
 }
@@ -44,15 +43,26 @@ function loadFirebaseData(loadedACB) {
   if (!useFlowStore().user) {
     // user should always be logged in when calling this, but check just in case
     console.warn("can't load Firebase data when logged out");
+    return;
   }
 
   console.log("loading Firebase data ...");
 
-  function dataLoadedFromFirebaseACB(data) {
+  function commonDataLoadedFromFirebaseACB(data) {
+    if (data.exists()) {
+      useFlowStore().waterLevel = data.val().waterLevel || 0;
+    }
+
+    // load user data
+    get(child(ref(db), REF + "/users/" + useFlowStore().user.uid))
+      .then(userDataLoadedFromFirebaseACB)
+      .catch((error) => { console.error(error); });
+  }
+
+  function userDataLoadedFromFirebaseACB(data) {
     if (data.exists()) {
       // load existing user data
       useFlowStore().conversation = Object.values(data.val().conversation || {});
-      useFlowStore().waterLevel = data.val().waterLevel || 0;
     }
     else {
       // no existing user data
@@ -64,8 +74,8 @@ function loadFirebaseData(loadedACB) {
   }
 
   // load data from Firebase, then set up sync
-  get(child(ref(db), REF + "/users/" + useFlowStore().user.uid))
-    .then(dataLoadedFromFirebaseACB)
+  get(child(ref(db), REF + "/waterLevel"))
+    .then(commonDataLoadedFromFirebaseACB)
     .catch((error) => { console.error(error); });
 }
 
@@ -95,7 +105,7 @@ function updateFirebaseFromStore(store) {
   }
 
   function waterLevelChangedInStoreACB(newWaterLevel) {
-    set(ref(db, REF + "/users/" + store.user.uid + "/waterLevel"), newWaterLevel);
+    set(ref(db, REF + "/waterLevel"), newWaterLevel);
   }
 
   unsubscribers = [
@@ -123,6 +133,6 @@ function updateStoreFromFirebase(store) {
     ...unsubscribers,
     onChildAdded(ref(db, REF + "/users/" + store.user.uid + "/conversation"), msgAddedInFirebaseACB),
     onChildRemoved(ref(db, REF + "/users/" + store.user.uid + "/conversation"), msgRemovedInFirebaseACB),
-    onValue(ref(db, REF + "/users/" + store.user.uid + "/waterLevel"), waterLevelChangedInFirebaseACB)
+    onValue(ref(db, REF + "/waterLevel"), waterLevelChangedInFirebaseACB)
   ];
 }

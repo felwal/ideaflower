@@ -9,7 +9,9 @@ const MainPresenter = {
 
     return <MainView
       conversation={useFlowStore().conversation.sort((a, b) => a.epoch - b.epoch)}
-      onSendPrompt={onSendPromptACB} />;
+      onSendPrompt={onSendPromptACB}
+      waterLevel={useFlowStore().waterLevel}
+      isSignedIn={useFlowStore().user !== null} />;
   }
 };
 

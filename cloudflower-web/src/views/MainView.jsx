@@ -27,8 +27,9 @@ export default function MainView(props) {
 
   return <div>
     <h1>Main</h1>
+    <p>Water level: {props.waterLevel}</p>
     <ul>{props.conversation.map(renderMessage)}</ul>
     <input id="prompt" type="text" placeholder="Enter a prompt ..." onKeydown={addPromptOnKeyACB} disabled={!useFlowStore().user} />
-    <button onClick={addPromptOnClickACB} disabled={!useFlowStore().user}>Send</button>
+    <button onClick={addPromptOnClickACB} disabled={!props.isSignedIn}>Send</button>
   </div>;
 }

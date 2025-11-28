@@ -22,6 +22,7 @@ const useFlowStore = defineStore("flow", {
     },
 
     sendPrompt(prompt) {
+      this.waterLevel = 0;
       this.addMessage({
         epoch: Date.now(),
         text: prompt,
