@@ -1,4 +1,6 @@
-# Cloudflower
+<p align="center"><img width="128" src="cloudflower-web\public\favicon.svg"></p>
+
+<h1 align="center">Cloudflower</h1>
 
 Human-plant interaction for speculative slow care in co-creative AI
 
