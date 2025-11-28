@@ -11,3 +11,4 @@ Human-plant interaction for speculative slow care in co-creative AI
 
 - [WiFiNINA](https://docs.arduino.cc/libraries/wifinina/)
 - [FlowSensor](https://github.com/hafidhh/FlowSensor-Arduino/)
+- [FirebaseArduino](https://github.com/Rupakpoddar/FirebaseArduino/)

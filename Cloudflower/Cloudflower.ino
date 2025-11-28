@@ -3,6 +3,7 @@
 #include <SPI.h>
 #include <WiFiNINA.h>
 #include <FlowSensor.h>
+#include <Firebase.h>
 
 const int PIN_IN_FLOW = 2;
 const int PIN_OUT_LED_1 = 4;
@@ -13,7 +14,7 @@ const float VOLUME_THRESHOLD = 0.5;
 const bool DEBUG = true;
 
 FlowSensor flow(700, PIN_IN_FLOW);
-WiFiSSLClient client;
+Firebase firebase(FIREBASE_URL, FIREBASE_AUTH);
 
 //
 
@@ -27,11 +28,10 @@ void setup() {
   pinMode(PIN_OUT_LED_3, OUTPUT);
 
   connectWifi();
-  connectFirebase();
 }
 
 void loop() {
-  readFlow();
+  if (readFlow()) sendToFirebase();
   delay(500);
 }
 
@@ -52,23 +52,20 @@ void connectWifi() {
   Serial.println(" success");
 }
 
-void connectFirebase() {
-  Serial.print("connecting to host " + String(FIREBASE_URL) + " ...");
-  client.connect(FIREBASE_URL, 443);
-  Serial.println(client.connected() ? " success" : " failed");
+void sendToFirebase() {
+  Serial.print("sending to Firebase " + String(FIREBASE_URL) + " ...");
 
-  String path = "/myString.json?auth=" + String(FIREBASE_AUTH);
-  client.println("GET " + path + " HTTP/1.1");
-  client.println("Host: " + String(FIREBASE_URL));
-  client.println("Connection: close");
-  client.println();
-  String response = client.readString();
-  Serial.println("response: " + response);
+  int responseCode = firebase.setInt("flowModel/waterLevel", 1);
+  if (responseCode != 200) {
+    Serial.print("Firebase setInt failed with code ");
+    Serial.println(responseCode);
+    return;
+  }
 }
 
 // sensors
 
-void readFlow() {
+bool readFlow() {
   flow.read();
   int pulse = flow.getPulse();
   float volume = flow.getVolume();
@@ -77,9 +74,12 @@ void readFlow() {
   writeLights(volume);
 
   if (volume >= VOLUME_THRESHOLD) {
-    //flow.resetVolume();
     Serial.println("threshold reached");
+    flow.resetVolume();
+    return true;
   }
+
+  return false;
 }
 
 void onFlowCount() {
