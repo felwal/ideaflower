@@ -1,4 +1,4 @@
-<p align="center"><img width="128" src="cloudflower-web\public\favicon.svg"></p>
+<p align="center"><img width="128" src="logo.svg"></p>
 
 <h1 align="center">Cloudflower</h1>
 
