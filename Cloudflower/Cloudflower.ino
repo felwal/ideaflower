@@ -1,8 +1,8 @@
-#include "wifiSecrets.h";
-#include "firebaseSecrets.h";
-#include <SPI.h>;
-#include <WiFiNINA.h>;
-#include <FlowSensor.h>;
+#include "wifiSecrets.h"
+#include "firebaseSecrets.h"
+#include <SPI.h>
+#include <WiFiNINA.h>
+#include <FlowSensor.h>
 
 const int PIN_IN_FLOW = 2;
 const int PIN_OUT_LED_1 = 4;
@@ -12,7 +12,7 @@ const int PIN_OUT_LED_3 = 6;
 const float VOLUME_THRESHOLD = 0.5;
 const bool DEBUG = true;
 
-FlowSensor flowSensor(700, PIN_IN_FLOW);
+FlowSensor flow(700, PIN_IN_FLOW);
 WiFiSSLClient client;
 
 //
@@ -21,7 +21,7 @@ void setup() {
   Serial.begin(9600);
   Serial.println("\n--- NEW RUN ---");
 
-  flowSensor.begin(onFlowCount);
+  flow.begin(onFlowCount);
   pinMode(PIN_OUT_LED_1, OUTPUT);
   pinMode(PIN_OUT_LED_2, OUTPUT);
   pinMode(PIN_OUT_LED_3, OUTPUT);
@@ -53,13 +53,13 @@ void connectWifi() {
 }
 
 void connectFirebase() {
-  Serial.print("connecting to host " + String(FIREBASE_DB_URL) + " ...");
-  client.connect(FIREBASE_DB_URL, 443);
+  Serial.print("connecting to host " + String(FIREBASE_URL) + " ...");
+  client.connect(FIREBASE_URL, 443);
   Serial.println(client.connected() ? " success" : " failed");
 
-  String path = "/myString.json?auth=" + String(FIREBASE_AUTH_TOKEN);
+  String path = "/myString.json?auth=" + String(FIREBASE_AUTH);
   client.println("GET " + path + " HTTP/1.1");
-  client.println("Host: " + String(FIREBASE_DB_URL));
+  client.println("Host: " + String(FIREBASE_URL));
   client.println("Connection: close");
   client.println();
   String response = client.readString();
@@ -69,22 +69,22 @@ void connectFirebase() {
 // sensors
 
 void readFlow() {
-  flowSensor.read();
-  int pulse = flowSensor.getPulse();
-  float volume = flowSensor.getVolume();
-  d("pulse: " + String(pulse) + "; volume: " + String(volume) + " L");
+  flow.read();
+  int pulse = flow.getPulse();
+  float volume = flow.getVolume();
+  Serial.println("pulse: " + String(pulse) + "; volume: " + String(volume) + " L");
 
   writeLights(volume);
 
   if (volume >= VOLUME_THRESHOLD) {
-    //flowSensor.resetVolume();
-    d("threshold reached");
+    //flow.resetVolume();
+    Serial.println("threshold reached");
   }
 }
 
 void onFlowCount() {
-  flowSensor.count();
-  d("flow detected");
+  flow.count();
+  Serial.println("flow detected");
 }
 
 void writeLights(float volume) {
@@ -109,13 +109,5 @@ void writeLights(float volume) {
     digitalWrite(PIN_OUT_LED_1, HIGH);
     digitalWrite(PIN_OUT_LED_2, HIGH);
     digitalWrite(PIN_OUT_LED_3, HIGH);
-  }
-}
-
-//
-
-void d(String s) {
-  if (DEBUG) {
-    Serial.println("D: " + s);
   }
 }
