@@ -28,8 +28,12 @@
 }
 
 .composer__button {
+  display: grid;
+  align-items: center;
+  justify-items: center;
   width: var(--height-composer);
   height: var(--height-composer);
+  padding: 0;
   border-radius: calc(var(--height-composer) * 0.5);
   background-color: var(--color-surface);
   border: none;

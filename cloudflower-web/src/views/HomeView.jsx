@@ -1,5 +1,6 @@
 import "@/css/home.css";
 import useFlowStore from "@/stores/flowStore";
+import { ArrowUp } from 'lucide-vue-next';
 
 export default function HomeView(props) {
   function sendPrompt() {
@@ -37,7 +38,9 @@ export default function HomeView(props) {
       <div class="home-footer">
         <div class="composer column">
           <input class="composer__input" id="prompt" type="text" placeholder="Plant an idea ..." onKeydown={addPromptOnKeyACB} disabled={!useFlowStore().user} />
-          <button class="composer__button" onClick={addPromptOnClickACB} disabled={!props.isSignedIn}>{">"}</button>
+          <button class="composer__button" onClick={addPromptOnClickACB} disabled={!props.isSignedIn}>
+            <ArrowUp color="var(--color-text-primary)" />
+          </button>
         </div>
       </div>
     </div>
