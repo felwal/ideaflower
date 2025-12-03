@@ -1,6 +1,7 @@
 :root {
   /* color */
 
+  --color-bg: #FFFFFF;
   --color-surface: #F5F3F0;
   --color-surface-dk: #F1EEEA;
   --color-border: rgba(128, 128, 128, 0.15);
