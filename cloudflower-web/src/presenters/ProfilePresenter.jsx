@@ -30,7 +30,7 @@ const ProfilePresenter = {
 
       if (this.authPromiseState.data !== null && !this.isSignedUp) {
         createUserData(store.user);
-        //this.$router.push({name: "main"});
+        //this.$router.push({name: "home"});
       }
     }
 

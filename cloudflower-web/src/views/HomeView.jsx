@@ -1,6 +1,6 @@
 import useFlowStore from "@/stores/flowStore";
 
-export default function MainView(props) {
+export default function HomeView(props) {
   function sendPrompt() {
     const promptInput = document.getElementById("prompt");
     const prompt = promptInput.value.trim();
@@ -25,14 +25,14 @@ export default function MainView(props) {
     return <li>{msg.text /*+ " (" + new Date(msg.epoch).toLocaleString() + ")"*/}</li>;
   }
 
-  return <div class="main-view">
-    <div class="main-content">
-      <h1>Main</h1>
+  return <div class="home-view">
+    <div class="home-content">
+      <h1>Home</h1>
       <p>Water level: {props.waterLevel}</p>
       <ul>{props.conversation.map(renderMessage)}</ul>
     </div>
 
-    <div class="main-footer">
+    <div class="home-footer">
       <div class="composer column">
         <input class="composer__input" id="prompt" type="text" placeholder="Plant an idea ..." onKeydown={addPromptOnKeyACB} disabled={!useFlowStore().user} />
         <button class="composer__button" onClick={addPromptOnClickACB} disabled={!props.isSignedIn}>{">"}</button>

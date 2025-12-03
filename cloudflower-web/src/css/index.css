@@ -129,9 +129,9 @@ header {
 }
 
 
-/* || MAIN */
+/* || HOME */
 
-.main-footer {
+.home-footer {
   position: fixed;
   bottom: var(--spacing-edge);
   left: 0;

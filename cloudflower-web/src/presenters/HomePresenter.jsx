@@ -1,13 +1,13 @@
 import useFlowStore from "@/stores/flowStore";
-import MainView from "@/views/MainView";
+import HomeView from "@/views/HomeView";
 
-const MainPresenter = {
+const HomePresenter = {
   render() {
     function onSendPromptACB(prompt) {
       useFlowStore().sendPrompt(prompt);
     }
 
-    return <MainView
+    return <HomeView
       conversation={useFlowStore().conversation.sort((a, b) => a.epoch - b.epoch)}
       onSendPrompt={onSendPromptACB}
       waterLevel={useFlowStore().waterLevel}
@@ -15,4 +15,4 @@ const MainPresenter = {
   }
 };
 
-export default MainPresenter;
+export default HomePresenter;

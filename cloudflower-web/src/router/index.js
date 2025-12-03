@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import MainPresenter from "@/presenters/MainPresenter";
+import HomePresenter from "@/presenters/HomePresenter";
 import ProfilePresenter from "@/presenters/ProfilePresenter";
 
 const router = createRouter({
@@ -7,8 +7,8 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "main",
-      component: MainPresenter
+      name: "home",
+      component: HomePresenter
     },
     {
       path: "/profile",

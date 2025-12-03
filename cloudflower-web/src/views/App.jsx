@@ -10,7 +10,7 @@ export default function App() {
           </div>
         </a>
         <nav class="header__nav">
-          <router-link to="/">Main</router-link>
+          <router-link to="/">Home</router-link>
           <router-link to="/profile">Profile</router-link>
         </nav>
       </div>
