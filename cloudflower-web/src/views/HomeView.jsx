@@ -1,3 +1,4 @@
+import "@/css/home.css";
 import useFlowStore from "@/stores/flowStore";
 
 export default function HomeView(props) {

@@ -1,4 +1,6 @@
 import "@/css/index.css";
+import "@/css/general.css";
+import "@/css/sitewide.css";
 
 export default function App() {
   return (

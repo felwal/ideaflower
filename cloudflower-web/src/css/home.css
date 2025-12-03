@@ -1,0 +1,40 @@
+.home-footer {
+  position: fixed;
+  bottom: var(--spacing-edge);
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: auto;
+}
+
+.composer {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-tiny);
+}
+
+.composer__input {
+  width: calc(100% - 2 * var(--height-composer) - var(--spacing-tiny));
+  height: var(--height-composer);
+  padding-left: calc(var(--height-composer) * 0.5);
+  padding-right: calc(var(--height-composer) * 0.5);
+  border-radius: calc(var(--height-composer) * 0.5);
+  border: none;
+  color: var(--color-text-primary);
+  background-color: var(--color-surface);
+}
+
+.composer__button {
+  width: var(--height-composer);
+  height: var(--height-composer);
+  border-radius: calc(var(--height-composer) * 0.5);
+  background-color: var(--color-surface);
+  border: none;
+}
+
+.composer__button:hover {
+  background-color: var(--color-surface-dk);
+}
