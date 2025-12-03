@@ -7,11 +7,11 @@ export default function App() {
     <div class="app-view">
       <header>
         <div class="header__content column">
-          <a href="/">
+          <router-link to="/">
             <div class="header__logo">
               <img src="/favicon.svg" class="header__logo__image" />
             </div>
-          </a>
+          </router-link>
           <nav class="header__nav">
             <router-link to="/">Home</router-link>
             <router-link to="/profile">Profile</router-link>
