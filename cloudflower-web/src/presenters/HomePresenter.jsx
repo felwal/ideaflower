@@ -7,11 +7,13 @@ const HomePresenter = {
       useFlowStore().sendPrompt(prompt);
     }
 
-    return <HomeView
-      conversation={useFlowStore().conversation.sort((a, b) => a.epoch - b.epoch)}
-      onSendPrompt={onSendPromptACB}
-      waterLevel={useFlowStore().waterLevel}
-      isSignedIn={useFlowStore().user !== null} />;
+    return (
+      <HomeView
+        conversation={useFlowStore().conversation.sort((a, b) => a.epoch - b.epoch)}
+        onSendPrompt={onSendPromptACB}
+        waterLevel={useFlowStore().waterLevel}
+        isSignedIn={useFlowStore().user !== null} />
+    );
   }
 };
 

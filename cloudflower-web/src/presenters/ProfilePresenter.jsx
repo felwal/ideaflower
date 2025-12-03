@@ -43,11 +43,12 @@ const ProfilePresenter = {
       signOutUser();
     }
 
-    return <ProfileView
-      username={store.user?.name ?? ""}
-      onSignIn={onSignInACB.bind(this)}
-      onSignOut={onSignOutACB.bind(this)}
-    />;
+    return (
+      <ProfileView
+        username={store.user?.name ?? ""}
+        onSignIn={onSignInACB.bind(this)}
+        onSignOut={onSignOutACB.bind(this)} />
+    );
   }
 };
 
