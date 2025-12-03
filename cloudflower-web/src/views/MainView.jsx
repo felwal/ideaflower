@@ -25,11 +25,18 @@ export default function MainView(props) {
     return <li>{msg.text /*+ " (" + new Date(msg.epoch).toLocaleString() + ")"*/}</li>;
   }
 
-  return <div>
-    <h1>Main</h1>
-    <p>Water level: {props.waterLevel}</p>
-    <ul>{props.conversation.map(renderMessage)}</ul>
-    <input id="prompt" type="text" placeholder="Enter a prompt ..." onKeydown={addPromptOnKeyACB} disabled={!useFlowStore().user} />
-    <button onClick={addPromptOnClickACB} disabled={!props.isSignedIn}>Send</button>
+  return <div class="main-view">
+    <div class="main-content">
+      <h1>Main</h1>
+      <p>Water level: {props.waterLevel}</p>
+      <ul>{props.conversation.map(renderMessage)}</ul>
+    </div>
+
+    <div class="main-footer">
+      <div class="composer column">
+        <input class="composer__input" id="prompt" type="text" placeholder="Plant an idea ..." onKeydown={addPromptOnKeyACB} disabled={!useFlowStore().user} />
+        <button class="composer__button" onClick={addPromptOnClickACB} disabled={!props.isSignedIn}>{">"}</button>
+      </div>
+    </div>
   </div>;
 }

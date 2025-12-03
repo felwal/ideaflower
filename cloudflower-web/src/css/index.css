@@ -1,0 +1,214 @@
+:root {
+  /* color */
+
+  --color-surface: #F5F3F0;
+  --color-surface-dk: #F1EEEA;
+  --color-border: rgba(128, 128, 128, 0.15);
+  --color-primary: #629B00;
+
+  --color-text-primary: rgba(0, 0, 0, 0.8);
+  --color-text-secondary: rgba(0, 0, 0, 0.6);
+
+  /* dimen */
+
+  --corner-radius-small: 0.5rem;
+  --corner-radius-medium: 0.75rem;
+  --corner-radius-large: 1.25rem;
+
+  --spacing-diminutive: 0.25rem; /* 2dp */
+  --spacing-tiny: 0.5rem; /* 4dp */
+  --spacing-small: 1rem; /* 8dp */
+  --spacing-medium: 2rem; /* 16dp */
+
+  --spacing-p: var(--spacing-small);
+  --spacing-section: var(--spacing-medium);
+  --spacing-edge: var(--spacing-small);
+
+  --size-logo-header: 2.1rem;
+  --width-border: 0.1rem;
+  --width-column: 46rem;
+  --width-mobile: 36rem;
+  --height-composer: 3rem;
+
+  /* font */
+
+  --font: Karla, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-size-h1: 2.4rem;
+  --font-size-h2: 1.7rem;
+  --font-size-h3: 1.3rem;
+  --font-size-body: 1.125rem;
+  --font-size-widget: 1.125rem;
+  --font-size-caption: 1rem;
+
+  /* composite */
+
+  --transition: 0.1s ease-out;
+  --outline: var(--width-border) solid var(--color-border);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  line-height: 1.5;
+  font-weight: 425;
+}
+
+input, button {
+  font-family: var(--font);
+  font-weight: 425;
+  font-size: var(--font-size-widget);
+}
+
+
+/* || GENERAL */
+
+#app {
+  /* footer to bottom */
+  min-height: 100vh;
+}
+
+.app-view {
+  /* footer to bottom */
+  min-height: 100vh;
+}
+
+.column {
+  max-width: min(var(--width-column), calc(100vw - 2 * var(--spacing-edge)));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* || HEADER */
+
+header {
+  background-color: var(--color-surface);
+  margin-bottom: var(--spacing-section);
+}
+
+.header__content {
+  display: flex;
+  justify-content: space-between;
+  padding-top: var(--spacing-tiny);
+  padding-bottom: var(--spacing-tiny);
+}
+
+.header__nav {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  align-items: center;
+}
+
+.header__nav > a {
+  color: var(--color-text-secondary);
+  padding: var(--spacing-tiny) var(--spacing-small);
+  border-radius: var(--corner-radius-small);
+  font-size: var(--font-size-widget);
+}
+
+.header__nav > a:hover {
+  background-color: var(--color-surface-dk);
+}
+
+.header__logo {
+  border-radius: var(--corner-radius-small);
+  width: var(--size-logo-header);
+  height: var(--size-logo-header);
+  padding: var(--spacing-tiny);
+}
+
+.header__logo:hover {
+  background-color: var(--color-surface-dk);
+}
+
+.header__logo__image {
+  width: var(--size-logo-header);
+  height: var(--size-logo-header);
+}
+
+
+/* || MAIN */
+
+.main-footer {
+  position: fixed;
+  bottom: var(--spacing-edge);
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: auto;
+}
+
+.composer {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-tiny);
+}
+
+.composer__input {
+  width: calc(100% - 2 * var(--height-composer) - var(--spacing-tiny));
+  height: var(--height-composer);
+  padding-left: calc(var(--height-composer) * 0.5);
+  padding-right: calc(var(--height-composer) * 0.5);
+  border-radius: calc(var(--height-composer) * 0.5);
+  border: none;
+  color: var(--color-text-primary);
+  background-color: var(--color-surface);
+}
+
+.composer__button {
+  width: var(--height-composer);
+  height: var(--height-composer);
+  border-radius: calc(var(--height-composer) * 0.5);
+  background-color: var(--color-surface);
+  border: none;
+}
+
+.composer__button:hover {
+  background-color: var(--color-surface-dk);
+}
+
+
+/* || TEXT */
+
+p {
+  margin-top: var(--spacing-p);
+  margin-bottom: var(--spacing-p);
+}
+
+p, li {
+  font-size: var(--font-size-body);
+  color: var(--color-text-primary);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+  margin-top: var(--spacing-section);
+  margin-bottom: var(--spacing-p);
+  color: var(--color-text-primary);
+  font-weight: bold;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: var(--font-size-h1);
+  text-align: center;;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+}
+
+a {
+  color: var(--color-text-primary);
+  text-decoration-line: none;
+  text-decoration-thickness: 0.08em;
+}
