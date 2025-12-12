@@ -1,4 +1,4 @@
-export default function resolvePromise(promise, promiseState, notifyACB) {
+export function resolvePromise(promise, promiseState, notifyACB) {
   if (!promise) return;
 
   promiseState.promise = promise;
@@ -30,4 +30,8 @@ export function resolvePromiseMock(response, promiseState, notifyACB) {
   promiseState.error = null;
 
   if (notifyACB) notifyACB();
+}
+
+export function isPromiseLoading(promiseState) {
+  return promiseState.promise && !promiseState.error && !promiseState.data;
 }

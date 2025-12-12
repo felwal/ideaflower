@@ -21,6 +21,14 @@ const useFlowStore = defineStore("flow", {
       this.conversation = this.conversation.filter(msg => msg.epoch !== epoch);
     },
 
+    addGeneration(text) {
+      this.addMessage({
+        epoch: Date.now(),
+        text: text,
+        generated: true
+      });
+    },
+
     sendPrompt(prompt) {
       this.waterLevel = 0;
       this.addMessage({

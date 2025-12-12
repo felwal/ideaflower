@@ -32,7 +32,10 @@ export default function HomeView(props) {
       <div class="home-content">
         <h1>Home</h1>
         <p>Water level: {props.waterLevel}</p>
-        <ul>{props.conversation.map(renderMessage)}</ul>
+        <ul>
+          {props.conversation.map(renderMessage)}
+          {props.isLoaing ? <li>...</li> : null}
+        </ul>
       </div>
 
       <div class="home-footer">
