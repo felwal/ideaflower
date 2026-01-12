@@ -23,8 +23,16 @@ export default function HomeView(props) {
     sendPrompt();
   }
 
-  function renderMessage(msg) {
-    return <li>{msg.text /*+ " (" + new Date(msg.epoch).toLocaleString() + ")"*/}</li>;
+  function renderIdea(idea) {
+    return (
+      <li>{idea.prompt}
+        <ul>
+          <li>{idea.name}</li>
+          <li>{new Date(idea.epoch).toLocaleString()}</li>
+          <li>{idea.result}</li>
+        </ul>
+      </li>
+    );
   }
 
   return (
@@ -33,7 +41,7 @@ export default function HomeView(props) {
         <h1>Home</h1>
         <p>Water level: {props.waterLevel}</p>
         <ul>
-          {props.conversation.map(renderMessage)}
+          {props.ideas.map(renderIdea)}
           {props.isLoaing ? <li>...</li> : null}
         </ul>
       </div>

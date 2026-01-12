@@ -21,7 +21,7 @@ const HomePresenter = {
 
       if (this.chatPromiseState.data) {
         //console.log("api response data:", this.chatPromiseState.data);
-        useFlowStore().addGeneration(this.chatPromiseState.data.output_text);
+        useFlowStore().growIdea(this.chatPromiseState.data.output_text);
       }
     }
 
@@ -31,13 +31,15 @@ const HomePresenter = {
         return;
       }
 
-      useFlowStore().sendPrompt(prompt);
+      useFlowStore().plantIdea(prompt);
       resolvePromise(evolveIdea(prompt), this.chatPromiseState, processAPIResultACB.bind(this));
     }
 
+    console.log(useFlowStore().ideas);
+
     return (
       <HomeView
-        conversation={useFlowStore().conversation.sort((a, b) => a.epoch - b.epoch)}
+        ideas={Object.values(useFlowStore().ideas).sort((a, b) => a.epoch - b.epoch)}
         onSendPrompt={onSendPromptACB.bind(this)}
         waterLevel={useFlowStore().waterLevel}
         isSignedIn={useFlowStore().user !== null}

@@ -4,39 +4,61 @@ const useFlowStore = defineStore("flow", {
   state: () => ({
     user: undefined,
     waterLevel: 0,
-    conversation: []
+    ideas: {}
   }),
 
   actions: {
-    addMessage(msg) {
-      if (this.conversation.find(m => m.epoch === msg.epoch)) {
+    addIdea(idea) {
+      if (idea.epoch in this.ideas) {
         // don't add duplicates
         return;
       }
 
-      this.conversation = [...this.conversation, msg];
+      this.ideas = {...this.ideas, [idea.epoch]: idea}
     },
 
-    removeMessage(epoch) {
-      this.conversation = this.conversation.filter(msg => msg.epoch !== epoch);
+    removeIdea(epoch) {
+      delete this.ideas[epoch];
     },
 
-    addGeneration(text) {
-      this.addMessage({
-        epoch: Date.now(),
-        text: text,
-        generated: true
-      });
+    editIdea(idea) {
+      if (!(idea.epoch in this.ideas)) {
+        console.warn("unable to edit non-existent idea " + idea.epoch);
+        return;
+      }
+
+      this.ideas[idea.epoch] = idea;
     },
 
-    sendPrompt(prompt) {
+    plantIdea(prompt) {
       this.waterLevel = 0;
-      this.addMessage({
-        epoch: Date.now(),
-        text: prompt,
-        generated: false
-      });
-    }
+      const idea = {
+        prompt: prompt,
+        result: null,
+        name: "Unnamed Idea",
+        epoch: Date.now()
+      };
+
+      this.ideas = {...this.ideas, [idea.epoch]: idea};
+    },
+
+    growIdea(result, epoch=null) {
+      const epochs = Object.keys(this.ideas);
+
+      if (!epoch && epochs.length > 0) {
+        // TEMP: evolve the last idea as default
+        epoch = epochs.reverse()[0];
+      }
+      else if (!(epoch in this.ideas)) {
+        console.warn("unable to grow non-existent idea " + epoch);
+        return;
+      }
+
+      const idea = this.ideas[epoch];
+      idea.name = result.substring(1, result.indexOf("]"));
+      idea.result = result.substring(result.indexOf("]") + 2);
+      this.ideas[epoch] = idea;
+    },
   }
 });
 

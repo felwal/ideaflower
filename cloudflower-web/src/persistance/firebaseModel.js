@@ -1,4 +1,4 @@
-import { getDatabase, ref, set, onChildAdded, onChildRemoved, get, child, onValue } from "firebase/database";
+import { getDatabase, ref, set, onChildAdded, onChildRemoved, get, child, onValue, onChildChanged } from "firebase/database";
 import { watch } from "vue";
 import { observeAuthState } from "./firebaseAuth";
 import useFlowStore from "@/stores/flowStore";
@@ -11,7 +11,7 @@ let unsubscribers = [];
 
 export function createUserData(user) {
   set(ref(db, REF + "/users/" + user.uid + "/name"), user.name);
-  set(ref(db, REF + "/users/" + user.uid + "/conversation"), []);
+  set(ref(db, REF + "/users/" + user.uid + "/ideas"), []);
 
   console.log("Firebase user data created");
 }
@@ -33,7 +33,7 @@ export function setUpFirebase() {
   function signedOutACB() {
     disableFirebaseSync();
     useFlowStore().user = null;
-    useFlowStore().conversation = [];
+    useFlowStore().ideas = {};
   }
 
   observeAuthState(signedInACB, signedOutACB);
@@ -62,11 +62,11 @@ function loadFirebaseData(loadedACB) {
   function userDataLoadedFromFirebaseACB(data) {
     if (data.exists()) {
       // load existing user data
-      useFlowStore().conversation = Object.values(data.val().conversation || {});
+      useFlowStore().ideas = data.val().ideas || {};
     }
     else {
       // no existing user data
-      useFlowStore().conversation = [];
+      useFlowStore().ideas = {};
     }
 
     console.log("Firebase account data loaded");
@@ -95,13 +95,8 @@ function disableFirebaseSync() {
 // sync
 
 function updateFirebaseFromStore(store) {
-  function conversationChangedInStoreACB(newConversation) {
-    function toDateKeyedObjectCB(obj, msg) {
-      return {...obj, [msg.epoch]: msg};
-    }
-
-    const conversationObj = newConversation.reduce(toDateKeyedObjectCB, {});
-    set(ref(db, REF + "/users/" + store.user.uid + "/conversation/"), conversationObj);
+  function ideasChangedInStoreACB(newIdeas) {
+    set(ref(db, REF + "/users/" + store.user.uid + "/ideas/"), newIdeas);
   }
 
   function waterLevelChangedInStoreACB(newWaterLevel) {
@@ -110,17 +105,21 @@ function updateFirebaseFromStore(store) {
 
   unsubscribers = [
     ...unsubscribers,
-    watch(() => store.conversation, conversationChangedInStoreACB),
+    watch(() => store.ideas, ideasChangedInStoreACB, {deep: true}),
     watch(() => store.waterLevel, waterLevelChangedInStoreACB)];
 }
 
 function updateStoreFromFirebase(store) {
-  function msgAddedInFirebaseACB(data) {
-    store.addMessage(data.val());
+  function ideaAddedInFirebaseACB(data) {
+    store.addIdea(data.val());
   }
 
-  function msgRemovedInFirebaseACB(data) {
-    store.removeMessage(data.val().epoch);
+  function ideaRemovedInFirebaseACB(data) {
+    store.removeIdea(data.val().epoch);
+  }
+
+  function ideaChangedInFirebaseACB(data) {
+    store.editIdea(data.val());
   }
 
   function waterLevelChangedInFirebaseACB(data) {
@@ -131,8 +130,9 @@ function updateStoreFromFirebase(store) {
 
   unsubscribers = [
     ...unsubscribers,
-    onChildAdded(ref(db, REF + "/users/" + store.user.uid + "/conversation"), msgAddedInFirebaseACB),
-    onChildRemoved(ref(db, REF + "/users/" + store.user.uid + "/conversation"), msgRemovedInFirebaseACB),
+    onChildAdded(ref(db, REF + "/users/" + store.user.uid + "/ideas"), ideaAddedInFirebaseACB),
+    onChildRemoved(ref(db, REF + "/users/" + store.user.uid + "/ideas"), ideaRemovedInFirebaseACB),
+    onChildChanged(ref(db, REF + "/users/" + store.user.uid + "/ideas"), ideaChangedInFirebaseACB),
     onValue(ref(db, REF + "/waterLevel"), waterLevelChangedInFirebaseACB)
   ];
 }
