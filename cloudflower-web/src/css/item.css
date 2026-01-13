@@ -1,0 +1,66 @@
+.stack {
+  display: grid;
+  gap: var(--spacing-small);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.item {
+  outline: var(--width-border) solid var(--color-border);
+  padding: var(--spacing-small);
+  border-radius: var(--corner-radius-medium);
+  transition: var(--transition);
+}
+
+.item:hover {
+  background-color: var(--color-border);
+}
+
+.item > :first-child {
+  margin-top: 0;
+}
+
+.item > :last-child {
+  margin-bottom: 0;
+}
+
+.item__date {
+  color: var(--color-text-secondary);
+}
+
+.plant {
+  width: 100%;
+  height: fit-content;
+  transition: var(--transition);
+}
+
+.item:hover > .plant {
+  width: 105%;
+  margin: -2.5%;
+  margin-top: -5%;
+  margin-bottom: -5%;
+}
+
+.plant__leaves {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  background-image: var(--color-primary-gradient);
+  margin-bottom: -1rem;
+  z-index: -1;
+}
+
+.plant__pot__front {
+  position: relative;
+  display: flex;
+  width: 100%;
+  z-index: 0;
+}
+
+.plant__pot__back {
+  position: relative;
+  display: flex;
+  width: 100%;
+  z-index: -2;
+}

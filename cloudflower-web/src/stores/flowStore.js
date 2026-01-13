@@ -35,7 +35,7 @@ const useFlowStore = defineStore("flow", {
       const idea = {
         prompt: prompt,
         result: null,
-        name: "Unnamed Idea",
+        name: null,
         epoch: Date.now()
       };
 
