@@ -2,7 +2,7 @@ import "@/css/home.css";
 import useFlowStore from "@/stores/flowStore";
 import { ArrowUp } from 'lucide-vue-next';
 import blobshape from "blobshape";
-import { randomInt } from "@/utils/mathUtils";
+import { randomInt, randomBool } from "@/utils/mathUtils";
 
 export default function HomeView(props) {
   function sendPrompt() {
@@ -62,8 +62,8 @@ export default function HomeView(props) {
           </div>
           <div class="plant__pot__front">
             <svg width="100%" height="auto" viewBox="0 0 46 27" fill="none">
-              <ellipse cx="23" cy="24" rx="13" ry="3" fill={potColor}/>
-              <path d="M0 0H46L36 24H10L0 0Z" fill={potColor}/>
+              <ellipse cx="23" cy="24" rx={idea.potWide ? "19" : "13"} ry="3" fill={potColor}/>
+              <path d={idea.potWide ? "M0 0H46L42 24H4L0 0Z" : "M0 0H46L36 24H10L0 0Z"} fill={potColor}/>
               <path d="M46 0C46 1.65685 35.7025 3 23 3C10.2975 3 0 1.65685 0 0H46Z" fill={potColorDark}/>
             </svg>
           </div>

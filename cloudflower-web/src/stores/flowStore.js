@@ -1,3 +1,4 @@
+import { randomBool } from "@/utils/mathUtils";
 import { defineStore } from "pinia";
 
 const useFlowStore = defineStore("flow", {
@@ -37,6 +38,7 @@ const useFlowStore = defineStore("flow", {
         prompt: prompt,
         result: null,
         name: null,
+        potWide: randomBool(),
         potSaturation: parseFloat(Math.random().toFixed(2)),
         leafPath: null,
         epoch: Date.now()
