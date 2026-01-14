@@ -44,10 +44,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 1;
-  border-radius: 50%;
-  background-color: var(--color-primary);
-  background-image: var(--color-gradient-primary);
-  margin-bottom: -1rem;
+  margin-bottom: -3rem;
   z-index: -1;
 }
 

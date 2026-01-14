@@ -6,6 +6,8 @@
   --color-surface-dk: #F1EEEA;
   --color-border: rgba(128, 128, 128, 0.15);
   --color-primary: #629B00;
+  --color-primary-light: #83D500;
+  --color-primary-dark: #017D00;
   --color-pot: #D97E00;
 
   --color-gradient-primary: linear-gradient(to bottom left, #83D500, #017D00);

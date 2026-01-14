@@ -15,3 +15,4 @@ Human-plant interaction for speculative slow care in co-creative AI
 - [FlowSensor](https://github.com/hafidhh/FlowSensor-Arduino/)
 - [FirebaseArduino](https://github.com/Rupakpoddar/FirebaseArduino/)
 - [GPT-4.1 nano](https://platform.openai.com/docs/models/gpt-4.1-nano)
+- [Blobshape](https://github.com/lokesh-coder/blobshape)
