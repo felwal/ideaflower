@@ -41,6 +41,7 @@ const useFlowStore = defineStore("flow", {
         potWide: randomBool(),
         potSaturation: parseFloat(Math.random().toFixed(2)),
         leafPath: null,
+        leafHue: parseFloat(Math.random().toFixed(2)),
         epoch: Date.now()
       };
 

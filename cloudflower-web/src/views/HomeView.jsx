@@ -27,15 +27,26 @@ export default function HomeView(props) {
 
   function renderIdea(idea) {
     function renderPlant() {
+      // pot saturation and lightness
       const sStart =  24;
       const sEnd =  100;
       const lStart =  85;
       const lEnd =  50;
       const s = sStart + (sEnd - sStart) * idea.potSaturation;
       const l = lStart + (lEnd - lStart) * idea.potSaturation;
-
       const potColor = "hsl(from var(--color-pot) h " + s + " " + l + ")";
       const potColorDark = "hsl(from " + potColor + " h s 35)";
+
+      // leaf hue
+      const hStart = 53;
+      const hEnd = 158;
+      const hStartDark = 90;
+      const hEndDark = 195;
+      const h = hStart + (hEnd - hStart) * idea.leafHue;
+      const hDark = hStartDark + (hEndDark - hStartDark) * idea.leafHue;
+      const leafColor = "hsl(from var(--color-primary-light) " + h + " s l)";
+      const leafColorDark = "hsl(from var(--color-primary-dark) " + hDark + " s l)";
+      const paintId = "paint_linear_" + idea.epoch;
 
       if (!idea.leafPath) {
         const {path} = blobshape({size: 100, growth: randomInt(5, 7), edges: randomInt(9, 15)});
@@ -46,11 +57,11 @@ export default function HomeView(props) {
         <div class="plant">
           <div class={"plant__leaves" + (idea.result ? "" : " hidden") }>
             <svg width="100%" height="auto" viewBox="0 0 100 100">
-              <path d={idea.leafPath} fill="url(#paint0_linear_685_1341)"/>
+              <path d={idea.leafPath} fill={"url(#" + paintId + ")"}/>
               <defs>
-                <linearGradient id="paint0_linear_685_1341" x1="100" y1="0" x2="0" y2="100" gradientUnits="userSpaceOnUse">
-                <stop stop-color="var(--color-primary-light)"/>
-                <stop offset="1" stop-color="var(--color-primary-dark)"/>
+                <linearGradient id={paintId} x1="100" y1="0" x2="0" y2="100" gradientUnits="userSpaceOnUse">
+                <stop stop-color={leafColor}/>
+                <stop offset="1" stop-color={leafColorDark}/>
                 </linearGradient>
               </defs>
             </svg>
