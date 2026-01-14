@@ -13,6 +13,7 @@
     "lint": "eslint . --fix --cache"
   },
   "dependencies": {
+    "blobshape": "^1.0.0",
     "firebase": "^12.6.0",
     "lucide-vue-next": "^0.555.0",
     "openai": "^6.10.0",
