@@ -32,10 +32,12 @@ const useFlowStore = defineStore("flow", {
 
     plantIdea(prompt) {
       this.waterLevel = 0;
+
       const idea = {
         prompt: prompt,
         result: null,
         name: null,
+        potSaturation: parseFloat(Math.random().toFixed(2)),
         epoch: Date.now()
       };
 

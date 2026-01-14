@@ -5,7 +5,7 @@
 }
 
 .item {
-  outline: var(--width-border) solid var(--color-border);
+  /*outline: var(--width-border) solid var(--color-border);*/
   padding: var(--spacing-small);
   border-radius: var(--corner-radius-medium);
   transition: var(--transition);
@@ -46,7 +46,7 @@
   aspect-ratio: 1;
   border-radius: 50%;
   background-color: var(--color-primary);
-  background-image: var(--color-primary-gradient);
+  background-image: var(--color-gradient-primary);
   margin-bottom: -1rem;
   z-index: -1;
 }
