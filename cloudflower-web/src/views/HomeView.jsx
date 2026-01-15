@@ -55,12 +55,16 @@ export default function HomeView(props) {
       const potColorDk = "hsl(from " + potColor + " h s 35)";
       const leafColor = "hsl(from var(--color-primary-light) " + hLeaf + " s " + lLeaf + ")";
       const leafColorDk = "hsl(from var(--color-primary-dark) " + hLeafDk + " s " + lLeafDk + ")";
-      const paintId = "paint_linear_" + idea.epoch;
+      const paintId = "gradient_leaf_" + idea.epoch;
 
       if (!idea.leafPath) {
         const {path} = blobshape({size: 100, growth: randomInt(5, 7), edges: randomInt(9, 15)});
         idea.leafPath = path;
       }
+
+      const waterProgress = useFlowStore().waterLevel / 8.0;
+      const yWaterLevel = Math.round(waterProgress * 27);
+      const yWaterHeight = 27 - yWaterLevel;
 
       return (
         <div class="plant">
@@ -77,7 +81,14 @@ export default function HomeView(props) {
                   </defs>
                 </svg> :
                 <svg width="100%" height="auto" viewBox="0 0 46 46" fill="none">
+                  <defs>
+                    <mask id="mask_water_level">
+                      <rect x="24" width="22" height={yWaterLevel} fill="white" fill-opacity="var(--alpha-water-empty)"/>
+                      <rect x="24" y={yWaterLevel} width="22" height={yWaterHeight} fill="white" fill-opacity="1"/>
+                    </mask>
+                  </defs>
                   <circle cx="23" cy="35" r="6" fill="var(--color-seed)"/>
+                  <path d="M42.7782 23.3345C47.0739 19.0388 47.0739 12.0739 42.7782 7.77817L35 0L27.2218 7.77817C22.9261 12.0739 22.9261 19.0388 27.2218 23.3345C31.5176 27.6303 38.4824 27.6303 42.7782 23.3345Z" fill="var(--color-water)" mask="url(#mask_water_level)"/>
                 </svg>
             }
           </div>
