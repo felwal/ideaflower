@@ -28,24 +28,33 @@ export default function HomeView(props) {
   function renderIdea(idea) {
     function renderPlant() {
       // pot saturation and lightness
-      const sStart =  24;
-      const sEnd =  100;
-      const lStart =  85;
-      const lEnd =  50;
-      const s = sStart + (sEnd - sStart) * idea.potSaturation;
-      const l = lStart + (lEnd - lStart) * idea.potSaturation;
-      const potColor = "hsl(from var(--color-pot) h " + s + " " + l + ")";
-      const potColorDark = "hsl(from " + potColor + " h s 35)";
+      const sPotStart =  24;
+      const sPotEnd =  100;
+      const lPotStart =  85;
+      const lPotEnd =  50;
+      const sPot = sPotStart + (sPotEnd - sPotStart) * idea.potSaturation;
+      const lPot = lPotStart + (lPotEnd - lPotStart) * idea.potSaturation;
 
       // leaf hue
-      const hStart = 53;
-      const hEnd = 158;
-      const hStartDark = 90;
-      const hEndDark = 195;
-      const h = hStart + (hEnd - hStart) * idea.leafHue;
-      const hDark = hStartDark + (hEndDark - hStartDark) * idea.leafHue;
-      const leafColor = "hsl(from var(--color-primary-light) " + h + " s l)";
-      const leafColorDark = "hsl(from var(--color-primary-dark) " + hDark + " s l)";
+      const hLeafStart = 53;
+      const hLeafStartDk = 90;
+      const hLeafEnd = 158;
+      const hLeafEndDk = 195;
+      const hLeaf = hLeafStart + (hLeafEnd - hLeafStart) * idea.leafHue;
+      const hLeafDk = hLeafStartDk + (hLeafEndDk - hLeafStartDk) * idea.leafHue;
+
+      // leaf lightness
+      const lLeafStart = 37;
+      const lLeafStartDk = 20;
+      const lLeafEnd = 47;
+      const lLeafEndDk = 30;
+      const lLeaf = lLeafStart + (lLeafEnd - lLeafStart) * idea.leafLightness;
+      const lLeafDk = lLeafStartDk + (lLeafEndDk - lLeafStartDk) * idea.leafLightness;
+
+      const potColor = "hsl(from var(--color-pot) h " + sPot + " " + lPot + ")";
+      const potColorDk = "hsl(from " + potColor + " h s 35)";
+      const leafColor = "hsl(from var(--color-primary-light) " + hLeaf + " s " + lLeaf + ")";
+      const leafColorDk = "hsl(from var(--color-primary-dark) " + hLeafDk + " s " + lLeafDk + ")";
       const paintId = "paint_linear_" + idea.epoch;
 
       if (!idea.leafPath) {
@@ -61,21 +70,21 @@ export default function HomeView(props) {
               <defs>
                 <linearGradient id={paintId} x1="100" y1="0" x2="0" y2="100" gradientUnits="userSpaceOnUse">
                 <stop stop-color={leafColor}/>
-                <stop offset="1" stop-color={leafColorDark}/>
+                <stop offset="1" stop-color={leafColorDk}/>
                 </linearGradient>
               </defs>
             </svg>
           </div>
           <div class="plant__pot__back">
             <svg width="100%" height="auto" viewBox="0 0 46 3" fill="none">
-              <path d="M23 0C35.7025 0 46 1.34315 46 3H0C0 1.34315 10.2975 0 23 0Z" fill={potColorDark}/>
+              <path d="M23 0C35.7025 0 46 1.34315 46 3H0C0 1.34315 10.2975 0 23 0Z" fill={potColorDk}/>
             </svg>
           </div>
           <div class="plant__pot__front">
             <svg width="100%" height="auto" viewBox="0 0 46 27" fill="none">
               <ellipse cx="23" cy="24" rx={idea.potWide ? "19" : "13"} ry="3" fill={potColor}/>
               <path d={idea.potWide ? "M0 0H46L42 24H4L0 0Z" : "M0 0H46L36 24H10L0 0Z"} fill={potColor}/>
-              <path d="M46 0C46 1.65685 35.7025 3 23 3C10.2975 3 0 1.65685 0 0H46Z" fill={potColorDark}/>
+              <path d="M46 0C46 1.65685 35.7025 3 23 3C10.2975 3 0 1.65685 0 0H46Z" fill={potColorDk}/>
             </svg>
           </div>
         </div>
