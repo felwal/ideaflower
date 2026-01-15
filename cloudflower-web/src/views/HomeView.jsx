@@ -64,16 +64,22 @@ export default function HomeView(props) {
 
       return (
         <div class="plant">
-          <div class={"plant__leaves" + (idea.result ? "" : " hidden") }>
-            <svg width="100%" height="auto" viewBox="0 0 100 100">
-              <path d={idea.leafPath} fill={"url(#" + paintId + ")"}/>
-              <defs>
-                <linearGradient id={paintId} x1="100" y1="0" x2="0" y2="100" gradientUnits="userSpaceOnUse">
-                <stop stop-color={leafColor}/>
-                <stop offset="1" stop-color={leafColorDk}/>
-                </linearGradient>
-              </defs>
-            </svg>
+          <div class={"plant__leaves"}>
+            {
+              idea.result ?
+                <svg width="100%" height="auto" viewBox="0 0 100 100">
+                  <path d={idea.leafPath} fill={"url(#" + paintId + ")"}/>
+                  <defs>
+                    <linearGradient id={paintId} x1="100" y1="0" x2="0" y2="100" gradientUnits="userSpaceOnUse">
+                      <stop stop-color={leafColor}/>
+                      <stop offset="1" stop-color={leafColorDk}/>
+                    </linearGradient>
+                  </defs>
+                </svg> :
+                <svg width="100%" height="auto" viewBox="0 0 46 46" fill="none">
+                  <circle cx="23" cy="35" r="6" fill="var(--color-seed)"/>
+                </svg>
+            }
           </div>
           <div class="plant__pot__back">
             <svg width="100%" height="auto" viewBox="0 0 46 3" fill="none">
