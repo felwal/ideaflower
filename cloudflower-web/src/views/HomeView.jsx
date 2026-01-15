@@ -77,12 +77,16 @@ export default function HomeView(props) {
       return (
         <svg width="100%" height="auto" viewBox="0 0 46 46" fill="none">
           <circle cx="23" cy="35" r="6" fill="var(--color-seed)"/>
-          <path class={hideWaterIndicator ? "hidden" : ""} d="M42.7782 23.3345C47.0739 19.0388 47.0739 12.0739 42.7782 7.77817L35 0L27.2218 7.77817C22.9261 12.0739 22.9261 19.0388 27.2218 23.3345C31.5176 27.6303 38.4824 27.6303 42.7782 23.3345Z" fill="var(--color-water)" mask="url(#mask_water_level)"/>
+          <path class={hideWaterIndicator ? "hidden" : ""} d="M42.7782 23.3345C47.0739 19.0388 47.0739 12.0739 42.7782 7.77817L35 0L27.2218 7.77817C22.9261 12.0739 22.9261 19.0388 27.2218 23.3345C31.5176 27.6303 38.4824 27.6303 42.7782 23.3345Z" fill="url(#gradient_water)" mask="url(#mask_water_level)"/>
           <defs>
             <mask id="mask_water_level">
               <rect x="24" width="22" height={yWaterLevel} fill="white" fill-opacity="var(--alpha-water-empty)"/>
               <rect x="24" y={yWaterLevel} width="22" height={yWaterHeight} fill="white" fill-opacity="1"/>
             </mask>
+            <linearGradient id="gradient_water" x1="46" y1="0" x2="29.6966" y2="30.0869" gradientUnits="userSpaceOnUse">
+              <stop stop-color="var(--color-water-light)"/>
+              <stop offset="1" stop-color="var(--color-water-dark)"/>
+            </linearGradient>
           </defs>
         </svg>
       );
