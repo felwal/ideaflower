@@ -10,6 +10,12 @@ const HomePresenter = {
     };
   },
 
+  computed: {
+    plantFullyWatered() {
+      return useFlowStore().plantFullyWatered
+    }
+  },
+
   render() {
     function processAPIResultACB() {
       console.log("api call completed");
@@ -32,18 +38,26 @@ const HomePresenter = {
       }
 
       useFlowStore().plantIdea(prompt);
-      resolvePromise(evolveIdea(prompt), this.chatPromiseState, processAPIResultACB.bind(this));
     }
 
-    console.log(useFlowStore().ideas);
+    function onAddWaterACB() {
+      useFlowStore().addWater();
+    }
+
+    if (this.plantFullyWatered) {
+      useFlowStore().waterLevel = 0;
+      resolvePromise(evolveIdea(useFlowStore().firstUngrownIdea.prompt), this.chatPromiseState, processAPIResultACB.bind(this));
+    }
 
     return (
       <HomeView
         ideas={Object.values(useFlowStore().ideas).sort((a, b) => a.epoch - b.epoch)}
         onSendPrompt={onSendPromptACB.bind(this)}
+        onAddWater={onAddWaterACB.bind(this)}
         waterLevel={useFlowStore().waterLevel}
+        plantBeingWateredEpoch={useFlowStore().firstUngrownIdea?.epoch}
         isSignedIn={useFlowStore().user !== null}
-        isLoaing={isPromiseLoading(this.chatPromiseState)} />
+        isLoading={isPromiseLoading(this.chatPromiseState)} />
     );
   }
 };

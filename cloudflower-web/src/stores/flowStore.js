@@ -8,6 +8,12 @@ const useFlowStore = defineStore("flow", {
     ideas: {}
   }),
 
+  getters: {
+    waterProgress: (state) => state.waterLevel / 8.0,
+    plantFullyWatered: (state) => state.waterLevel >= 8,
+    firstUngrownIdea: (state) => Object.values(state.ideas).filter(idea => !idea.result)[0]
+  },
+
   actions: {
     addIdea(idea) {
       if (idea.epoch in this.ideas) {
@@ -31,6 +37,10 @@ const useFlowStore = defineStore("flow", {
       this.ideas[idea.epoch] = idea;
     },
 
+    addWater() {
+      this.waterLevel = Math.min(this.waterLevel + 1, 8);
+    },
+
     plantIdea(prompt) {
       this.waterLevel = 0;
 
@@ -47,24 +57,12 @@ const useFlowStore = defineStore("flow", {
       };
 
       this.ideas = {...this.ideas, [idea.epoch]: idea};
+      return idea;
     },
 
-    growIdea(result, epoch=null) {
-      const epochs = Object.keys(this.ideas);
-
-      if (!epoch && epochs.length > 0) {
-        // TEMP: evolve the last idea as default
-        epoch = epochs.reverse()[0];
-      }
-      else if (!(epoch in this.ideas)) {
-        console.warn("unable to grow non-existent idea " + epoch);
-        return;
-      }
-
-      const idea = this.ideas[epoch];
-      idea.name = result.substring(1, result.indexOf("]"));
-      idea.result = result.substring(result.indexOf("]") + 2);
-      this.ideas[epoch] = idea;
+    growIdea(result) {
+      this.firstUngrownIdea.name = result.substring(1, result.indexOf("]"));
+      this.firstUngrownIdea.result = result.substring(result.indexOf("]") + 2);
     },
   }
 });

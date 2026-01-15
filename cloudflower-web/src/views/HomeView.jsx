@@ -25,6 +25,10 @@ export default function HomeView(props) {
     sendPrompt();
   }
 
+  function waterClickACB(evt) {
+    props.onAddWater();
+  }
+
   function renderIdea(idea) {
     function renderLeaves() {
       const hLeafStart = 53;
@@ -66,20 +70,20 @@ export default function HomeView(props) {
     }
 
     function renderSeed() {
-      const waterProgress = useFlowStore().waterLevel / 8.0;
-      const yWaterLevel = Math.round(waterProgress * 27);
-      const yWaterHeight = 27 - yWaterLevel;
+      const yWaterHeight = Math.round(useFlowStore().waterProgress * 27);;
+      const yWaterLevel = 27 - yWaterHeight;
+      const hideWaterIndicator = props.isLoading || idea.epoch != props.plantBeingWateredEpoch;
 
       return (
         <svg width="100%" height="auto" viewBox="0 0 46 46" fill="none">
+          <circle cx="23" cy="35" r="6" fill="var(--color-seed)"/>
+          <path class={hideWaterIndicator ? "hidden" : ""} d="M42.7782 23.3345C47.0739 19.0388 47.0739 12.0739 42.7782 7.77817L35 0L27.2218 7.77817C22.9261 12.0739 22.9261 19.0388 27.2218 23.3345C31.5176 27.6303 38.4824 27.6303 42.7782 23.3345Z" fill="var(--color-water)" mask="url(#mask_water_level)"/>
           <defs>
             <mask id="mask_water_level">
               <rect x="24" width="22" height={yWaterLevel} fill="white" fill-opacity="var(--alpha-water-empty)"/>
               <rect x="24" y={yWaterLevel} width="22" height={yWaterHeight} fill="white" fill-opacity="1"/>
             </mask>
           </defs>
-          <circle cx="23" cy="35" r="6" fill="var(--color-seed)"/>
-          <path d="M42.7782 23.3345C47.0739 19.0388 47.0739 12.0739 42.7782 7.77817L35 0L27.2218 7.77817C22.9261 12.0739 22.9261 19.0388 27.2218 23.3345C31.5176 27.6303 38.4824 27.6303 42.7782 23.3345Z" fill="var(--color-water)" mask="url(#mask_water_level)"/>
         </svg>
       );
     }
@@ -127,6 +131,8 @@ export default function HomeView(props) {
       <div class="home-content">
         <h1>Home</h1>
         <p>Water level: {props.waterLevel}</p>
+        <button onClick={waterClickACB}>Add water</button>
+
         <div class="stack">
           {props.ideas.reverse().map(renderIdea)}
         </div>
