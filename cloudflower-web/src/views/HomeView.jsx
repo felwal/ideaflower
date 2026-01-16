@@ -70,24 +70,39 @@ export default function HomeView(props) {
     }
 
     function renderSeed() {
-      const yWaterHeight = Math.round(useFlowStore().waterProgress * 27);;
-      const yWaterLevel = 27 - yWaterHeight;
-      const hideWaterIndicator = props.isLoading || idea.epoch != props.plantBeingWateredEpoch;
+      function renderWater() {
+        // approximate the water level that would correspond to
+        // the percentage of the volume (area) that would fit within the drop shape
+        const dropRadius = 11;
+        const yIntersect = dropRadius * (1 + Math.cos(Math.PI / 4));
+        const intersectWidth = Math.sqrt(dropRadius ** 2 - (yIntersect - dropRadius) ** 2);
+        const dropHeight = yIntersect + intersectWidth;
+        const waterHeight = parseFloat((dropHeight / Math.PI * Math.acos(1 - 2 * useFlowStore().waterProgress)).toFixed(2));
+        const yWaterLevel = parseFloat((dropHeight - waterHeight).toFixed(2));
+
+        return (
+          <>
+            <path d="M42.7782 23.3345C47.0739 19.0388 47.0739 12.0739 42.7782 7.77817L35 0L27.2218 7.77817C22.9261 12.0739 22.9261 19.0388 27.2218 23.3345C31.5176 27.6303 38.4824 27.6303 42.7782 23.3345Z" fill="url(#gradient_water)" mask="url(#mask_water_level)"/>
+            <defs>
+              <mask id="mask_water_level">
+                <rect x="24" width="22" height={yWaterLevel} fill="white" fill-opacity="var(--alpha-water-empty)"/>
+                <rect x="24" y={yWaterLevel} width="22" height={waterHeight} fill="white" fill-opacity="1"/>
+              </mask>
+              <linearGradient id="gradient_water" x1="46" y1="0" x2="29.6966" y2="30.0869" gradientUnits="userSpaceOnUse">
+                <stop stop-color="var(--color-water-light)"/>
+                <stop offset="1" stop-color="var(--color-water-dark)"/>
+              </linearGradient>
+            </defs>
+          </>
+        );
+      }
+
+      const showWaterProgress = !props.isLoading && idea.epoch == props.plantBeingWateredEpoch;
 
       return (
         <svg width="100%" height="auto" viewBox="0 0 46 46" fill="none">
           <circle cx="23" cy="35" r="6" fill="var(--color-seed)"/>
-          <path class={hideWaterIndicator ? "hidden" : ""} d="M42.7782 23.3345C47.0739 19.0388 47.0739 12.0739 42.7782 7.77817L35 0L27.2218 7.77817C22.9261 12.0739 22.9261 19.0388 27.2218 23.3345C31.5176 27.6303 38.4824 27.6303 42.7782 23.3345Z" fill="url(#gradient_water)" mask="url(#mask_water_level)"/>
-          <defs>
-            <mask id="mask_water_level">
-              <rect x="24" width="22" height={yWaterLevel} fill="white" fill-opacity="var(--alpha-water-empty)"/>
-              <rect x="24" y={yWaterLevel} width="22" height={yWaterHeight} fill="white" fill-opacity="1"/>
-            </mask>
-            <linearGradient id="gradient_water" x1="46" y1="0" x2="29.6966" y2="30.0869" gradientUnits="userSpaceOnUse">
-              <stop stop-color="var(--color-water-light)"/>
-              <stop offset="1" stop-color="var(--color-water-dark)"/>
-            </linearGradient>
-          </defs>
+          {showWaterProgress ? renderWater() : null}
         </svg>
       );
     }
