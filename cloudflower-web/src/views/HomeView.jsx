@@ -133,6 +133,25 @@ export default function HomeView(props) {
       );
     }
 
+    const ideaDate = new Date(idea.epoch);
+    const now = new Date();
+    let dateString = "";
+
+    if (ideaDate.getDate() === now.getDate()
+      && ideaDate.getMonth() === now.getMonth()
+      && ideaDate.getFullYear() === now.getFullYear()) {
+
+      const options = {hour: "numeric", minute: "numeric", hour12: false};
+      dateString = ideaDate.toLocaleTimeString(undefined, options);
+    }
+    else {
+      const options = {day: "numeric", month: "short"};
+      if (ideaDate.getFullYear() !== now.getFullYear()) options.year = "numeric";
+
+      dateString = ideaDate.toLocaleDateString(undefined, options);
+    }
+
+
     return (
       <div class="item">
         <div class="plant">
@@ -140,7 +159,7 @@ export default function HomeView(props) {
           {renderPot()}
         </div>
         <h3 class="item__name">{idea.name || "???"}</h3>
-        <p class="item__date">{new Date(idea.epoch).toLocaleString()}</p>
+        <p class="item__date">{"Planted " + dateString}</p>
       </div>
     );
   }
