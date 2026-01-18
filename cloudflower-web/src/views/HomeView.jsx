@@ -151,16 +151,15 @@ export default function HomeView(props) {
       dateString = ideaDate.toLocaleDateString(undefined, options);
     }
 
-
     return (
-      <div class="item">
+      <RouterLink to={"/idea/" + idea.epoch} class="item">
         <div class="plant">
           <div class="plant__leaves">{idea.result ? renderLeaves() : renderSeed()}</div>
           {renderPot()}
         </div>
         <h3 class="item__name">{idea.name || "???"}</h3>
         <p class="item__date">{"Planted " + dateString}</p>
-      </div>
+      </RouterLink>
     );
   }
 

@@ -62,8 +62,12 @@ const useFlowStore = defineStore("flow", {
 
     growIdea(result) {
       this.firstUngrownIdea.name = result.substring(1, result.indexOf("]"));
-      this.firstUngrownIdea.result = result.substring(result.indexOf("]") + 2);
+      this.firstUngrownIdea.result = result.substring(result.indexOf("]") + 3);
     },
+
+    getIdea(epoch) {
+      return epoch in this.ideas ? this.ideas[epoch] : null;
+    }
   }
 });
 
