@@ -35,10 +35,6 @@
   margin-bottom: 0;
 }
 
-.item__date {
-  color: var(--color-text-secondary);
-}
-
 .plant {
   width: 100%;
   height: fit-content;

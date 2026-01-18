@@ -6,6 +6,10 @@
   min-height: 100vh;
 }
 
+main {
+  padding-bottom: var(--spacing-edge);
+}
+
 .column {
   max-width: min(var(--width-column), calc(100vw - 2 * var(--spacing-edge)));
   margin-left: auto;

@@ -2,6 +2,7 @@ import "@/css/home.css";
 import useFlowStore from "@/stores/flowStore";
 import { ArrowUp } from 'lucide-vue-next';
 import PlantView from "./PlantView";
+import { formatDate } from "@/utils/dateUtils";
 
 export default function HomeView(props) {
   function sendPrompt() {
@@ -29,24 +30,6 @@ export default function HomeView(props) {
   }
 
   function renderIdea(idea) {
-    const ideaDate = new Date(idea.epoch);
-    const now = new Date();
-    let dateString = "";
-
-    if (ideaDate.getDate() === now.getDate()
-      && ideaDate.getMonth() === now.getMonth()
-      && ideaDate.getFullYear() === now.getFullYear()) {
-
-      const options = {hour: "numeric", minute: "numeric", hour12: false};
-      dateString = ideaDate.toLocaleTimeString(undefined, options);
-    }
-    else {
-      const options = {day: "numeric", month: "short"};
-      if (ideaDate.getFullYear() !== now.getFullYear()) options.year = "numeric";
-
-      dateString = ideaDate.toLocaleDateString(undefined, options);
-    }
-
     return (
       <RouterLink to={"/idea/" + idea.epoch} class="item">
         <PlantView
@@ -54,7 +37,7 @@ export default function HomeView(props) {
           waterProgress={useFlowStore().waterProgress}
           showWaterProgress={!props.isLoading && idea.epoch == props.plantBeingWateredEpoch} />
         <h3 class="item__name">{idea.name || "???"}</h3>
-        <p class="item__date">{"Planted " + dateString}</p>
+        <p class="caption item__date">{"Planted " + formatDate(idea.epoch)}</p>
       </RouterLink>
     );
   }

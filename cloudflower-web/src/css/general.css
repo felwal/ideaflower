@@ -19,6 +19,10 @@ p {
   margin-bottom: var(--spacing-p);
 }
 
+.caption {
+  color: var(--color-text-secondary);
+}
+
 p, li {
   font-size: var(--font-size-body);
   color: var(--color-text-primary);

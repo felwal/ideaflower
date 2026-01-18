@@ -3,24 +3,7 @@ import { randomInt } from "@/utils/mathUtils";
 
 export default function PlantView(props) {
   function renderLeaves() {
-    const hLeafStart = 53;
-    const hLeafStartDk = 90;
-    const hLeafEnd = 158;
-    const hLeafEndDk = 195;
-
-    const hLeaf = hLeafStart + (hLeafEnd - hLeafStart) * props.idea.leafHue;
-    const hLeafDk = hLeafStartDk + (hLeafEndDk - hLeafStartDk) * props.idea.leafHue;
-
-    const lLeafStart = 37;
-    const lLeafStartDk = 20;
-    const lLeafEnd = 47;
-    const lLeafEndDk = 30;
-
-    const lLeaf = lLeafStart + (lLeafEnd - lLeafStart) * props.idea.leafLightness;
-    const lLeafDk = lLeafStartDk + (lLeafEndDk - lLeafStartDk) * props.idea.leafLightness;
-
-    const leafColor = "hsl(from var(--color-primary-light) " + hLeaf + " s " + lLeaf + ")";
-    const leafColorDk = "hsl(from var(--color-primary-dark) " + hLeafDk + " s " + lLeafDk + ")";
+    const {leafColor, leafColorDk} = getLeafColors(props.idea);
     const paintId = "gradient_leaf_" + props.idea.epoch;
 
     if (!props.idea.leafPath) {
@@ -103,12 +86,40 @@ export default function PlantView(props) {
     );
   }
 
+  console.log(typeof(props.showLeaves))
+
   return (
     <div class="plant">
-      <div class="plant__leaves">
-        {props.idea.result ? renderLeaves() : renderSeed()}
-      </div>
+      {props.showLeaves !== false || !props.idea.result ?
+        <div class="plant__leaves">
+          {props.idea.result ? renderLeaves() : renderSeed()}
+        </div>
+        : null
+      }
       {renderPot()}
     </div>
   );
+}
+
+export function getLeafColors(idea) {
+  const hLeafStart = 53;
+    const hLeafStartDk = 90;
+    const hLeafEnd = 158;
+    const hLeafEndDk = 195;
+
+    const hLeaf = hLeafStart + (hLeafEnd - hLeafStart) * idea.leafHue;
+    const hLeafDk = hLeafStartDk + (hLeafEndDk - hLeafStartDk) * idea.leafHue;
+
+    const lLeafStart = 37;
+    const lLeafStartDk = 20;
+    const lLeafEnd = 47;
+    const lLeafEndDk = 30;
+
+    const lLeaf = lLeafStart + (lLeafEnd - lLeafStart) * idea.leafLightness;
+    const lLeafDk = lLeafStartDk + (lLeafEndDk - lLeafStartDk) * idea.leafLightness;
+
+    const leafColor = "hsl(from var(--color-primary-light) " + hLeaf + " s " + lLeaf + ")";
+    const leafColorDk = "hsl(from var(--color-primary-dark) " + hLeafDk + " s " + lLeafDk + ")";
+
+    return {leafColor, leafColorDk};
 }

@@ -1,0 +1,56 @@
+.plant__container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--spacing-section);
+  margin-top: var(--spacing-section);
+
+  margin-top: -1rem;
+  position: relative;
+  z-index: -1;
+}
+
+.plant--detail {
+  width: 15rem;
+}
+
+.idea-growth {
+  padding: var(--spacing-medium);
+  border-radius: var(--corner-radius-large);
+  background-color: rgb(from var(--color-bg) r g b / 0.9);
+}
+
+.idea-growth__bg {
+  padding: calc(0 * var(--width-border));
+  padding-right: var(--spacing-small);
+  padding-bottom: var(--spacing-small);
+  border-radius: calc(var(--corner-radius-large) + var(--spacing-small));
+  background-color: antiquewhite;
+}
+
+.idea__result {
+  margin-bottom: 0;
+}
+
+.idea__prompt {
+  height: fit-content;
+}
+
+.idea__prompt__text {
+  outline: var(--outline);
+  padding: var(--spacing-small);
+  padding-top: var(--spacing-tiny);
+  padding-bottom: var(--spacing-tiny);
+  border-radius: var(--corner-radius-medium);
+  border-top-left-radius: 0;
+  width: fit-content;
+}
+
+.idea__date {}
+
+.idea__seed {
+  height: 2rem;
+  border-radius: 50%;
+  aspect-ratio: 1;
+  background-color: var(--color-seed);
+}
