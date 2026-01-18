@@ -2,3 +2,6 @@
 /cloudflower-web/src/persistance/firebaseConfig.js
 /Cloudflower/firebaseSecrets.h
 /Cloudflower/wifiSecrets.h
+
+# Hosting
+/cloudflower-web/.firebase
