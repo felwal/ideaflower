@@ -37,7 +37,7 @@
   --spacing-edge: var(--spacing-small);
 
   --size-logo-header: 2.1rem;
-  --width-border: 1px;
+  --width-border: 0.1rem;
   --width-column: 46rem;
   --width-mobile: 36rem;
   --height-composer: 3rem;

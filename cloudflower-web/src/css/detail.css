@@ -16,7 +16,7 @@
 .idea-growth {
   padding: var(--spacing-medium);
   border-radius: var(--corner-radius-large);
-  background-color: rgb(from var(--color-hover) r g b / 1);
+  background-color: rgb(from var(--color-bg) r g b / 1);
 }
 
 .idea-growth__bg {
@@ -33,8 +33,23 @@
   padding: var(--width-border);
 }
 
-.idea-growth__bg__hang > svg {
+.idea-growth__bg__hang__svg--desktop {
   margin-top: -16%;
+}
+
+.idea-growth__bg__hang__svg--mobile {
+  display: none;
+  margin-top: -25%;
+}
+
+@media screen and (max-width: 36rem) {
+  .idea-growth__bg__hang__svg--mobile {
+    display: block;
+  }
+
+  .idea-growth__bg__hang__svg--desktop {
+    display: none;
+  }
 }
 
 .idea__result {
