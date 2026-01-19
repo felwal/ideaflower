@@ -24,7 +24,7 @@
 }
 
 .item:hover {
-  background-color: var(--color-border);
+  background-color: var(--color-hover);
 }
 
 .item > :first-child {

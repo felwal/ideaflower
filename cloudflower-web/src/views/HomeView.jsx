@@ -45,9 +45,7 @@ export default function HomeView(props) {
   return (
     <div class="home-view">
       <div class="home-content">
-        <h1>Home</h1>
-        <p>Water level: {props.waterLevel}</p>
-        <button onClick={waterClickACB}>Add water</button>
+        <h1>Your idea garden</h1>
 
         <div class="stack">
           {props.ideas.reverse().map(renderIdea)}

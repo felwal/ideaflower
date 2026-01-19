@@ -1,10 +1,11 @@
 :root {
   /* color */
 
-  --color-bg: #FFFFFF;
-  --color-surface: #F5F3F0;
+  --color-bg: #F5F3F0;
+  --color-surface: white;
   --color-surface-dk: #F1EEEA;
   --color-border: rgba(128, 128, 128, 0.15);
+  --color-hover: rgb(from black r g b / 0.05);
 
   --color-primary-light: #83D500;
   --color-primary-dark: #017D00;
@@ -36,7 +37,7 @@
   --spacing-edge: var(--spacing-small);
 
   --size-logo-header: 2.1rem;
-  --width-border: 0.1rem;
+  --width-border: 1px;
   --width-column: 46rem;
   --width-mobile: 36rem;
   --height-composer: 3rem;
@@ -44,8 +45,8 @@
   /* font */
 
   --font: Karla, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  --font-size-h1: 2.4rem;
-  --font-size-h2: 1.7rem;
+  --font-size-h1: 2rem;
+  --font-size-h2: 1.6rem;
   --font-size-h3: 1.3rem;
   --font-size-body: 1.125rem;
   --font-size-widget: 1.125rem;

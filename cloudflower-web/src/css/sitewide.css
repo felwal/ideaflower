@@ -24,8 +24,9 @@ main {
 /* || HEADER */
 
 header {
-  background-color: var(--color-surface);
   margin-bottom: var(--spacing-section);
+  /*background-color: var(--color-surface);
+  outline: var(--outline);*/
 }
 
 .header__content {
@@ -51,7 +52,7 @@ header {
 }
 
 .header__nav > a:hover {
-  background-color: var(--color-surface-dk);
+  background-color: var(--color-hover);
 }
 
 .header__logo {
@@ -62,7 +63,7 @@ header {
 }
 
 .header__logo:hover {
-  background-color: var(--color-surface-dk);
+  background-color: var(--color-hover);
 }
 
 .header__logo__image {

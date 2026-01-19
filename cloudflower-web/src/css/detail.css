@@ -5,7 +5,6 @@
   margin-bottom: var(--spacing-section);
   margin-top: var(--spacing-section);
 
-  margin-top: -1rem;
   position: relative;
   z-index: -1;
 }
@@ -17,15 +16,13 @@
 .idea-growth {
   padding: var(--spacing-medium);
   border-radius: var(--corner-radius-large);
-  background-color: rgb(from var(--color-bg) r g b / 0.9);
+  background-color: rgb(from var(--color-bg) r g b / 1);
 }
 
 .idea-growth__bg {
-  padding: calc(0 * var(--width-border));
-  padding-right: var(--spacing-small);
+  padding: calc(1 * var(--width-border));
   padding-bottom: var(--spacing-small);
-  border-radius: calc(var(--corner-radius-large) + var(--spacing-small));
-  background-color: antiquewhite;
+  border-radius: calc(var(--corner-radius-large) + var(--width-border));
 }
 
 .idea__result {
