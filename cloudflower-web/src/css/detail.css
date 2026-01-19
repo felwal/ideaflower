@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   margin-bottom: var(--spacing-section);
-  margin-top: var(--spacing-section);
+  margin-top: var(--spacing-small);
 
   position: relative;
   z-index: -1;
@@ -16,7 +16,7 @@
 .idea-growth {
   padding: var(--spacing-medium);
   border-radius: var(--corner-radius-large);
-  background-color: rgb(from var(--color-bg) r g b / 1);
+  background-color: rgb(from var(--color-hover) r g b / 1);
 }
 
 .idea-growth__bg {
@@ -38,6 +38,7 @@
 }
 
 .idea__result {
+  margin-top: 0;
   margin-bottom: 0;
 }
 
@@ -46,16 +47,20 @@
 }
 
 .idea__prompt__text {
-  outline: var(--outline);
   padding: var(--spacing-small);
   padding-top: var(--spacing-tiny);
   padding-bottom: var(--spacing-tiny);
   border-radius: var(--corner-radius-medium);
-  border-top-left-radius: 0;
   width: fit-content;
+  background-color: var(--color-hover);
+  margin-bottom: var(--spacing-tiny);
 }
 
-.idea__date {}
+.idea__date {
+  padding-left: var(--spacing-tiny);
+  margin-top: var(--spacing-tiny);
+  width: fit-content;
+}
 
 .idea__seed {
   height: 2rem;

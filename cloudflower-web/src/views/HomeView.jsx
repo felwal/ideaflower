@@ -35,7 +35,7 @@ export default function HomeView(props) {
         <PlantView
           idea={idea}
           waterProgress={useFlowStore().waterProgress}
-          showWaterProgress={!props.isLoading && idea.epoch == props.plantBeingWateredEpoch} />
+          showWaterProgress={!props.isLoading && idea.epoch === props.plantBeingWateredEpoch} />
         <h3 class="item__name">{idea.name || "???"}</h3>
         <p class="caption item__date">{"Planted " + formatDate(idea.epoch)}</p>
       </RouterLink>

@@ -16,3 +16,18 @@ Human-plant interaction for speculative slow care in co-creative AI
 - [FirebaseArduino](https://github.com/Rupakpoddar/FirebaseArduino/)
 - [GPT-4.1 nano](https://platform.openai.com/docs/models/gpt-4.1-nano)
 - [Blobshape](https://github.com/lokesh-coder/blobshape)
+
+## Develop
+
+```
+npm install
+npm run dev
+```
+
+## Deploy
+
+```
+firebase init
+npm run build
+firebase deploy
+```

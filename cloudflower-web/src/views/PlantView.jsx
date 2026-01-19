@@ -55,7 +55,7 @@ export default function PlantView(props) {
     return (
       <svg width="100%" height="auto" viewBox="0 0 46 46" fill="none">
         <circle cx="23" cy="35" r="6" fill="var(--color-seed)"/>
-        {props.showWaterProgress ? renderWater() : null}
+        {props.showWaterProgress !== false ? renderWater() : null}
       </svg>
     );
   }
@@ -85,8 +85,6 @@ export default function PlantView(props) {
       </div>
     );
   }
-
-  console.log(typeof(props.showLeaves))
 
   return (
     <div class="plant">

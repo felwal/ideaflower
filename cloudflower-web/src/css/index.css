@@ -5,7 +5,7 @@
   --color-surface: white;
   --color-surface-dk: #F1EEEA;
   --color-border: rgba(128, 128, 128, 0.15);
-  --color-hover: rgb(from black r g b / 0.05);
+  --color-hover: hsl(from var(--color-bg) h s 98);
 
   --color-primary-light: #83D500;
   --color-primary-dark: #017D00;
