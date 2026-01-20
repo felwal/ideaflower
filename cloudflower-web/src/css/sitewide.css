@@ -49,7 +49,7 @@ header {
   padding: var(--spacing-tiny) var(--spacing-small);
   border-radius: var(--corner-radius-small);
   font-size: var(--font-size-widget);
-  transition: var(--transition);
+  transition: var(--transition-fast);
 }
 
 .header__nav > a:hover {
@@ -61,7 +61,7 @@ header {
   width: var(--size-logo-header);
   height: var(--size-logo-header);
   padding: var(--spacing-tiny);
-  transition: var(--transition);
+  transition: var(--transition-fast);
 }
 
 .header__logo:hover {

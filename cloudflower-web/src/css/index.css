@@ -58,5 +58,6 @@
   /* composite */
 
   --transition: 0.1s ease-out;
+  --transition-fast: 0.04s ease-out;
   --outline: var(--width-border) solid var(--color-border);
 }
