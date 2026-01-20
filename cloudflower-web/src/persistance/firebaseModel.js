@@ -16,6 +16,20 @@ export function createUserData(user) {
   console.log("Firebase user data created");
 }
 
+// get
+
+export function getChatKey(notifyACB) {
+  function dataLoaded(data) {
+    if (data.exists()) {
+      notifyACB(data.val());
+    }
+  }
+
+  get(child(ref(db), REF + "/chatKey"))
+    .then(dataLoaded)
+    .catch((error) => { console.error(error); });
+}
+
 // start/stop
 
 export function setUpFirebase() {

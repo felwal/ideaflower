@@ -2,6 +2,7 @@ import useFlowStore from "@/stores/flowStore";
 import HomeView from "@/views/HomeView";
 import { evolveIdea, chatResponseMock } from "@/network/chatService";
 import { resolvePromise, isPromiseLoading, resolvePromiseMock } from "@/utils/resolvePromise";
+import { getChatKey } from "@/persistance/firebaseModel";
 
 const HomePresenter = {
   data() {
@@ -46,8 +47,11 @@ const HomePresenter = {
 
     if (this.plantFullyWatered) {
       useFlowStore().waterLevel = 0;
-      //resolvePromise(evolveIdea(useFlowStore().firstUngrownIdea.prompt), this.chatPromiseState, processAPIResultACB.bind(this));
-      resolvePromiseMock(chatResponseMock, this.chatPromiseState, processAPIResultACB.bind(this));
+
+      getChatKey(key =>
+        resolvePromise(evolveIdea(key, useFlowStore().firstUngrownIdea.prompt), this.chatPromiseState, processAPIResultACB.bind(this))
+        //resolvePromiseMock(chatResponseMock, this.chatPromiseState, processAPIResultACB.bind(this))
+      );
     }
 
     return (
