@@ -16,3 +16,9 @@ export function evolveIdea(prompt) {
 
   return promise;
 }
+
+const chatResponseMock = {
+  output_text: "[Lorem Ipsum] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc erat massa, imperdiet a tincidunt bibendum, tempor nec ipsum. Aliquam eu felis euismod, consectetur ex quis, pellentesque sem. Pellentesque imperdiet ut nisi ac pharetra. Maecenas ornare."
+}
+
+export { chatResponseMock };

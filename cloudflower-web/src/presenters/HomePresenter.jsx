@@ -1,7 +1,7 @@
 import useFlowStore from "@/stores/flowStore";
 import HomeView from "@/views/HomeView";
-import { evolveIdea } from "@/network/chatService";
-import { resolvePromise, isPromiseLoading } from "@/utils/resolvePromise";
+import { evolveIdea, chatResponseMock } from "@/network/chatService";
+import { resolvePromise, isPromiseLoading, resolvePromiseMock } from "@/utils/resolvePromise";
 
 const HomePresenter = {
   data() {
@@ -46,7 +46,8 @@ const HomePresenter = {
 
     if (this.plantFullyWatered) {
       useFlowStore().waterLevel = 0;
-      resolvePromise(evolveIdea(useFlowStore().firstUngrownIdea.prompt), this.chatPromiseState, processAPIResultACB.bind(this));
+      //resolvePromise(evolveIdea(useFlowStore().firstUngrownIdea.prompt), this.chatPromiseState, processAPIResultACB.bind(this));
+      resolvePromiseMock(chatResponseMock, this.chatPromiseState, processAPIResultACB.bind(this));
     }
 
     return (
