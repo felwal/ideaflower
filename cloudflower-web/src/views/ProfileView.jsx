@@ -18,11 +18,14 @@ export default function ProfileView(props) {
   return (
     <div>
       <h1>Profile</h1>
-      <input id="username" type="text" placeholder="Enter username ..." value={props.username} onKeydown={signOnKeyACB} disabled={props.username !== ""} />
 
-      {props.username
-          ? <button onClick={signOutACB}>Sign out</button>
-          : <button onClick={signInACB}>Sign in</button>}
+      <div class="input-btn-row">
+        <input id="username" type="text" placeholder="Enter username ..." value={props.username} onKeydown={signOnKeyACB} disabled={props.username !== ""} />
+
+        {props.username
+            ? <button onClick={signOutACB}>Sign out</button>
+            : <button onClick={signInACB}>Sign in</button>}
+      </div>
     </div>
   );
 }

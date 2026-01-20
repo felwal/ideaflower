@@ -1,6 +1,6 @@
 import "@/css/home.css";
 import useFlowStore from "@/stores/flowStore";
-import { ArrowUp } from 'lucide-vue-next';
+import { ArrowDownToDot } from 'lucide-vue-next';
 import PlantView from "./PlantView";
 import { formatDate } from "@/utils/dateUtils";
 
@@ -47,17 +47,15 @@ export default function HomeView(props) {
       <div class="home-content">
         <h1>Your idea garden</h1>
 
+        <div class="composer input-btn-row column">
+          <input class="composer__input" id="prompt" type="text" placeholder="Plant an idea to grow ..." onKeydown={addPromptOnKeyACB} disabled={!props.isSignedIn} />
+          <button class="composer__button" onClick={addPromptOnClickACB} disabled={!props.isSignedIn}>
+            <ArrowDownToDot color="currentColor" />
+          </button>
+        </div>
+
         <div class="stack">
           {props.ideas.reverse().map(renderIdea)}
-        </div>
-      </div>
-
-      <div class="home-footer">
-        <div class="composer column">
-          <input class="composer__input" id="prompt" type="text" placeholder="Plant an idea ..." onKeydown={addPromptOnKeyACB} disabled={!useFlowStore().user} />
-          <button class="composer__button" onClick={addPromptOnClickACB} disabled={!props.isSignedIn}>
-            <ArrowUp color="var(--color-text-primary)" />
-          </button>
         </div>
       </div>
     </div>

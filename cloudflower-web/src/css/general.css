@@ -6,12 +6,48 @@ body {
   background-color: var(--color-bg);
 }
 
+.input-btn-row {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-tiny);
+}
+
 input, button {
   font-family: var(--font);
   font-weight: 425;
   font-size: var(--font-size-widget);
+  padding: var(--spacing-tiny);
+  padding-left: var(--spacing-small);
+  padding-right: var(--spacing-small);
+  border: none;
+  border-radius: var(--corner-radius-small);
+  background-color: var(--color-surface);
+  outline: var(--outline);
 }
 
+input::placeholder {
+  color: var(--color-text-secondary);
+}
+
+input:disabled, button:disabled {
+  background-color: var(--color-hover);
+  color: var(--color-text-secondary);
+  outline: none;
+}
+
+button {
+  color: var(--color-text-primary);
+}
+
+input:focus {
+  outline-color: var(--color-hover-variant);
+}
+
+button:enabled:hover {
+  color: var(--color-text-primary-inverted);
+  background-color: var(--color-hover-variant);
+  outline-color: var(--color-hover-variant);
+}
 
 /* || TEXT */
 

@@ -6,6 +6,7 @@
   --color-surface-dk: #F1EEEA;
   --color-border: rgba(128, 128, 128, 0.15);
   --color-hover: hsl(from var(--color-bg) h s 98);
+  --color-hover-variant: rgb(from var(--color-seed) r g b / 0.4);
 
   --color-primary-light: #83D500;
   --color-primary-dark: #017D00;
@@ -17,7 +18,8 @@
   --color-water-dark: #1A64FF;
 
   --color-text-primary: rgba(0, 0, 0, 0.8);
-  --color-text-secondary: rgba(0, 0, 0, 0.6);
+  --color-text-secondary: rgba(0, 0, 0, 0.5);
+  --color-text-primary-inverted: white;
 
   --alpha-water-empty: 0.4;
 
