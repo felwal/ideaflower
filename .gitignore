@@ -1,7 +1,7 @@
 # Secrets
-/cloudflower-web/src/persistance/firebaseConfig.js
-/Cloudflower/firebaseSecrets.h
-/Cloudflower/wifiSecrets.h
+/ideagarden/src/persistance/firebaseConfig.js
+/Ideaflower/firebaseSecrets.h
+/Ideaflower/wifiSecrets.h
 
 # Hosting
-/cloudflower-web/.firebase
+/ideagarden/.firebase

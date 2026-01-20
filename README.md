@@ -1,6 +1,6 @@
 <p align="center"><img width="128" src="logo.svg"></p>
 
-<h1 align="center">Cloudflower</h1>
+<h1 align="center">Ideaflower</h1>
 
 Human-plant interaction for speculative slow care in co-creative AI
 
