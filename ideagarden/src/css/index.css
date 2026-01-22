@@ -12,6 +12,7 @@
   --color-primary-dark: #017D00;
   --color-primary-gradient: linear-gradient(to bottom left, var(--color-primary-light), var(--color-primary-dark));
   --color-pot: #D97E00;
+  --color-soil: #8E6225;
   --color-seed: #5C4916;
 
   --color-water-light: #52ABFF;

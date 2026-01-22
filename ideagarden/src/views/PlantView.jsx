@@ -61,26 +61,25 @@ export default function PlantView(props) {
   }
 
   function renderPot() {
-    const sPotStart =  24;
-    const sPotEnd =  100;
-    const lPotStart =  85;
-    const lPotEnd =  50;
+    const sPotStart = 24;
+    const sPotEnd = 100;
+    const lPotStart = 85;
+    const lPotEnd = 50;
 
     const sPot = sPotStart + (sPotEnd - sPotStart) * props.idea.potSaturation;
     const lPot = lPotStart + (lPotEnd - lPotStart) * props.idea.potSaturation;
 
     const potColor = "hsl(from var(--color-pot) h " + sPot + " " + lPot + ")";
-    const potColorDk = "hsl(from " + potColor + " h s 35)";
 
     return (
       <div class="plant__pot">
         <svg class="plant__pot__back"width="100%" height="auto" viewBox="0 0 46 3" fill="none">
-          <path d="M23 0C35.7025 0 46 1.34315 46 3H0C0 1.34315 10.2975 0 23 0Z" fill={potColorDk}/>
+          <path d="M23 0C35.7025 0 46 1.34315 46 3H0C0 1.34315 10.2975 0 23 0Z" fill="var(--color-soil)"/>
         </svg>
         <svg class="plant__pot__front" width="100%" height="auto" viewBox="0 0 46 27" fill="none">
           <ellipse cx="23" cy="24" rx={props.idea.potWide ? "19" : "13"} ry="3" fill={potColor}/>
           <path d={props.idea.potWide ? "M0 0H46L42 24H4L0 0Z" : "M0 0H46L36 24H10L0 0Z"} fill={potColor}/>
-          <path d="M46 0C46 1.65685 35.7025 3 23 3C10.2975 3 0 1.65685 0 0H46Z" fill={potColorDk}/>
+          <path d="M46 0C46 1.65685 35.7025 3 23 3C10.2975 3 0 1.65685 0 0H46Z" fill="var(--color-soil)"/>
         </svg>
       </div>
     );
