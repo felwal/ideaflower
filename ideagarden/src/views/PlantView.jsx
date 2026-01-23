@@ -32,7 +32,8 @@ export default function PlantView(props) {
       const yIntersect = dropRadius * (1 + Math.cos(Math.PI / 4));
       const intersectWidth = Math.sqrt(dropRadius ** 2 - (yIntersect - dropRadius) ** 2);
       const dropHeight = yIntersect + intersectWidth;
-      const waterHeight = parseFloat((dropHeight / Math.PI * Math.acos(1 - 2 * props.waterProgress)).toFixed(2));
+      const progressNormalised = Math.min(props.waterProgress, 1);
+      const waterHeight = parseFloat((dropHeight / Math.PI * Math.acos(1 - 2 * progressNormalised)).toFixed(2));
       const yWaterLevel = parseFloat((dropHeight - waterHeight).toFixed(2));
 
       return (

@@ -46,11 +46,11 @@ const HomePresenter = {
     }
 
     if (this.plantFullyWatered) {
-      useFlowStore().waterLevel = 0;
+      useFlowStore().useWater();
 
       getChatKey(key =>
-        resolvePromise(evolveIdea(key, useFlowStore().firstUngrownIdea.prompt), this.chatPromiseState, processAPIResultACB.bind(this))
-        //resolvePromiseMock(chatResponseMock, this.chatPromiseState, processAPIResultACB.bind(this))
+        //resolvePromise(evolveIdea(key, useFlowStore().firstUngrownIdea.prompt), this.chatPromiseState, processAPIResultACB.bind(this))
+        resolvePromiseMock(chatResponseMock, this.chatPromiseState, processAPIResultACB.bind(this))
       );
     }
 
@@ -59,7 +59,7 @@ const HomePresenter = {
         ideas={Object.values(useFlowStore().ideas).sort((a, b) => a.epoch - b.epoch)}
         onSendPrompt={onSendPromptACB.bind(this)}
         onAddWater={onAddWaterACB.bind(this)}
-        waterLevel={useFlowStore().waterLevel}
+        waterProgress={useFlowStore().waterProgress}
         plantBeingWateredEpoch={useFlowStore().firstUngrownIdea?.epoch}
         isSignedIn={useFlowStore().user !== null}
         isLoading={isPromiseLoading(this.chatPromiseState)} />

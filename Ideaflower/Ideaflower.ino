@@ -6,14 +6,18 @@
 #include <Firebase.h>
 
 const int PIN_IN_FLOW = 2;
-const int PIN_OUT_LED_1 = 4;
-const int PIN_OUT_LED_2 = 5;
-const int PIN_OUT_LED_3 = 6;
+const int PIN_OUT_LED = 4;
 
-const float VOLUME_THRESHOLD = 0.5;
+const int PULSE_PER_LITER = 700; // approximate value from testing
+const int DELAY_WATERING = 500;
+const int DELAY_IDLE = 1000;
+const int DELAY_FULL = 2000;
 const bool DEBUG = true;
 
-FlowSensor flow(700, PIN_IN_FLOW);
+float volumeProgress = 0;
+float volumeFullLiter = 0.5; // will be set via Firebase
+
+FlowSensor flow(PULSE_PER_LITER, PIN_IN_FLOW);
 Firebase firebase(FIREBASE_URL, FIREBASE_AUTH);
 
 //
@@ -23,16 +27,34 @@ void setup() {
   Serial.println("\n--- NEW RUN ---");
 
   flow.begin(onFlowCount);
-  pinMode(PIN_OUT_LED_1, OUTPUT);
-  pinMode(PIN_OUT_LED_2, OUTPUT);
-  pinMode(PIN_OUT_LED_3, OUTPUT);
+  pinMode(PIN_OUT_LED, OUTPUT);
 
   connectWifi();
+  connectFirebase();
 }
 
 void loop() {
-  if (readFlow()) sendToFirebase();
-  delay(500);
+  if (volumeProgress < 1) {
+    // only measure flow if not already fully watered
+    // TODO: contintue to accumulate, if user has multiple ungrown seeds?
+    readFlow();
+    delay(DELAY_WATERING); // TODO: shorter delay if watered recently, otherwise longer
+  }
+  else {
+    // wait for water progress to be resetted via Firebase / web interface
+    float waterProgressInFirebase = getFirebaseFloat("flowModel/waterProgress");
+
+    if (waterProgressInFirebase == 0) {
+      digitalWrite(PIN_OUT_LED, LOW);
+      flow.resetVolume();
+      volumeProgress = 0;
+      delay(DELAY_IDLE);
+    }
+    else {
+      // waiting for user to be active on the web interface
+      delay(DELAY_FULL);
+    }
+  }
 }
 
 // connectivity
@@ -52,62 +74,48 @@ void connectWifi() {
   Serial.println(" success");
 }
 
-void sendToFirebase() {
-  Serial.print("sending to Firebase " + String(FIREBASE_URL) + " ...");
+void connectFirebase() {
+  Serial.print("connecting to Firebase " + String(FIREBASE_URL) + " ...");
+  volumeFullLiter = getFirebaseFloat("flowModel/WATER_FULL_LITER");
+}
 
-  int responseCode = firebase.setInt("flowModel/waterLevel", 1);
+float getFirebaseFloat(String key) {
+  float retrievedFloat;
+  int responseCode = firebase.getFloat(key, retrievedFloat);
+  handleFirebaseError(responseCode);
+  return retrievedFloat;
+}
+
+void setFirebaseFloat(String key, float val) {
+  int responseCode = firebase.setFloat(key, val);
+  handleFirebaseError(responseCode);
+}
+
+void handleFirebaseError(responseCode) {
   if (responseCode != 200) {
-    Serial.print("Firebase setInt failed with code ");
+    Serial.print("Firebase get/set failed with code ");
     Serial.println(responseCode);
-    return;
   }
 }
 
 // sensors
 
-bool readFlow() {
+void readFlow() {
   flow.read();
-  int pulse = flow.getPulse();
   float volume = flow.getVolume();
-  Serial.println("pulse: " + String(pulse) + "; volume: " + String(volume) + " L");
+  //int pulse = flow.getPulse();
+  //Serial.println("pulse: " + String(pulse) + "; volume: " + String(volume) + " L");
 
-  writeLights(volume);
+  volumeProgress = volume / volumeFullLiter;
+  setFirebaseFloat("flowModel/waterProgress", volumeProgress);
 
-  if (volume >= VOLUME_THRESHOLD) {
-    Serial.println("threshold reached");
-    flow.resetVolume();
-    return true;
+  if (volumeProgress >= 1) {
+    Serial.println("fully watered");
+    digitalWrite(PIN_OUT_LED, HIGH);
   }
-
-  return false;
 }
 
 void onFlowCount() {
   flow.count();
   Serial.println("flow detected");
-}
-
-void writeLights(float volume) {
-  float volumeProgress = volume / VOLUME_THRESHOLD;
-
-  if (volumeProgress < 0.33) {
-    digitalWrite(PIN_OUT_LED_1, LOW);
-    digitalWrite(PIN_OUT_LED_2, LOW);
-    digitalWrite(PIN_OUT_LED_3, LOW);
-  }
-  else if (volumeProgress < 0.66) {
-    digitalWrite(PIN_OUT_LED_1, HIGH);
-    digitalWrite(PIN_OUT_LED_2, LOW);
-    digitalWrite(PIN_OUT_LED_3, LOW);
-  }
-  else if (volumeProgress < 1.0) {
-    digitalWrite(PIN_OUT_LED_1, HIGH);
-    digitalWrite(PIN_OUT_LED_2, HIGH);
-    digitalWrite(PIN_OUT_LED_3, LOW);
-  }
-  else {
-    digitalWrite(PIN_OUT_LED_1, HIGH);
-    digitalWrite(PIN_OUT_LED_2, HIGH);
-    digitalWrite(PIN_OUT_LED_3, HIGH);
-  }
 }

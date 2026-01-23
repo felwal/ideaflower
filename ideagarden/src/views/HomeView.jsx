@@ -34,7 +34,7 @@ export default function HomeView(props) {
       <RouterLink to={"/idea/" + idea.epoch} class="item">
         <PlantView
           idea={idea}
-          waterProgress={useFlowStore().waterProgress}
+          waterProgress={props.waterProgress}
           showWaterProgress={!props.isLoading && idea.epoch === props.plantBeingWateredEpoch} />
         <h3 class="item__name">{idea.name || "???"}</h3>
         <p class="caption item__date">{"Planted " + formatDate(idea.epoch)}</p>

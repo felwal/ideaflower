@@ -25,7 +25,7 @@ export function getChatKey(notifyACB) {
     }
   }
 
-  get(child(ref(db), REF + "/chatKey"))
+  get(child(ref(db), REF + "/CHAT_KEY"))
     .then(dataLoaded)
     .catch((error) => { console.error(error); });
 }
@@ -64,7 +64,7 @@ function loadFirebaseData(loadedACB) {
 
   function commonDataLoadedFromFirebaseACB(data) {
     if (data.exists()) {
-      useFlowStore().waterLevel = data.val().waterLevel || 0;
+      useFlowStore().waterProgress = data.val().waterProgress || 0;
     }
 
     // load user data
@@ -88,7 +88,7 @@ function loadFirebaseData(loadedACB) {
   }
 
   // load data from Firebase, then set up sync
-  get(child(ref(db), REF + "/waterLevel"))
+  get(child(ref(db), REF + "/waterProgress"))
     .then(commonDataLoadedFromFirebaseACB)
     .catch((error) => { console.error(error); });
 }
@@ -113,14 +113,14 @@ function updateFirebaseFromStore(store) {
     set(ref(db, REF + "/users/" + store.user.uid + "/ideas/"), newIdeas);
   }
 
-  function waterLevelChangedInStoreACB(newWaterLevel) {
-    set(ref(db, REF + "/waterLevel"), newWaterLevel);
+  function waterProgressChangedInStoreACB(newWaterProgress) {
+    set(ref(db, REF + "/waterProgress"), newWaterProgress);
   }
 
   unsubscribers = [
     ...unsubscribers,
     watch(() => store.ideas, ideasChangedInStoreACB, {deep: true}),
-    watch(() => store.waterLevel, waterLevelChangedInStoreACB)];
+    watch(() => store.waterProgress, waterProgressChangedInStoreACB)];
 }
 
 function updateStoreFromFirebase(store) {
@@ -136,9 +136,9 @@ function updateStoreFromFirebase(store) {
     store.editIdea(data.val());
   }
 
-  function waterLevelChangedInFirebaseACB(data) {
-    if (store.waterLevel !== data.val()) {
-      store.waterLevel = data.val();
+  function waterProgressChangedInFirebaseACB(data) {
+    if (store.waterProgress !== data.val()) {
+      store.waterProgress = data.val();
     }
   }
 
@@ -147,6 +147,6 @@ function updateStoreFromFirebase(store) {
     onChildAdded(ref(db, REF + "/users/" + store.user.uid + "/ideas"), ideaAddedInFirebaseACB),
     onChildRemoved(ref(db, REF + "/users/" + store.user.uid + "/ideas"), ideaRemovedInFirebaseACB),
     onChildChanged(ref(db, REF + "/users/" + store.user.uid + "/ideas"), ideaChangedInFirebaseACB),
-    onValue(ref(db, REF + "/waterLevel"), waterLevelChangedInFirebaseACB)
+    onValue(ref(db, REF + "/waterProgress"), waterProgressChangedInFirebaseACB)
   ];
 }

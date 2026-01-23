@@ -4,13 +4,12 @@ import { defineStore } from "pinia";
 const useFlowStore = defineStore("flow", {
   state: () => ({
     user: undefined,
-    waterLevel: 0,
+    waterProgress: 0,
     ideas: {}
   }),
 
   getters: {
-    waterProgress: (state) => state.waterLevel / 8.0,
-    plantFullyWatered: (state) => state.waterLevel >= 8,
+    plantFullyWatered: (state) => state.waterProgress >= 1,
     firstUngrownIdea: (state) => Object.values(state.ideas).filter(idea => !idea.result)[0]
   },
 
@@ -38,12 +37,14 @@ const useFlowStore = defineStore("flow", {
     },
 
     addWater() {
-      this.waterLevel = Math.min(this.waterLevel + 1, 8);
+      this.waterProgress = Math.min(this.waterProgress + 0.1, 1);
+    },
+
+    useWater() {
+      this.waterProgress = Math.max(this.waterProgress - 1, 0);
     },
 
     plantIdea(prompt) {
-      this.waterLevel = 0;
-
       const idea = {
         prompt: prompt,
         result: null,
