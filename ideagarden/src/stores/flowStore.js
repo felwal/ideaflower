@@ -5,6 +5,7 @@ const useFlowStore = defineStore("flow", {
   state: () => ({
     user: undefined,
     waterProgress: 0,
+    isRequesting: false,
     ideas: {}
   }),
 
@@ -42,6 +43,7 @@ const useFlowStore = defineStore("flow", {
 
     useWater() {
       this.waterProgress = Math.max(this.waterProgress - 1, 0);
+      this.isRequesting = true;
     },
 
     plantIdea(prompt) {

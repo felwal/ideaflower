@@ -12,8 +12,8 @@ const HomePresenter = {
   },
 
   computed: {
-    plantFullyWatered() {
-      return useFlowStore().plantFullyWatered
+    canGrowIdea() {
+      return useFlowStore().plantFullyWatered && !useFlowStore().isRequesting;
     }
   },
 
@@ -23,13 +23,13 @@ const HomePresenter = {
 
       if (this.chatPromiseState.error) {
         console.error("api error:", this.chatPromiseState.error);
-        return;
       }
-
-      if (this.chatPromiseState.data) {
+      else if (this.chatPromiseState.data) {
         //console.log("api response data:", this.chatPromiseState.data);
         useFlowStore().growIdea(this.chatPromiseState.data.output_text);
       }
+
+      useFlowStore().isRequesting = false;
     }
 
     function onSendPromptACB(prompt) {
@@ -45,7 +45,7 @@ const HomePresenter = {
       useFlowStore().addWater();
     }
 
-    if (this.plantFullyWatered) {
+    if (this.canGrowIdea) {
       useFlowStore().useWater();
 
       getChatKey(key =>

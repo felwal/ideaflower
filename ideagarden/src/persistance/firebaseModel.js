@@ -12,6 +12,7 @@ let unsubscribers = [];
 export function createUserData(user) {
   set(ref(db, REF + "/users/" + user.uid + "/name"), user.name);
   set(ref(db, REF + "/users/" + user.uid + "/ideas"), []);
+  set(ref(db, REF + "/users/" + user.uid + "/isRequesting"), false);
 
   console.log("Firebase user data created");
 }
@@ -48,6 +49,7 @@ export function setUpFirebase() {
     disableFirebaseSync();
     useFlowStore().user = null;
     useFlowStore().ideas = {};
+    useFlowStore().isRequesting = false;
   }
 
   observeAuthState(signedInACB, signedOutACB);
@@ -77,10 +79,12 @@ function loadFirebaseData(loadedACB) {
     if (data.exists()) {
       // load existing user data
       useFlowStore().ideas = data.val().ideas || {};
+      useFlowStore().isRequesting = data.val().isRequesting || false;
     }
     else {
       // no existing user data
       useFlowStore().ideas = {};
+      useFlowStore().isRequesting = false;
     }
 
     console.log("Firebase account data loaded");
@@ -113,6 +117,10 @@ function updateFirebaseFromStore(store) {
     set(ref(db, REF + "/users/" + store.user.uid + "/ideas/"), newIdeas);
   }
 
+  function isRequestingChangedInStoreACB(newState) {
+    set(ref(db, REF + "/users/" + store.user.uid + "/isRequesting"), newState);
+  }
+
   function waterProgressChangedInStoreACB(newWaterProgress) {
     set(ref(db, REF + "/waterProgress"), newWaterProgress);
   }
@@ -120,6 +128,7 @@ function updateFirebaseFromStore(store) {
   unsubscribers = [
     ...unsubscribers,
     watch(() => store.ideas, ideasChangedInStoreACB, {deep: true}),
+    watch(() => store.isRequesting, isRequestingChangedInStoreACB),
     watch(() => store.waterProgress, waterProgressChangedInStoreACB)];
 }
 
@@ -136,6 +145,12 @@ function updateStoreFromFirebase(store) {
     store.editIdea(data.val());
   }
 
+  function isRequestingChangedInFirebaseACB(data) {
+    if (store.isRequesting !== data.val()) {
+      store.isRequesting = data.val();
+    }
+  }
+
   function waterProgressChangedInFirebaseACB(data) {
     if (store.waterProgress !== data.val()) {
       store.waterProgress = data.val();
@@ -147,6 +162,7 @@ function updateStoreFromFirebase(store) {
     onChildAdded(ref(db, REF + "/users/" + store.user.uid + "/ideas"), ideaAddedInFirebaseACB),
     onChildRemoved(ref(db, REF + "/users/" + store.user.uid + "/ideas"), ideaRemovedInFirebaseACB),
     onChildChanged(ref(db, REF + "/users/" + store.user.uid + "/ideas"), ideaChangedInFirebaseACB),
+    onValue(ref(db, REF + "/users/" + store.user.uid + "/isRequesting"), isRequestingChangedInFirebaseACB),
     onValue(ref(db, REF + "/waterProgress"), waterProgressChangedInFirebaseACB)
   ];
 }
