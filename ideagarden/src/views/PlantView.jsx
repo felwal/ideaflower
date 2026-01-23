@@ -78,8 +78,8 @@ export default function PlantView(props) {
           <path d="M23 0C35.7025 0 46 1.34315 46 3H0C0 1.34315 10.2975 0 23 0Z" fill="var(--color-soil)"/>
         </svg>
         <svg class="plant__pot__front" width="100%" height="auto" viewBox="0 0 46 27" fill="none">
-          <ellipse cx="23" cy="24" rx={props.idea.potWide ? "19" : "13"} ry="3" fill={potColor}/>
-          <path d={props.idea.potWide ? "M0 0H46L42 24H4L0 0Z" : "M0 0H46L36 24H10L0 0Z"} fill={potColor}/>
+          <ellipse cx="23" cy="24" rx={props.idea.potShape > 0.5 ? "19" : "13"} ry="3" fill={potColor}/>
+          <path d={props.idea.potShape > 0.5 ? "M0 0H46L42 24H4L0 0Z" : "M0 0H46L36 24H10L0 0Z"} fill={potColor}/>
           <path d="M46 0C46 1.65685 35.7025 3 23 3C10.2975 3 0 1.65685 0 0H46Z" fill="var(--color-soil)"/>
         </svg>
       </div>
