@@ -13,7 +13,7 @@ const HomePresenter = {
 
   computed: {
     canGrowIdea() {
-      return useFlowStore().plantFullyWatered && !useFlowStore().isRequesting;
+      return useFlowStore().firstUngrownIdea && useFlowStore().plantFullyWatered && !useFlowStore().isRequesting;
     }
   },
 

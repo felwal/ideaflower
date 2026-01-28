@@ -11,7 +11,8 @@ const useFlowStore = defineStore("flow", {
 
   getters: {
     plantFullyWatered: (state) => state.waterProgress >= 1,
-    firstUngrownIdea: (state) => Object.values(state.ideas).filter(idea => !idea.result)[0]
+    ungrownIdeas: (state) => Object.values(state.ideas).filter(idea => !idea.result),
+    firstUngrownIdea: (state) => state.ungrownIdeas[0]
   },
 
   actions: {
@@ -42,11 +43,17 @@ const useFlowStore = defineStore("flow", {
     },
 
     useWater() {
-      this.waterProgress = Math.max(this.waterProgress - 1, 0);
+      if (this.ungrownIdeas.length <= 1) this.waterProgress = -1;
+      else this.waterProgress = Math.max(this.waterProgress - 1, 0);
+
       this.isRequesting = true;
     },
 
     plantIdea(prompt) {
+      if (!this.firstUngrownIdea) {
+        this.waterProgress = 0;
+      }
+
       const idea = {
         prompt: prompt,
         result: null,
