@@ -7,8 +7,9 @@
 
 const int PIN_IN_FLOW = 2; // must be D2
 
-const int PULSE_PER_LITER = 700; // approximate value from testing
+const int PULSE_PER_LITER = 400; // approximate value from testing
 const int AWAIT_WATER = 1000;
+const int AWAIT_IDLE = 2000;
 const int AWAIT_FIREBASE = 10000; // TODO: longer for home study, shorter for user study
 float VOLUME_FULL_LITER = 0.5; // will be set via Firebase on startup
 
@@ -92,7 +93,7 @@ void connectFirebase() {
 void writeFirebase() {
   int idleDuration = millis() - flowDetectedMillis;
 
-  if (flowDetected && idleDuration > 1000) {
+  if (flowDetected && idleDuration >= AWAIT_IDLE) {
     // only send to Firebase when watering has stopped
     Serial.println();
     //Serial.print("idled for " + String(idleDuration) + "ms; ");
