@@ -6,7 +6,6 @@
 #include <Firebase.h>
 
 const int PIN_IN_FLOW = 2; // must be D2
-const int PIN_OUT_LED = 4;
 
 const int PULSE_PER_LITER = 700; // approximate value from testing
 const int AWAIT_WATER = 1000;
@@ -29,7 +28,6 @@ void setup() {
   Serial.println("\n\n--- NEW RUN ---");
 
   flow.begin(onFlowCount, false); // use internal pull-up resistor
-  pinMode(PIN_OUT_LED, OUTPUT);
 
   connectWifi();
   connectFirebase();
@@ -41,7 +39,6 @@ void loop() {
     // TODO: contintue to accumulate, if user has multiple ungrown seeds?
     readFlow();
     writeFirebase();
-    writeLed();
 
     if (!flowDetected) {
       Serial.print(".");
@@ -61,7 +58,6 @@ void loop() {
 
       flow.resetVolume();
       flow.resetPulse();
-      writeLed();
     }
     else {
       Serial.print("…");
@@ -156,13 +152,4 @@ void onFlowCount() {
   flowDetectedMillis = millis();
 
   Serial.print("~");
-}
-
-void writeLed() {
-  if (volumeProgress >= 1) {
-    digitalWrite(PIN_OUT_LED, HIGH);
-  }
-  else {
-    digitalWrite(PIN_OUT_LED, LOW);
-  }
 }
