@@ -7,11 +7,11 @@
 
 const int PIN_IN_FLOW = 2; // must be D2
 
-const int PULSE_PER_LITER = 400; // approximate value from testing
+const int PULSE_PER_LITER = 500; // approximate value from testing
 const int AWAIT_WATER = 1000;
 const int AWAIT_IDLE = 2000;
 const int AWAIT_FIREBASE = 10000; // TODO: longer for home study, shorter for user study
-float VOLUME_FULL_LITER = 0.5; // will be set via Firebase on startup
+float VOLUME_FULL_LITER = 0.05; // will be set via Firebase on startup
 
 bool firebaseSynced = true;
 bool flowDetected = false;
