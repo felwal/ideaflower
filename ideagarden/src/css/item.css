@@ -72,7 +72,7 @@
 
 .plant__pot__front, .plant__pot__back {
   position: relative;
-  display: flex;
+  display: block;
   width: 100%;
 }
 
