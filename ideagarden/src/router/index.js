@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import HomePresenter from "@/presenters/HomePresenter";
 import ProfilePresenter from "@/presenters/ProfilePresenter";
 import IdeaPresenter from "@/presenters/IdeaPresenter";
+import ErrorPresenter from "@/presenters/ErrorPresenter";
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -22,9 +23,15 @@ const router = createRouter({
       component: IdeaPresenter,
       props: true,
     },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "error",
+      component: ErrorPresenter,
+    },
   ],
 
   scrollBehavior(to, from, savedPosition) {
+    // don't keep scroll position between different pages
     if (savedPosition) {
       return savedPosition;
     }

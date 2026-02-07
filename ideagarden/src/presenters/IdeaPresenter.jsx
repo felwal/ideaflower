@@ -4,7 +4,13 @@ import IdeaView from "@/views/IdeaView";
 const IdeaPresenter = {
   render() {
     const epoch = this.$route.params.id;
-    const idea = useFlowStore().getIdea(epoch) || {};
+    const idea = useFlowStore().getIdea(epoch);
+
+    if (!idea) {
+      // invalid id
+      this.$router.push({name: "error"});
+      return;
+    }
 
     if (idea.result) {
       idea.read = true;
