@@ -6,11 +6,8 @@ const IdeaPresenter = {
     const epoch = this.$route.params.id;
     const idea = useFlowStore().getIdea(epoch);
 
-    if (!idea) {
-      // invalid id
-      this.$router.push({name: "error"});
-      return;
-    }
+    // loading or invalid id
+    if (!idea) return;
 
     if (idea.result) {
       idea.read = true;
