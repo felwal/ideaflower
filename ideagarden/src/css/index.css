@@ -23,7 +23,7 @@
   --color-water-light: #52ABFF;
   --color-water-dark: #1A64FF;
 
-  --saturation-leaf: 100;
+  --saturation-leaf: 100%;
   --hue-pot: 35;
   --alpha-water-empty: 0.4;
 
