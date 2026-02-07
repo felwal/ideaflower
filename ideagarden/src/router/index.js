@@ -9,19 +9,19 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: HomePresenter
+      component: HomePresenter,
     },
     {
       path: "/profile",
       name: "profile",
-      component: ProfilePresenter
+      component: ProfilePresenter,
     },
     {
       path: "/idea/:id",
       name: "Idea",
       component: IdeaPresenter,
-      props: true
-    }
+      props: true,
+    },
   ],
 
   scrollBehavior(to, from, savedPosition) {
@@ -31,7 +31,7 @@ const router = createRouter({
     else {
       return {top: 0};
     }
-  }
+  },
 })
 
 export default router;

@@ -14,7 +14,8 @@ const IdeaPresenter = {
       <IdeaView
         idea={idea}
         isPlantBeingWatered={idea.epoch === useFlowStore().firstUngrownIdea?.epoch}
-        waterProgress={useFlowStore().waterProgress} />
+        waterProgress={useFlowStore().waterProgress}
+      />
     );
   }
 };

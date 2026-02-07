@@ -1,5 +1,4 @@
 import "@/css/home.css";
-import useFlowStore from "@/stores/flowStore";
 import { ArrowDownToDot } from 'lucide-vue-next';
 import PlantView from "./PlantView";
 import { formatDate } from "@/utils/dateUtils";
@@ -25,19 +24,19 @@ export default function HomeView(props) {
     sendPrompt();
   }
 
-  function waterClickACB(evt) {
-    props.onAddWater();
-  }
-
   function renderIdea(idea) {
     return (
       <RouterLink to={"/idea/" + idea.epoch} class="item">
-        {idea.result && !idea.read ? <div class="item__unread"></div> : null}
+        {idea.result && !idea.read &&
+          <div class="item__unread"></div>
+        }
 
         <PlantView
           idea={idea}
           waterProgress={props.waterProgress}
-          showWaterProgress={!props.isLoading && idea.epoch === props.plantBeingWateredEpoch} />
+          showWaterProgress={!props.isLoading && idea.epoch === props.plantBeingWateredEpoch}
+        />
+
         <h3 class="item__name">{idea.name || "???"}</h3>
         <p class="caption item__date">{"Planted " + formatDate(idea.epoch)}</p>
       </RouterLink>

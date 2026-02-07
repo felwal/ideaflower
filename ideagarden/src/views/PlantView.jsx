@@ -13,11 +13,11 @@ export default function PlantView(props) {
 
     return (
       <svg width="100%" height="auto" viewBox="0 0 100 100">
-        <path d={props.idea.leafPath} fill={"url(#" + paintId + ")"}/>
+        <path d={props.idea.leafPath} fill={"url(#" + paintId + ")"} />
         <defs>
           <linearGradient id={paintId} x1="100" y1="0" x2="0" y2="100" gradientUnits="userSpaceOnUse">
-            <stop stop-color={leafColor}/>
-            <stop offset="1" stop-color={leafColorDk}/>
+            <stop stop-color={leafColor} />
+            <stop offset="1" stop-color={leafColorDk} />
           </linearGradient>
         </defs>
       </svg>
@@ -38,15 +38,15 @@ export default function PlantView(props) {
 
       return (
         <>
-          <path d="M42.7782 23.3345C47.0739 19.0388 47.0739 12.0739 42.7782 7.77817L35 0L27.2218 7.77817C22.9261 12.0739 22.9261 19.0388 27.2218 23.3345C31.5176 27.6303 38.4824 27.6303 42.7782 23.3345Z" fill="url(#gradient_water)" mask="url(#mask_water_level)"/>
+          <path d="M42.7782 23.3345C47.0739 19.0388 47.0739 12.0739 42.7782 7.77817L35 0L27.2218 7.77817C22.9261 12.0739 22.9261 19.0388 27.2218 23.3345C31.5176 27.6303 38.4824 27.6303 42.7782 23.3345Z" fill="url(#gradient_water)" mask="url(#mask_water_level)" />
           <defs>
             <mask id="mask_water_level">
-              <rect x="24" width="22" height={yWaterLevel} fill="white" fill-opacity="var(--alpha-water-empty)"/>
-              <rect x="24" y={yWaterLevel} width="22" height={waterHeight} fill="white" fill-opacity="1"/>
+              <rect x="24" width="22" height={yWaterLevel} fill="white" fill-opacity="var(--alpha-water-empty)" />
+              <rect x="24" y={yWaterLevel} width="22" height={waterHeight} fill="white" fill-opacity="1" />
             </mask>
             <linearGradient id="gradient_water" x1="46" y1="0" x2="29.6966" y2="30.0869" gradientUnits="userSpaceOnUse">
-              <stop stop-color="var(--color-water-light)"/>
-              <stop offset="1" stop-color="var(--color-water-dark)"/>
+              <stop stop-color="var(--color-water-light)" />
+              <stop offset="1" stop-color="var(--color-water-dark)" />
             </linearGradient>
           </defs>
         </>
@@ -55,8 +55,8 @@ export default function PlantView(props) {
 
     return (
       <svg width="100%" height="auto" viewBox="0 0 46 46" fill="none">
-        <circle cx="23" cy="35" r="6" fill="var(--color-seed)"/>
-        {props.showWaterProgress !== false ? renderWater() : null}
+        <circle cx="23" cy="35" r="6" fill="var(--color-seed)" />
+        {props.showWaterProgress !== false && renderWater()}
       </svg>
     );
   }
@@ -74,16 +74,16 @@ export default function PlantView(props) {
 
     const potShapes = [
       <>
-        <ellipse cx="23" cy="24" rx="13" ry="3" fill={potColor}/>
-        <path d="M0 0H46L36 24H10L0 0Z" fill={potColor}/>
+        <ellipse cx="23" cy="24" rx="13" ry="3" fill={potColor} />
+        <path d="M0 0H46L36 24H10L0 0Z" fill={potColor} />
       </>,
       <>
-        <ellipse cx="23" cy="24" rx="19" ry="3" fill={potColor}/>
-        <path d={"M0 0H46L42 24H4L0 0Z"} fill={potColor}/>
+        <ellipse cx="23" cy="24" rx="19" ry="3" fill={potColor} />
+        <path d={"M0 0H46L42 24H4L0 0Z"} fill={potColor} />
       </>,
       <>
-        <path d="M46 0H0C0 9.93334 3.96094 18.7002 10 23.9266H36C42.0391 18.7002 46 9.93334 46 0Z" fill={potColor}/>
-        <ellipse cx="23" cy="24" rx="13" ry="3" fill={potColor}/>
+        <path d="M46 0H0C0 9.93334 3.96094 18.7002 10 23.9266H36C42.0391 18.7002 46 9.93334 46 0Z" fill={potColor} />
+        <ellipse cx="23" cy="24" rx="13" ry="3" fill={potColor} />
       </>,
     ];
 
@@ -92,11 +92,11 @@ export default function PlantView(props) {
     return (
       <div class="plant__pot">
         <svg class="plant__pot__back" width="100%" height="auto" viewBox="0 0 46 3" fill="none">
-          <path d="M23 0C35.7025 0 46 1.34315 46 3H0C0 1.34315 10.2975 0 23 0Z" fill="var(--color-soil)"/>
+          <path d="M23 0C35.7025 0 46 1.34315 46 3H0C0 1.34315 10.2975 0 23 0Z" fill="var(--color-soil)" />
         </svg>
         <svg class="plant__pot__front" width="100%" height="auto" viewBox="0 0 46 27" fill="none">
           {potShape}
-          <path d="M46 0C46 1.65685 35.7025 3 23 3C10.2975 3 0 1.65685 0 0H46Z" fill="var(--color-soil)"/>
+          <path d="M46 0C46 1.65685 35.7025 3 23 3C10.2975 3 0 1.65685 0 0H46Z" fill="var(--color-soil)" />
         </svg>
       </div>
     );

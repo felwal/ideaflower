@@ -41,10 +41,6 @@ const HomePresenter = {
       useFlowStore().plantIdea(prompt);
     }
 
-    function onAddWaterACB() {
-      useFlowStore().addWater();
-    }
-
     if (this.canGrowIdea) {
       useFlowStore().useWater();
 
@@ -58,13 +54,13 @@ const HomePresenter = {
       <HomeView
         ideas={Object.values(useFlowStore().ideas).sort((a, b) => a.epoch - b.epoch)}
         onSendPrompt={onSendPromptACB.bind(this)}
-        onAddWater={onAddWaterACB.bind(this)}
         waterProgress={useFlowStore().waterProgress}
         plantBeingWateredEpoch={useFlowStore().firstUngrownIdea?.epoch}
         isSignedIn={useFlowStore().user !== null}
-        isLoading={isPromiseLoading(this.chatPromiseState)} />
+        isLoading={isPromiseLoading(this.chatPromiseState)}
+      />
     );
-  }
+  },
 };
 
 export default HomePresenter;

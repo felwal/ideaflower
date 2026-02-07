@@ -33,7 +33,7 @@ export function observeAuthState(signedInACB, signedOutACB) {
       const user = {
         uid: credentialUser.uid,
         email: credentialUser.email,
-        name: username(credentialUser.email)
+        name: username(credentialUser.email),
       };
 
       console.log("signed in as " + user.name);

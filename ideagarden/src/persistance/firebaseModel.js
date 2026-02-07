@@ -129,7 +129,8 @@ function updateFirebaseFromStore(store) {
     ...unsubscribers,
     watch(() => store.ideas, ideasChangedInStoreACB, {deep: true}),
     watch(() => store.isRequesting, isRequestingChangedInStoreACB),
-    watch(() => store.waterProgress, waterProgressChangedInStoreACB)];
+    watch(() => store.waterProgress, waterProgressChangedInStoreACB),
+  ];
 }
 
 function updateStoreFromFirebase(store) {
@@ -163,6 +164,6 @@ function updateStoreFromFirebase(store) {
     onChildRemoved(ref(db, REF + "/users/" + store.user.uid + "/ideas"), ideaRemovedInFirebaseACB),
     onChildChanged(ref(db, REF + "/users/" + store.user.uid + "/ideas"), ideaChangedInFirebaseACB),
     onValue(ref(db, REF + "/users/" + store.user.uid + "/isRequesting"), isRequestingChangedInFirebaseACB),
-    onValue(ref(db, REF + "/waterProgress"), waterProgressChangedInFirebaseACB)
+    onValue(ref(db, REF + "/waterProgress"), waterProgressChangedInFirebaseACB),
   ];
 }

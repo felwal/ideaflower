@@ -1,4 +1,4 @@
-import { randomBool } from "@/utils/mathUtils";
+import { randomFloatRounded } from "@/utils/mathUtils";
 import { defineStore } from "pinia";
 
 const useFlowStore = defineStore("flow", {
@@ -6,13 +6,13 @@ const useFlowStore = defineStore("flow", {
     user: undefined,
     waterProgress: 0,
     isRequesting: false,
-    ideas: {}
+    ideas: {},
   }),
 
   getters: {
     plantFullyWatered: (state) => state.waterProgress >= 1,
     ungrownIdeas: (state) => Object.values(state.ideas).filter(idea => !idea.result),
-    firstUngrownIdea: (state) => state.ungrownIdeas[0]
+    firstUngrownIdea: (state) => state.ungrownIdeas[0],
   },
 
   actions: {
@@ -38,10 +38,6 @@ const useFlowStore = defineStore("flow", {
       this.ideas[idea.epoch] = idea;
     },
 
-    addWater() {
-      this.waterProgress = Math.min(this.waterProgress + 0.1, 1);
-    },
-
     useWater() {
       if (this.ungrownIdeas.length <= 1) this.waterProgress = -1;
       else this.waterProgress = Math.max(this.waterProgress - 1, 0);
@@ -58,12 +54,12 @@ const useFlowStore = defineStore("flow", {
         prompt: prompt,
         result: null,
         name: null,
-        potShape: parseFloat(Math.random().toFixed(2)),
-        potSaturation: parseFloat(Math.random().toFixed(2)),
         read: false,
+        potShape: randomFloatRounded(),
+        potSaturation: randomFloatRounded(),
+        leafHue: randomFloatRounded(),
+        leafLightness: randomFloatRounded(),
         leafPath: null,
-        leafHue: parseFloat(Math.random().toFixed(2)),
-        leafLightness: parseFloat(Math.random().toFixed(2)),
         epoch: Date.now()
       };
 
@@ -78,8 +74,8 @@ const useFlowStore = defineStore("flow", {
 
     getIdea(epoch) {
       return epoch in this.ideas ? this.ideas[epoch] : null;
-    }
-  }
+    },
+  },
 });
 
 export default useFlowStore;

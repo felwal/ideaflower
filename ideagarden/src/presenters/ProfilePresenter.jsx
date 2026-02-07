@@ -9,7 +9,7 @@ const ProfilePresenter = {
     return {
       username: "",
       authPromiseState: {},
-      isSignedUp: false
+      isSignedUp: false,
     };
   },
 
@@ -47,9 +47,10 @@ const ProfilePresenter = {
       <ProfileView
         username={store.user?.name ?? ""}
         onSignIn={onSignInACB.bind(this)}
-        onSignOut={onSignOutACB.bind(this)} />
+        onSignOut={onSignOutACB.bind(this)}
+      />
     );
-  }
+  },
 };
 
 export default ProfilePresenter;

@@ -23,8 +23,9 @@ export default function ProfileView(props) {
         <input id="username" type="text" placeholder="Enter username ..." value={props.username} onKeydown={signOnKeyACB} disabled={props.username !== ""} />
 
         {props.username
-            ? <button onClick={signOutACB}>Sign out</button>
-            : <button onClick={signInACB}>Sign in</button>}
+          ? <button onClick={signOutACB}>Sign out</button>
+          : <button onClick={signInACB}>Sign in</button>
+        }
       </div>
     </div>
   );
