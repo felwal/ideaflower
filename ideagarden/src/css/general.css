@@ -45,13 +45,13 @@ button {
 }
 
 input:focus {
-  outline-color: var(--color-hover-variant);
+  outline-color: var(--color-hover-button);
 }
 
 button:enabled:hover {
   color: var(--color-text-primary-inverted);
-  background-color: var(--color-hover-variant);
-  outline-color: var(--color-hover-variant);
+  background-color: var(--color-hover-button);
+  outline-color: var(--color-hover-button);
 }
 
 /* || TEXT */

@@ -16,7 +16,7 @@
 .idea-growth {
   padding: var(--spacing-medium);
   border-radius: var(--corner-radius-large);
-  background-color: rgb(from var(--color-hover) r g b / 0.98);
+  background-color: var(--color-hover-growth);
 }
 
 .idea-growth__bg {

@@ -70,7 +70,7 @@ export default function PlantView(props) {
     const sPot = sPotStart + (sPotEnd - sPotStart) * props.idea.potSaturation;
     const lPot = lPotStart + (lPotEnd - lPotStart) * props.idea.potSaturation;
 
-    const potColor = "hsl(from var(--color-pot) h " + sPot + " " + lPot + ")";
+    const potColor = "hsl(var(--hue-pot) " + sPot + " " + lPot + ")";
 
     const potShapes = [
       <>
@@ -132,8 +132,8 @@ export function getLeafColors(idea) {
     const lLeaf = lLeafStart + (lLeafEnd - lLeafStart) * idea.leafLightness;
     const lLeafDk = lLeafStartDk + (lLeafEndDk - lLeafStartDk) * idea.leafLightness;
 
-    const leafColor = "hsl(from var(--color-primary-light) " + hLeaf + " s " + lLeaf + ")";
-    const leafColorDk = "hsl(from var(--color-primary-dark) " + hLeafDk + " s " + lLeafDk + ")";
+    const leafColor = "hsl(" + hLeaf + " var(--saturation-leaf) " + lLeaf + ")";
+    const leafColorDk = "hsl(" + hLeafDk + " var(--saturation-leaf) " + lLeafDk + ")";
 
     return {leafColor, leafColorDk};
 }
