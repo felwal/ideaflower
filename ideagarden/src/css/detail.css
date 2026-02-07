@@ -6,7 +6,6 @@
   margin-top: var(--spacing-small);
 
   position: relative;
-  z-index: -1;
 }
 
 .plant--detail {
@@ -20,15 +19,15 @@
 }
 
 .idea-growth__bg {
+  position: relative;
   padding: var(--width-border-wide);
   padding-bottom: 0;
   /*padding-bottom: var(--spacing-small);*/
   border-radius: calc(var(--corner-radius-large) + var(--width-border-wide));
+  z-index: 1;
 }
 
 .idea-growth__bg__hang {
-  position: relative;
-  z-index: -1;
   margin: calc(-1 * var(--width-border));
   padding: var(--width-border);
 }
