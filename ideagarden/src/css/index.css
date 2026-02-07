@@ -40,6 +40,7 @@
   --spacing-edge: var(--spacing-small);
 
   --size-logo-header: 2.1rem;
+  --size-unread-dot: 1rem;
   --width-border: 0.1rem;
   --width-border-wide: 0.2rem;
   --width-column: 46rem;

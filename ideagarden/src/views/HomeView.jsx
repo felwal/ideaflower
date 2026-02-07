@@ -32,6 +32,8 @@ export default function HomeView(props) {
   function renderIdea(idea) {
     return (
       <RouterLink to={"/idea/" + idea.epoch} class="item">
+        {idea.result && !idea.read ? <div class="item__unread"></div> : null}
+
         <PlantView
           idea={idea}
           waterProgress={props.waterProgress}

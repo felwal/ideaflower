@@ -17,7 +17,7 @@
 }
 
 .item {
-  /*outline: var(--width-border) solid var(--color-border);*/
+  position: relative;
   padding: var(--spacing-small);
   border-radius: var(--corner-radius-medium);
   transition: var(--transition);
@@ -25,6 +25,15 @@
 
 .item:hover {
   background-color: var(--color-hover);
+}
+
+.item__unread {
+  position: absolute;
+  right: var(--spacing-small);
+  background-color: var(--color-pot);
+  height: var(--size-unread-dot);
+  aspect-ratio: 1;
+  border-radius: 50%;
 }
 
 .item > :first-child {
