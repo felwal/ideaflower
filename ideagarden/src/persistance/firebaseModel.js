@@ -66,7 +66,7 @@ function loadFirebaseData(loadedACB) {
 
   function commonDataLoadedFromFirebaseACB(data) {
     if (data.exists()) {
-      useFlowStore().waterProgress = data.val().waterProgress || 0;
+      useFlowStore().waterProgress = data.val() || 0;
     }
 
     // load user data

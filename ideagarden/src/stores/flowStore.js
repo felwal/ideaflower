@@ -1,4 +1,7 @@
+import { chatResponseMock, evolveIdea } from "@/network/chatService";
+import { getChatKey } from "@/persistance/firebaseModel";
 import { randomFloatRounded } from "@/utils/mathUtils";
+import { resolvePromiseMock } from "@/utils/resolvePromise";
 import { defineStore } from "pinia";
 
 const useFlowStore = defineStore("flow", {
@@ -7,12 +10,14 @@ const useFlowStore = defineStore("flow", {
     waterProgress: 0,
     isRequesting: false,
     ideas: {},
+    chatPromiseState: {},
   }),
 
   getters: {
     plantFullyWatered: (state) => state.waterProgress >= 1,
     ungrownIdeas: (state) => Object.values(state.ideas).filter(idea => !idea.result),
     firstUngrownIdea: (state) => state.ungrownIdeas[0],
+    canGrowIdea: (state) => state.firstUngrownIdea && state.plantFullyWatered && !state.isRequesting,
   },
 
   actions: {
@@ -75,6 +80,29 @@ const useFlowStore = defineStore("flow", {
     getIdea(epoch) {
       return epoch in this.ideas ? this.ideas[epoch] : null;
     },
+
+    manageAPICall() {
+      function processAPIResultACB() {
+        console.log("api call completed");
+
+        if (this.chatPromiseState.error) {
+          console.error("api error:", this.chatPromiseState.error);
+        }
+        else if (this.chatPromiseState.data) {
+          //console.log("api response data:", this.chatPromiseState.data);
+          this.growIdea(this.chatPromiseState.data.output_text);
+        }
+
+        this.isRequesting = false;
+      }
+
+      this.useWater();
+
+      getChatKey(key =>
+        //resolvePromise(evolveIdea(key, this.firstUngrownIdea.prompt), this.chatPromiseState, processAPIResultACB.bind(this))
+        resolvePromiseMock(chatResponseMock, this.chatPromiseState, processAPIResultACB.bind(this))
+      );
+    }
   },
 });
 

@@ -16,6 +16,10 @@ const IdeaPresenter = {
       idea.read = true;
     }
 
+    if (useFlowStore().canGrowIdea) {
+      useFlowStore().manageAPICall();
+    }
+
     return (
       <IdeaView
         idea={idea}
