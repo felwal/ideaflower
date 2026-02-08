@@ -1,11 +1,11 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import HomePresenter from "@/presenters/HomePresenter";
 import ProfilePresenter from "@/presenters/ProfilePresenter";
 import IdeaPresenter from "@/presenters/IdeaPresenter";
 import ErrorPresenter from "@/presenters/ErrorPresenter";
 
 const router = createRouter({
-  history: createWebHashHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
