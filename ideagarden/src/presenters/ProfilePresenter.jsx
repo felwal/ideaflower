@@ -9,34 +9,52 @@ const ProfilePresenter = {
     return {
       username: "",
       authPromiseState: {},
-      isSignedUp: false,
+      invalidLogin: false,
     };
   },
 
   render() {
     const store = useFlowStore();
 
-    function authResultACB() {
+    function signUpResultACB() {
       if (this.authPromiseState.error) {
         if (this.authPromiseState.error.code === "auth/email-already-in-use") {
-          console.log("user already exists, signing in instead");
-          this.isSignedUp = true;
-          resolvePromise(signInUser(this.username), this.authPromiseState, authResultACB.bind(this));
+          console.log("user already exists");
           return;
         }
 
         console.error(this.authPromiseState.error.code);
       }
 
-      if (this.authPromiseState.data !== null && !this.isSignedUp) {
+      if (this.authPromiseState.data !== null) {
+        this.invalidLogin = false;
         createUserData(store.user);
         //this.$router.push({name: "home"});
       }
     }
 
+    function signInResultACB() {
+      if (this.authPromiseState.error) {
+        if (this.authPromiseState.error.code === "auth/invalid-credential") {
+          console.log("user doesn't exist");
+
+          this.invalidLogin = true;
+          // NOTE: only sign up new users in dev
+          //resolvePromise(signUpUser(this.username), this.authPromiseState, signUpResultACB.bind(this));
+
+          return;
+        }
+
+        console.error(this.authPromiseState.error.code);
+      }
+      else {
+        this.invalidLogin = false;
+      }
+    }
+
     function onSignInACB(username) {
       this.username = username;
-      resolvePromise(signUpUser(username), this.authPromiseState, authResultACB.bind(this));
+      resolvePromise(signInUser(username), this.authPromiseState, signInResultACB.bind(this));
     }
 
     function onSignOutACB() {
@@ -48,6 +66,7 @@ const ProfilePresenter = {
         username={store.user?.name ?? ""}
         onSignIn={onSignInACB.bind(this)}
         onSignOut={onSignOutACB.bind(this)}
+        invalidLogin={this.invalidLogin}
       />
     );
   },

@@ -110,11 +110,10 @@ export default function PlantView(props) {
 
   return (
     <div class="plant">
-      {props.showLeaves !== false || !props.idea.result ?
+      {(props.showLeaves !== false || !props.idea.result) &&
         <div class="plant__leaves">
           {props.idea.result ? renderLeaves() : renderSeed()}
         </div>
-        : null
       }
       {renderPot()}
     </div>

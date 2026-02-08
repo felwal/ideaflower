@@ -66,6 +66,14 @@ p {
   font-size: var(--font-size-caption);
 }
 
+.caption--success {
+  color: var(--color-success);
+}
+
+.caption--error {
+  color: var(--color-error);
+}
+
 p, li {
   font-size: var(--font-size-body);
   color: var(--color-text-primary);

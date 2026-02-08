@@ -27,6 +27,11 @@ export default function ProfileView(props) {
           : <button onClick={signInACB}>Sign in</button>
         }
       </div>
+
+      {props.invalidLogin
+        ? <p class="caption caption--error">Invalid username</p>
+        : props.username && <p class="caption caption--success">{"Signed in as " + props.username}</p>
+      }
     </div>
   );
 }
