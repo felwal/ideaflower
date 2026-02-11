@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { nextTick } from "vue";
 import HomePresenter from "@/presenters/HomePresenter";
 import ProfilePresenter from "@/presenters/ProfilePresenter";
 import IdeaPresenter from "@/presenters/IdeaPresenter";
@@ -39,6 +40,14 @@ const router = createRouter({
       return {top: 0};
     }
   },
-})
+});
+
+router.afterEach((to, from) => {
+  nextTick(() => {
+    // ensure that the title always works
+    // even when refreshing pages other than home
+    document.title = "Ideaflower";
+  });
+});
 
 export default router;

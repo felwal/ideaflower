@@ -1,7 +1,7 @@
 import { chatResponseMock, evolveIdea } from "@/network/chatService";
 import { getChatKey } from "@/persistance/firebaseModel";
 import { randomFloatRounded } from "@/utils/mathUtils";
-import { resolvePromiseMock } from "@/utils/resolvePromise";
+import { resolvePromise, resolvePromiseMock } from "@/utils/resolvePromise";
 import { defineStore } from "pinia";
 
 const useFlowStore = defineStore("flow", {
