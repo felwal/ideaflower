@@ -1,3 +1,4 @@
+import { randomFloatRounded } from "@/utils/mathUtils";
 import OpenAI from "openai";
 
 export function evolveIdea(key, idea) {
@@ -14,7 +15,12 @@ export function evolveIdea(key, idea) {
     + "Let time elapsed since planting affect the depth of mutation. Let time of day affect tone and energy.\n\n";
 
   const meta = "Use concise, vivid phrasing. Avoid clichés, obvious 'improvements', restatement, or long explanations. Respond in one paragraph. "
-    + "Provide a 1–3 word summarising title within [brackets] at the start. End with one good question to help the user reflect on the idea and be more creative.\n\n";
+    + "End with one good question to help the user reflect on the idea and be more creative. Provide a 1–3 word summarising title.\n\n";
+
+  const params = "Rate the idea's morphological character for: "
+    + "energy_orientation (0=inward, 1=outward), density (0=light/simple, 1=layered/complex), structural_complexity (0=cohesive/unified, 1=hybridized/fragmented), sharpness (0=gentle, 1=disruptive). "
+    + "Do not explain the values. At least one dimension should be clearly dominant (below 0.2 or above 0.8), unless the idea is genuinely balanced. "
+    + "The dimensions are independent; do not assign similar values unless conceptually justified. Do not hesitate to exaggerate the morphological character of the idea."
 
   const prompt = "Seed idea: '" + idea.prompt + "'\n\n" + getCareShapePrompt(idea);
 
@@ -22,6 +28,14 @@ export function evolveIdea(key, idea) {
     model: "gpt-4.1-2025-04-14",
     instructions: identity + task + care + meta + params,
     input: prompt,
+    text: {
+      format: {
+        name: "idea_response",
+        type: "json_schema",
+        strict: true,
+        schema: schema
+      }
+    }
   });
 
   return promise;
@@ -55,8 +69,56 @@ export function getCareShapePrompt(idea) {
   return carePrompt;
 }
 
+const schema = {
+  type: "object",
+  properties: {
+    text: {
+      type: "string"
+    },
+    title: {
+      type: "string"
+    },
+    energy_orientation: {
+      type: "number",
+      minimum: 0,
+      maximum: 1
+    },
+    density: {
+      type: "number",
+      minimum: 0,
+      maximum: 1
+    },
+    structural_complexity: {
+      type: "number",
+      minimum: 0,
+      maximum: 1
+    },
+    sharpness: {
+      type: "number",
+      minimum: 0,
+      maximum: 1
+    }
+  },
+  required: [
+    "text",
+    "title",
+    "energy_orientation",
+    "density",
+    "structural_complexity",
+    "sharpness"
+  ],
+  additionalProperties: false
+}
+
 const chatResponseMock = {
-  output_text: "[Lorem Ipsum] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc erat massa, imperdiet a tincidunt bibendum, tempor nec ipsum. Aliquam eu felis euismod, consectetur ex quis, pellentesque sem. Pellentesque imperdiet ut nisi ac pharetra. Maecenas ornare."
+  output_text: {
+    title: "Lorem Ipsum",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc erat massa, imperdiet a tincidunt bibendum, tempor nec ipsum. Aliquam eu felis euismod, consectetur ex quis, pellentesque sem. Pellentesque imperdiet ut nisi ac pharetra. Maecenas ornare.",
+    energy_orientation: randomFloatRounded(),
+    density: randomFloatRounded(),
+    structural_complexity: randomFloatRounded(),
+    sharpness: randomFloatRounded()
+  }
 }
 
 export { chatResponseMock };

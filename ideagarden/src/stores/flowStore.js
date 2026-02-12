@@ -62,8 +62,10 @@ const useFlowStore = defineStore("flow", {
         read: false,
         potShape: randomFloatRounded(),
         potSaturation: randomFloatRounded(),
-        leafHue: randomFloatRounded(),
-        leafLightness: randomFloatRounded(),
+        leafHue: null,
+        leafLightness: null,
+        leafEdges: null,
+        leafRoundness: null,
         leafPath: null,
         epoch: Date.now()
       };
@@ -73,8 +75,15 @@ const useFlowStore = defineStore("flow", {
     },
 
     growIdea(result) {
-      this.firstUngrownIdea.name = result.substring(1, result.indexOf("]"));
-      this.firstUngrownIdea.result = result.substring(result.indexOf("]") + 2).trim();
+      //console.log(result);
+      const idea = this.firstUngrownIdea;
+
+      idea.name = result.title;
+      idea.result = result.text;
+      idea.leafHue = 1 - result.energy_orientation;
+      idea.leafLightness = 1 - result.density;
+      idea.leafEdges = result.structural_complexity;
+      idea.leafRoundness = 1 - result.sharpness;
     },
 
     getIdea(epoch) {
@@ -89,8 +98,7 @@ const useFlowStore = defineStore("flow", {
           console.error("api error:", this.chatPromiseState.error);
         }
         else if (this.chatPromiseState.data) {
-          //console.log("api response data:", this.chatPromiseState.data);
-          this.growIdea(this.chatPromiseState.data.output_text);
+          this.growIdea(JSON.parse(this.chatPromiseState.data.output_text));
         }
 
         this.isRequesting = false;

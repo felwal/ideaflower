@@ -7,7 +7,15 @@ export default function PlantView(props) {
     const paintId = "gradient_leaf_" + props.idea.epoch;
 
     if (!props.idea.leafPath) {
-      const {path} = blobshape({size: 100, growth: randomInt(5, 7), edges: randomInt(9, 15)});
+      const growthMin = 5;
+      const growthMax = 7;
+      const growth = growthMin + Math.round((growthMax - growthMin) * props.idea.leafRoundness);
+
+      const edgesMin = 9;
+      const edgesMax = 15;
+      const edges = edgesMin + Math.round((edgesMax - edgesMin) * props.idea.leafEdges);
+
+      const {path} = blobshape({size: 100, growth: growth, edges: edges});
       props.idea.leafPath = path;
     }
 
