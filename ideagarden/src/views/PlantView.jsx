@@ -7,11 +7,11 @@ export default function PlantView(props) {
     const paintId = "gradient_leaf_" + props.idea.epoch;
 
     if (!props.idea.leafPath) {
-      const growthMin = 5;
+      const growthMin = 4;
       const growthMax = 7;
       const growth = growthMin + Math.round((growthMax - growthMin) * props.idea.leafRoundness);
 
-      const edgesMin = 9;
+      const edgesMin = 8;
       const edgesMax = 15;
       const edges = edgesMin + Math.round((edgesMax - edgesMin) * props.idea.leafEdges);
 
@@ -129,24 +129,24 @@ export default function PlantView(props) {
 }
 
 export function getLeafColors(idea) {
-  const hLeafStart = 53;
-    const hLeafStartDk = 90;
-    const hLeafEnd = 158;
-    const hLeafEndDk = 195;
+  const hLeafStart = 48;
+  const hLeafStartDk = 85;
+  const hLeafEnd = 163;
+  const hLeafEndDk = 200;
 
-    const hLeaf = hLeafStart + (hLeafEnd - hLeafStart) * idea.leafHue;
-    const hLeafDk = hLeafStartDk + (hLeafEndDk - hLeafStartDk) * idea.leafHue;
+  const hLeaf = hLeafStart + (hLeafEnd - hLeafStart) * idea.leafHue;
+  const hLeafDk = hLeafStartDk + (hLeafEndDk - hLeafStartDk) * idea.leafHue;
 
-    const lLeafStart = 37;
-    const lLeafStartDk = 20;
-    const lLeafEnd = 47;
-    const lLeafEndDk = 30;
+  const lLeafStart = 32;
+  const lLeafStartDk = 25;
+  const lLeafEnd = 47;
+  const lLeafEndDk = 30;
 
-    const lLeaf = lLeafStart + (lLeafEnd - lLeafStart) * idea.leafLightness;
-    const lLeafDk = lLeafStartDk + (lLeafEndDk - lLeafStartDk) * idea.leafLightness;
+  const lLeaf = lLeafStart + (lLeafEnd - lLeafStart) * idea.leafLightness;
+  const lLeafDk = lLeafStartDk + (lLeafEndDk - lLeafStartDk) * idea.leafLightness;
 
-    const leafColor = "hsl(" + hLeaf + ", var(--saturation-leaf), " + lLeaf + "%)";
-    const leafColorDk = "hsl(" + hLeafDk + ", var(--saturation-leaf), " + lLeafDk + "%)";
+  const leafColor = "hsl(" + hLeaf + ", var(--saturation-leaf), " + lLeaf + "%)";
+  const leafColorDk = "hsl(" + hLeafDk + ", var(--saturation-leaf), " + lLeafDk + "%)";
 
-    return {leafColor, leafColorDk};
+  return {leafColor, leafColorDk};
 }
