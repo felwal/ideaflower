@@ -4,14 +4,24 @@ export function evolveIdea(key, idea) {
   const openai = new OpenAI({apiKey: key, dangerouslyAllowBrowser: true}); // TODO: set to false for production
   console.log("calling api ...");
 
-  const task = "You are a plant that helps ideas grow. As a Creativity Support Tool, your task is to **grow or build upon user's idea slightly**. Focus on evolving the **functionality** or **essence** of the idea in an **unexpected** direction. ";
-  const care = "Take the user's plant care into consideration, interpreting freely how it might influence the growth: " + getCareShapePrompt(idea);
-  const meta = "Respond in similar writing style and tone as the user. Be specific; do not just add adjectives; do not just rephrase the idea; do not respond as in a conversation – only respond with the evolved idea. Provide a 1–3 word summarising title within [brackets] at the start. End with one good question to help the user reflect on their idea and be more creative. Keep it under 30 words.";
+  const identity = "You are a co-creative intelligence that grows ideas rather than generating them. "
+    + "Think slowly and subtly, like something quietly processing in the background. Do not explicitly reference environmental variables.\n\n";
+
+  const task = "Transform the seed idea in a single, striking way. Prioritize bold conceptual shifts over incremental changes. "
+    + "Tilt perspective, reveal an unexpected implication, or combine with an unexpected domain. Growth should be grounded and practical but imaginative. You should surprise and delight the user.\n\n";
+
+  const care = "Environmental variables should metaphorically and without explicit mention subtly influence the character of the idea's growth. "
+    + "Let time elapsed since planting affect the depth of mutation. Let time of day affect tone and energy.\n\n";
+
+  const meta = "Use concise, vivid phrasing. Avoid clichés, obvious 'improvements', restatement, or long explanations. Respond in one paragraph. "
+    + "Provide a 1–3 word summarising title within [brackets] at the start. End with one good question to help the user reflect on the idea and be more creative.\n\n";
+
+  const prompt = "Seed idea: '" + idea.prompt + "'\n\n" + getCareShapePrompt(idea);
 
   const promise = openai.responses.create({
-    model: "gpt-4.1-nano-2025-04-14",
-    instructions: task + care + meta,
-    input: idea.prompt,
+    model: "gpt-4.1-2025-04-14",
+    instructions: identity + task + care + meta + params,
+    input: prompt,
   });
 
   return promise;
@@ -24,21 +34,24 @@ export function getCareShapePrompt(idea) {
   const daysPlantedToGrown = epochPlantedToGrown / 86_400_000;
   const hoursPlantedToGrown = (daysPlantedToGrown % 1) * 24;
   const minutesPlantedToGrown = (hoursPlantedToGrown % 1) * 60;
+  const secondsPlantedToGrown = (minutesPlantedToGrown % 1) * 60;
   let timePlantedToGrown = "";
 
-  if (daysPlantedToGrown >= 1) timePlantedToGrown += Math.floor(daysPlantedToGrown) + " days, "
-  if (hoursPlantedToGrown >= 1) timePlantedToGrown += Math.floor(hoursPlantedToGrown) + " hours, "
-  timePlantedToGrown += Math.floor(minutesPlantedToGrown) + " minutes"
+  if (daysPlantedToGrown >= 1) timePlantedToGrown = Math.floor(daysPlantedToGrown) + " days"
+  else if (hoursPlantedToGrown >= 1) timePlantedToGrown = Math.floor(hoursPlantedToGrown) + " hours"
+  else if (minutesPlantedToGrown >= 1) timePlantedToGrown = Math.floor(minutesPlantedToGrown) + " minutes"
+  else timePlantedToGrown = Math.floor(secondsPlantedToGrown) + " seconds"
 
   const hour = now.getHours();
   const periodOfDay =
-    hour >= 5 && hour < 9 ? "the morning" :
-    hour >= 9 && hour < 15 ? "daytime" :
-    hour >= 15 && hour < 19 ? "the evening" :
-    "nighttime"
+    hour >= 5 && hour < 10 ? "morning" :
+    hour >= 10 && hour < 16 ? "daytime" :
+    hour >= 16 && hour < 20 ? "evening" :
+    "night"
 
-  let carePrompt = "This particular idea has been waiting as a seed for " + timePlantedToGrown + "; ";
-  carePrompt += "you are now growing it during " + periodOfDay + ". ";
+  let carePrompt = "Environmental variables:\n";
+  carePrompt += "- Time elapsed since planting: " + timePlantedToGrown + "\n";
+  carePrompt += "- Time of day: " + periodOfDay;
   return carePrompt;
 }
 
