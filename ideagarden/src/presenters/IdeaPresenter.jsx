@@ -1,4 +1,5 @@
 import useFlowStore from "@/stores/flowStore";
+import { isPromiseLoading } from "@/utils/resolvePromise";
 import IdeaView from "@/views/IdeaView";
 
 const IdeaPresenter = {
@@ -22,6 +23,7 @@ const IdeaPresenter = {
         idea={idea}
         isPlantBeingWatered={idea.epoch === useFlowStore().firstUngrownIdea?.epoch}
         waterProgress={useFlowStore().waterProgress}
+        isLoading={isPromiseLoading(useFlowStore().chatPromiseState)}
       />
     );
   }

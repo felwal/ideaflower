@@ -66,7 +66,7 @@ export default function IdeaView(props) {
           idea={props.idea}
           showLeaves={false}
           showWaterProgress={props.isPlantBeingWatered}
-          waterProgress={props.waterProgress}
+          waterProgress={props.isLoading ? 1 : props.waterProgress}
         />
       </div>
     </div>
