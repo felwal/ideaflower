@@ -12,15 +12,15 @@ export function evolveIdea(key, idea) {
     + "Tilt perspective, reveal an unexpected implication, or combine with an unexpected domain. Growth should be grounded and practical but imaginative. You should surprise and delight the user.\n\n";
 
   const care = "Environmental variables should metaphorically and without explicit mention subtly influence the character of the idea's growth. "
-    + "Let time elapsed since planting affect the depth of mutation. Let time of day affect tone and energy.\n\n";
+    + "Let time elapsed since planting affect the depth of mutation. Let the hour of day affect tone and energy.\n\n";
 
   const meta = "Use concise, vivid phrasing. Avoid clichés, obvious 'improvements', restatement, or long explanations. Respond in one paragraph. "
     + "End with one good question to help the user reflect on the idea and be more creative. Provide a 1–3 word summarising title.\n\n";
 
-  const params = "Rate the idea's morphological character for: "
-    + "energy_orientation (0=inward, 1=outward), density (0=light/simple, 1=layered/complex), structural_complexity (0=cohesive/unified, 1=hybridized/fragmented), sharpness (0=gentle, 1=disruptive). "
-    + "Do not explain the values. At least one dimension should be clearly dominant (below 0.2 or above 0.8), unless the idea is genuinely balanced. "
-    + "The dimensions are independent; do not assign similar values unless conceptually justified. Do not hesitate to exaggerate the morphological character of the idea."
+  const params = "Rate the idea's morphological character, rounded to two decimals, for: "
+    + "energy_orientation (0=inward/private, 1=outward/public), density (0=light/simple, 1=layered/complex), structural_complexity (0=cohesive/unified, 1=hybridized/fragmented), sharpness (0=gentle, 1=disruptive). "
+    + "Do not explain the values. At least one dimension should be clearly dominant (below 0.20 or above 0.80), unless the idea is genuinely balanced. "
+    + "The dimensions are independent; do not assign similar values unless conceptually justified. Do not hesitate to exaggerate the morphological character of the idea. Take into account both seed idea and grown idea."
 
   const prompt = "Seed idea: '" + idea.prompt + "'\n\n" + getCareShapePrompt(idea);
 
@@ -51,21 +51,16 @@ export function getCareShapePrompt(idea) {
   const secondsPlantedToGrown = (minutesPlantedToGrown % 1) * 60;
   let timePlantedToGrown = "";
 
-  if (daysPlantedToGrown >= 1) timePlantedToGrown = Math.floor(daysPlantedToGrown) + " days"
-  else if (hoursPlantedToGrown >= 1) timePlantedToGrown = Math.floor(hoursPlantedToGrown) + " hours"
-  else if (minutesPlantedToGrown >= 1) timePlantedToGrown = Math.floor(minutesPlantedToGrown) + " minutes"
-  else timePlantedToGrown = Math.floor(secondsPlantedToGrown) + " seconds"
+  if (daysPlantedToGrown >= 1) timePlantedToGrown = Math.round(daysPlantedToGrown) + " days"
+  else if (hoursPlantedToGrown >= 1) timePlantedToGrown = Math.round(hoursPlantedToGrown) + " hours"
+  else if (minutesPlantedToGrown >= 1) timePlantedToGrown = Math.round(minutesPlantedToGrown) + " minutes"
+  else timePlantedToGrown = Math.round(secondsPlantedToGrown) + " seconds"
 
   const hour = now.getHours();
-  const periodOfDay =
-    hour >= 5 && hour < 10 ? "morning" :
-    hour >= 10 && hour < 16 ? "daytime" :
-    hour >= 16 && hour < 20 ? "evening" :
-    "night"
 
   let carePrompt = "Environmental variables:\n";
   carePrompt += "- Time elapsed since planting: " + timePlantedToGrown + "\n";
-  carePrompt += "- Time of day: " + periodOfDay;
+  carePrompt += "- Hour of day: " + hour;
   return carePrompt;
 }
 

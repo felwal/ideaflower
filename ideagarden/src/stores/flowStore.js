@@ -1,6 +1,6 @@
 import { chatResponseMock, evolveIdea, getCareShapePrompt } from "@/network/chatService";
 import { getChatKey } from "@/persistance/firebaseModel";
-import { randomFloatRounded } from "@/utils/mathUtils";
+import { randomFloatRounded, roundFloat } from "@/utils/mathUtils";
 import { resolvePromise, resolvePromiseMock } from "@/utils/resolvePromise";
 import { defineStore } from "pinia";
 
@@ -80,10 +80,10 @@ const useFlowStore = defineStore("flow", {
 
       idea.name = result.title;
       idea.result = result.text;
-      idea.leafHue = 1 - result.energy_orientation;
-      idea.leafLightness = 1 - result.density;
-      idea.leafEdges = result.structural_complexity;
-      idea.leafRoundness = 1 - result.sharpness;
+      idea.leafHue = roundFloat(1 - result.energy_orientation);
+      idea.leafLightness = roundFloat(1 - result.density);
+      idea.leafEdges = roundFloat(result.structural_complexity);
+      idea.leafRoundness = roundFloat(1 - result.sharpness);
     },
 
     getIdea(epoch) {

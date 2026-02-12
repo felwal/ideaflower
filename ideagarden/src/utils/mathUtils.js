@@ -5,3 +5,7 @@ export function randomInt(min, max) {
 export function randomFloatRounded() {
   return parseFloat(Math.random().toFixed(2));
 }
+
+export function roundFloat(val) {
+  return parseFloat(val.toFixed(2));
+}
