@@ -21,7 +21,7 @@ Web:
 
 - [Vue](https://vuejs.org/), [Vite](https://vite.dev/), [Vue Router](https://router.vuejs.org/), [Pinia](https://pinia.vuejs.org/)
 - [Firebase](https://firebase.google.com/) database and hosting
-- [OpenAI](https://platform.openai.com/docs/overview), [GPT-4.1 nano](https://platform.openai.com/docs/models/gpt-4.1-nano)
+- [OpenAI](https://developers.openai.com/api/docs), [GPT-4.1](https://developers.openai.com/api/docs/models/gpt-4.1)
 - [Blobshape](https://github.com/lokesh-coder/blobshape) shape generator
 - [Lucide](https://lucide.dev/) icons
 
