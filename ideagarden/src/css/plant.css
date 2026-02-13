@@ -28,6 +28,6 @@
 }
 
 .plant__pot__back {
-  margin-bottom: -1px; /* to avoid occasional 1px gap. TODO: find a better way */
+  margin-bottom: -1px; /* to avoid occasional 1px gap */
   z-index: 0;
 }

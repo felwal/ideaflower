@@ -2,7 +2,7 @@ import { randomFloatRounded } from "@/utils/mathUtils";
 import OpenAI from "openai";
 
 export function evolveIdea(key, idea) {
-  const openai = new OpenAI({apiKey: key, dangerouslyAllowBrowser: true}); // TODO: set to false for production
+  const openai = new OpenAI({apiKey: key, dangerouslyAllowBrowser: true});
   console.log("calling api ...");
 
   const identity = "You are a co-creative intelligence that grows ideas rather than generating them. "

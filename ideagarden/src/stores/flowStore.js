@@ -75,7 +75,6 @@ const useFlowStore = defineStore("flow", {
     },
 
     growIdea(result) {
-      //console.log(result);
       const idea = this.firstUngrownIdea;
 
       idea.name = result.title;

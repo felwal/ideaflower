@@ -34,7 +34,6 @@ const ProfilePresenter = {
       if (this.authPromiseState.data !== null) {
         this.invalidLogin = false;
         createUserData(store.user);
-        //this.$router.push({name: "home"});
       }
     }
 

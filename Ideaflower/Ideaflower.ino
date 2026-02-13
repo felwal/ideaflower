@@ -52,8 +52,6 @@ void loop() {
     float volumeProgressInFirebase = getFirebaseFloat("flowModel/waterProgress");
 
     if (volumeProgressInFirebase != volumeProgress) {
-      //Serial.println("detected water reset in Firebase: " + String(volumeProgressInFirebase) + " vs " + String(volumeProgress));
-
       volumeProgressStart = volumeProgressInFirebase;
       volumeProgress = volumeProgressInFirebase;
 
@@ -81,7 +79,7 @@ void connectWifi() {
     delay(500);
   }
 
-  Serial.println(" done");
+  Serial.println(" ✓");
 }
 
 void connectFirebase() {
@@ -96,7 +94,6 @@ void writeFirebase() {
   if (flowDetected && idleDuration >= AWAIT_IDLE) {
     // only send to Firebase when watering has stopped
     Serial.println();
-    //Serial.print("idled for " + String(idleDuration) + "ms; ");
 
     flowDetected = false;
     firebaseSynced = true;
@@ -105,7 +102,7 @@ void writeFirebase() {
 }
 
 float getFirebaseFloat(String key) {
-  Serial.print("get ↓ " + key + " ... ");
+  Serial.print("get " + key + " ... ");
 
   float retrievedFloat;
   int responseCode = firebase.getFloat(key, retrievedFloat);
@@ -116,7 +113,7 @@ float getFirebaseFloat(String key) {
 }
 
 void setFirebaseFloat(String key, float val) {
-  Serial.print("set ↑ " + key + " ... ");
+  Serial.print("set " + key + " ... ");
 
   int responseCode = firebase.setFloat(key, val);
   handleFirebaseError(responseCode);
