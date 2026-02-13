@@ -13,6 +13,7 @@
     "lint": "eslint . --fix --cache"
   },
   "dependencies": {
+    "@vueuse/head": "^2.0.0",
     "blobshape": "^1.0.0",
     "firebase": "^12.6.0",
     "lucide-vue-next": "^0.555.0",
