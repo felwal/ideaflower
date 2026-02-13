@@ -1,11 +1,17 @@
 import useFlowStore from "@/stores/flowStore";
 import { isPromiseLoading } from "@/utils/resolvePromise";
 import IdeaView from "@/views/IdeaView";
+import { useHead } from "@vueuse/head";
+import { useRoute } from "vue-router";
 
 const IdeaPresenter = {
+  setup() {
+    const ideaName = useFlowStore().getIdea(useRoute().params.id)?.name;
+    useHead({title: (ideaName ? ideaName : "Ungrown idea") + " | Ideaflower"});
+  },
+
   render() {
-    const epoch = this.$route.params.id;
-    const idea = useFlowStore().getIdea(epoch);
+    const idea = useFlowStore().getIdea(this.$route.params.id);
 
     // loading or invalid id
     if (!idea) return;

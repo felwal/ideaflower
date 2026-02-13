@@ -42,12 +42,4 @@ const router = createRouter({
   },
 });
 
-router.afterEach((to, from) => {
-  nextTick(() => {
-    // ensure that the title always works
-    // even when refreshing pages other than home
-    document.title = "Ideaflower";
-  });
-});
-
 export default router;

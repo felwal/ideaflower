@@ -1,8 +1,13 @@
 import useFlowStore from "@/stores/flowStore";
 import HomeView from "@/views/HomeView";
 import { isPromiseLoading } from "@/utils/resolvePromise";
+import { useHead } from "@vueuse/head";
 
 const HomePresenter = {
+  setup() {
+    useHead({title: "Ideaflower"})
+  },
+
   render() {
     function onSendPromptACB(prompt) {
       if (isPromiseLoading(useFlowStore().chatPromiseState)) {

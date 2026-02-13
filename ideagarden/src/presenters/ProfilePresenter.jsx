@@ -3,6 +3,7 @@ import { createUserData } from "@/persistance/firebaseModel.js";
 import useFlowStore from "@/stores/flowStore";
 import ProfileView from "@/views/ProfileView";
 import { resolvePromise } from "@/utils/resolvePromise";
+import { useHead } from "@vueuse/head";
 
 const ProfilePresenter = {
   data() {
@@ -11,6 +12,10 @@ const ProfilePresenter = {
       authPromiseState: {},
       invalidLogin: false,
     };
+  },
+
+  setup() {
+    useHead({title: "Profile | Ideaflower"})
   },
 
   render() {
