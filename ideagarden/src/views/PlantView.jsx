@@ -129,8 +129,8 @@ export default function PlantView(props) {
 }
 
 export function getLeafColors(idea) {
-  const hLeafStart = 48;
-  const hLeafStartDk = 85;
+  const hLeafStart = 53;
+  const hLeafStartDk = 90;
   const hLeafEnd = 163;
   const hLeafEndDk = 200;
 
