@@ -46,8 +46,6 @@ const useFlowStore = defineStore("flow", {
     useWater() {
       if (this.ungrownIdeas.length <= 1) this.waterProgress = -1;
       else this.waterProgress = Math.max(this.waterProgress - 1, 0);
-
-      this.isRequesting = true;
     },
 
     plantIdea(prompt) {
@@ -77,6 +75,11 @@ const useFlowStore = defineStore("flow", {
     growIdea(result) {
       const idea = this.firstUngrownIdea;
 
+      if (!idea) {
+        console.warn("no ungrown ideas to receive api result");
+        return;
+      }
+
       idea.name = result.title;
       idea.result = result.text;
       idea.leafHue = roundFloat(1 - result.energy_orientation);
@@ -90,6 +93,8 @@ const useFlowStore = defineStore("flow", {
     },
 
     manageAPICall() {
+      this.isRequesting = true;
+
       function processAPIResultACB() {
         console.log("api call completed");
 
