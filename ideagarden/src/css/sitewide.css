@@ -58,16 +58,11 @@ header {
   background-color: var(--color-hover);
 }
 
-.header__nav:last-child {
-  margin-right: calc(-1 * var(--spacing-tiny));
-}
-
 .header__logo {
   border-radius: var(--corner-radius-small);
   width: var(--size-logo-header);
   height: var(--size-logo-header);
   padding: var(--spacing-tiny);
-  margin-left: calc(-1 * var(--spacing-tiny));
   transition: var(--transition-fast);
 }
 
