@@ -19,7 +19,7 @@ Arduino:
 
 Web:
 
-- [Vue](https://vuejs.org/), [Vite](https://vite.dev/), [Vue Router](https://router.vuejs.org/), [Pinia](https://pinia.vuejs.org/)
+- [Vue](https://vuejs.org/), [Vite](https://vite.dev/), [Vue Router](https://router.vuejs.org/), [Pinia](https://pinia.vuejs.org/), [VueUse](https://vueuse.org/)
 - [Firebase](https://firebase.google.com/) database and hosting
 - [OpenAI](https://developers.openai.com/api/docs), [GPT-4.1](https://developers.openai.com/api/docs/models/gpt-4.1)
 - [Blobshape](https://github.com/lokesh-coder/blobshape) shape generator
@@ -31,6 +31,28 @@ Web:
 npm install
 firebase init
 npm run dev
+```
+
+### Make FirebaseArduino compatible with Arduino Uno WiFi Rev2
+
+In `Firebase.h`, add:
+
+```cpp
+#elif defined(ARDUINO_AVR_UNO_WIFI_REV2)
+    #include <WiFiNINA.h>
+```
+
+```cpp
+#elif defined(ARDUINO_AVR_UNO_WIFI_REV2)
+    WiFiSSLClient _httpsClient;
+```
+
+In `Firebase.cpp`, edit to:
+
+```cpp
+#if !(defined(ARDUINO_UNOWIFIR4) || defined(ARDUINO_AVR_UNO_WIFI_REV2))
+    _httpsClient.setInsecure();
+#endif
 ```
 
 ## Deploy
