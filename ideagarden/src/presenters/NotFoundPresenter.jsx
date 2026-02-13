@@ -1,7 +1,7 @@
-import ErrorView from "@/views/ErrorView";
+import NotFoundView from "@/views/NotFoundView";
 import { useHead } from "@vueuse/head";
 
-const ErrorPresenter = {
+const NotFoundPresenter = {
   setup() {
     useHead({title: "404 | Ideaflower"})
   },
@@ -11,8 +11,8 @@ const ErrorPresenter = {
       this.$router.push({name: "home"});
     }
 
-    return <ErrorView onReturnHome={returnHomeACB.bind(this)} />;
+    return <NotFoundView onReturnHome={returnHomeACB.bind(this)} />;
   },
 };
 
-export default ErrorPresenter;
+export default NotFoundPresenter;

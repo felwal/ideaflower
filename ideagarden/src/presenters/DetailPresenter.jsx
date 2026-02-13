@@ -1,10 +1,10 @@
 import useFlowStore from "@/stores/flowStore";
 import { isPromiseLoading } from "@/utils/resolvePromise";
-import IdeaView from "@/views/IdeaView";
+import DetailView from "@/views/DetailView";
 import { useHead } from "@vueuse/head";
 import { useRoute } from "vue-router";
 
-const IdeaPresenter = {
+const DetailPresenter = {
   setup() {
     const ideaName = useFlowStore().getIdea(useRoute().params.id)?.name;
     useHead({title: (ideaName ? ideaName : "Ungrown idea") + " | Ideaflower"});
@@ -25,7 +25,7 @@ const IdeaPresenter = {
     }
 
     return (
-      <IdeaView
+      <DetailView
         idea={idea}
         isPlantBeingWatered={idea.epoch === useFlowStore().firstUngrownIdea?.epoch}
         waterProgress={useFlowStore().waterProgress}
@@ -35,4 +35,4 @@ const IdeaPresenter = {
   }
 };
 
-export default IdeaPresenter;
+export default DetailPresenter;

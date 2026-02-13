@@ -2,8 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import { nextTick } from "vue";
 import HomePresenter from "@/presenters/HomePresenter";
 import ProfilePresenter from "@/presenters/ProfilePresenter";
-import IdeaPresenter from "@/presenters/IdeaPresenter";
-import ErrorPresenter from "@/presenters/ErrorPresenter";
+import DetailPresenter from "@/presenters/DetailPresenter";
+import NotFoundPresenter from "@/presenters/NotFoundPresenter";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,13 +21,13 @@ const router = createRouter({
     {
       path: "/idea/:id",
       name: "Idea",
-      component: IdeaPresenter,
+      component: DetailPresenter,
       props: true,
     },
     {
       path: "/:pathMatch(.*)*",
       name: "error",
-      component: ErrorPresenter,
+      component: NotFoundPresenter,
     },
   ],
 

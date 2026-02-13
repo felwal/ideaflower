@@ -1,4 +1,4 @@
-export default function ErrorView(props) {
+export default function NotFoundView(props) {
   function returnHomeClickACB() {
     props.onReturnHome();
   }

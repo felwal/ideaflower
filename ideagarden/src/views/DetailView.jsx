@@ -2,7 +2,7 @@ import "@/css/detail.css";
 import PlantView, { getLeafColors } from "./PlantView";
 import { formatDate } from "@/utils/dateUtils";
 
-export default function IdeaView(props) {
+export default function DetailView(props) {
   function renderResult() {
     const {leafColor, leafColorDk} = getLeafColors(props.idea);
     const style = "background-image: linear-gradient(to bottom left, " + leafColor +", " + leafColorDk + ")";
@@ -49,7 +49,7 @@ export default function IdeaView(props) {
   }
 
   return (
-    <div class="idea-view">
+    <div class="detail-view">
       <h1 class="idea__title">{props.idea.name || "Ungrown idea"}</h1>
       <div class="idea__prompt">
         <div class="idea__prompt__texts">
