@@ -1,0 +1,33 @@
+.plant {
+  width: 100%;
+  height: fit-content;
+  transition: var(--transition);
+}
+
+.plant__leaves {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  margin-bottom: -33%;
+  z-index: 1;
+}
+
+.plant__pot {
+  width: 100%;
+  height: fit-content;
+}
+
+.plant__pot__front, .plant__pot__back {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.plant__pot__front {
+  z-index: 2;
+}
+
+.plant__pot__back {
+  margin-bottom: -1px; /* to avoid occasional 1px gap. TODO: find a better way */
+  z-index: 0;
+}

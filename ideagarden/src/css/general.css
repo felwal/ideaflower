@@ -1,10 +1,4 @@
-body {
-  margin: 0;
-  font-family: var(--font);
-  line-height: 1.5;
-  font-weight: 450;
-  background-color: var(--color-bg);
-}
+/* INPUT, BUTTON */
 
 .input-btn-row {
   display: flex;
@@ -26,26 +20,22 @@ input, button {
   transition: var(--transition-fast);
 }
 
-button > svg {
-  transition: var(--transition-fast);
-}
-
-input::placeholder {
-  color: var(--color-text-secondary);
-}
-
 input:disabled, button:disabled {
   background-color: var(--color-hover);
   color: var(--color-text-secondary);
   outline: none;
 }
 
-button {
-  color: var(--color-text-primary);
+input::placeholder {
+  color: var(--color-text-secondary);
 }
 
 input:focus {
   outline-color: var(--color-hover-button);
+}
+
+button {
+  color: var(--color-text-primary);
 }
 
 button:enabled:hover {
@@ -54,11 +44,21 @@ button:enabled:hover {
   outline-color: var(--color-hover-button);
 }
 
+button > svg {
+  transition: var(--transition-fast);
+}
+
+
 /* || TEXT */
 
 p {
   margin-top: var(--spacing-p);
   margin-bottom: var(--spacing-p);
+}
+
+p, li {
+  font-size: var(--font-size-body);
+  color: var(--color-text-primary);
 }
 
 .caption {
@@ -72,11 +72,6 @@ p {
 
 .caption--error {
   color: var(--color-error);
-}
-
-p, li {
-  font-size: var(--font-size-body);
-  color: var(--color-text-primary);
 }
 
 h1, h2, h3, h4, h5, h6 {

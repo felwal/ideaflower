@@ -1,4 +1,5 @@
 import "@/css/home.css";
+import "@/css/plant.css";
 import { ArrowDownToDot } from 'lucide-vue-next';
 import PlantView from "./PlantView";
 import { formatDate } from "@/utils/dateUtils";

@@ -1,4 +1,5 @@
 import "@/css/detail.css";
+import "@/css/plant.css";
 import PlantView, { getLeafColors } from "./PlantView";
 import { formatDate } from "@/utils/dateUtils";
 

@@ -1,3 +1,5 @@
+/* COMPOSER */
+
 .composer {
   width: 100%;
   height: auto;
@@ -25,4 +27,63 @@
   background-color: var(--color-surface);
   border: none;
   outline: var(--outline);
+}
+
+
+/* STACK */
+
+.stack {
+  display: grid;
+  gap: var(--spacing-small);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media screen and (max-width: 48rem) {
+  .stack {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 36rem) {
+  .stack {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* ITEM */
+
+.item {
+  position: relative;
+  padding: var(--spacing-small);
+  border-radius: var(--corner-radius-medium);
+  transition: var(--transition);
+}
+
+.item:hover {
+  background-color: var(--color-hover);
+}
+
+.item:hover > .plant {
+  width: 105%;
+  margin: -2.5%;
+  margin-top: -5%;
+  margin-bottom: -1.6%;
+}
+
+.item__unread {
+  position: absolute;
+  right: var(--spacing-small);
+  background-color: var(--color-pot);
+  height: var(--size-unread-dot);
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.item > :first-child {
+  margin-top: 0;
+}
+
+.item > :last-child {
+  margin-bottom: 0;
 }

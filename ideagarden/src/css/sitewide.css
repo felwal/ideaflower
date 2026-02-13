@@ -1,3 +1,11 @@
+body {
+  margin: 0;
+  font-family: var(--font);
+  line-height: 1.5;
+  font-weight: 450;
+  background-color: var(--color-bg);
+}
+
 #app {
   min-height: 100vh;
 }
@@ -16,17 +24,11 @@ main {
   margin-right: auto;
 }
 
-.hidden {
-  visibility: hidden;
-}
-
 
 /* || HEADER */
 
 header {
   margin-bottom: var(--spacing-section);
-  /*background-color: var(--color-surface);
-  outline: var(--outline);*/
 }
 
 .header__content {
