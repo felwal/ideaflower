@@ -19,7 +19,7 @@
 
   --color-success: var(--color-primary-dark);
   --color-error: red;
-  --color-unread: violet;
+  --color-unread: rgb(255, 112, 255);
 
   --color-pot: #D97E00;
   --color-soil: #8E6225;
