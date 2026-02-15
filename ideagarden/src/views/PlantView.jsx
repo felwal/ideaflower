@@ -99,6 +99,11 @@ export default function PlantView(props) {
         <path d="M46 0H0C0 9.93334 3.96094 18.7002 10 23.9266H36C42.0391 18.7002 46 9.93334 46 0Z" fill={potColor} />
         <ellipse cx="23" cy="24" rx="13" ry="3" fill={potColor} />
       </>,
+      <>
+        <path d="M23 23C35.7025 23 46 12.7025 46 0H0C0 12.7025 10.2975 23 23 23Z" fill={potColor}/>
+        <path d="M23 11C15.8203 11 10 16.8203 10 24L36 24C36 16.8203 30.1797 11 23 11Z" fill={potColor}/>
+        <ellipse cx="23" cy="24" rx="13" ry="3" fill={potColor}/>
+      </>,
     ];
 
     const potShape = potShapes[Math.floor(props.idea.potShape * potShapes.length)];
