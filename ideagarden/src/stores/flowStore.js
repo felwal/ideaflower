@@ -18,6 +18,7 @@ const useFlowStore = defineStore("flow", {
     ungrownIdeas: (state) => Object.values(state.ideas).filter(idea => !idea.result),
     firstUngrownIdea: (state) => state.ungrownIdeas[0],
     canGrowIdea: (state) => state.firstUngrownIdea && state.plantFullyWatered && !state.isRequesting,
+    ideasCount: (state) => Object.values(state.ideas).length,
   },
 
   actions: {
@@ -58,8 +59,8 @@ const useFlowStore = defineStore("flow", {
         result: null,
         name: null,
         read: false,
-        potShape: randomFloatRounded(),
-        potSaturation: randomFloatRounded(),
+        potShape: this.ideasCount > 0 ? randomFloatRounded() : 0.0,
+        potSaturation: this.ideasCount > 0 ? randomFloatRounded(): 0.6,
         leafHue: null,
         leafLightness: null,
         leafEdges: null,
