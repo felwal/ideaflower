@@ -36,6 +36,7 @@ export default function HomeView(props) {
           idea={idea}
           waterProgress={props.isLoading ? 1 : props.waterProgress}
           showWaterProgress={idea.epoch === props.plantBeingWateredEpoch}
+          isLoading={props.isLoading && idea.epoch === props.plantBeingWateredEpoch}
         />
 
         <h3 class="item__name">{idea.name || "???"}</h3>

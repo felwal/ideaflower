@@ -4,6 +4,25 @@
   transition: var(--transition);
 }
 
+@keyframes loading {
+  0%, 100% {
+    r: 5px;
+    fill: hsl(from var(--color-seed) h s calc(l * 0.9));
+  }
+  50% {
+    r: 7px;
+    fill: hsl(from var(--color-seed) h s calc(l * 1.1));
+  }
+}
+
+.plant__seed--growing {
+  animation-name: loading;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(0.36, 0.0, 0.64, 1.0); /* sine approximation */
+  animation-delay: -0.5s;
+}
+
 .plant__leaves {
   position: relative;
   width: 100%;

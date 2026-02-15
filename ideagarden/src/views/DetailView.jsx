@@ -68,6 +68,7 @@ export default function DetailView(props) {
           showLeaves={false}
           showWaterProgress={props.isPlantBeingWatered}
           waterProgress={props.isLoading ? 1 : props.waterProgress}
+          isLoading={props.isLoading && props.isPlantBeingWatered}
         />
       </div>
     </div>

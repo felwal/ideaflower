@@ -69,7 +69,7 @@ export default function PlantView(props) {
 
     return (
       <svg width="100%" height="auto" viewBox="0 0 46 46" fill="none">
-        <circle cx="23" cy="35" r="6" fill="var(--color-seed)" />
+        <circle class={"plant__seed" + (props.isLoading ? " plant__seed--growing" : "")} cx="23" cy="35" r="6" fill="var(--color-seed)" />
         {props.showWaterProgress !== false && renderWater()}
       </svg>
     );
