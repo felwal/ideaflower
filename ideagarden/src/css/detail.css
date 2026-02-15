@@ -1,8 +1,24 @@
+.detail-view {
+  /* footer to bottom */
+  min-height: calc(100vh - var(--spacing-section) - var(--spacing-edge) - var(--size-logo-header) - 4 * var(--spacing-tiny));
+  display: flex;
+  flex-direction: column;
+}
+
+.detail__content {
+  flex: 1; /* footer to bottom */
+}
+
+.detail__footer {
+  display: flex;
+  justify-content: end;
+}
+
 .plant__container {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: var(--spacing-section);
+  margin-bottom: var(--spacing-small);
   margin-top: var(--spacing-small);
 
   position: relative;
@@ -77,9 +93,15 @@
   width: fit-content;
 }
 
-.idea__seed {
-  height: 2rem;
-  border-radius: 50%;
-  aspect-ratio: 1;
-  background-color: var(--color-seed);
+
+/* BUTTON */
+
+.button--delete {
+  outline: none;
+  background-color: transparent;
+}
+
+.button--delete:hover {
+  color: var(--color-error) !important;
+  background-color: var(--color-surface) !important;
 }

@@ -4,6 +4,10 @@ import PlantView, { getLeafColors } from "./PlantView";
 import { formatDate } from "@/utils/dateUtils";
 
 export default function DetailView(props) {
+  function deleteIdeaACB() {
+    props.onDeleteIdea();
+  }
+
   function renderResult() {
     const {leafColor, leafColorDk} = getLeafColors(props.idea);
     const style = "background-image: linear-gradient(to bottom left, " + leafColor +", " + leafColorDk + ")";
@@ -51,26 +55,32 @@ export default function DetailView(props) {
 
   return (
     <div class="detail-view">
-      <h1 class="idea__title">{props.idea.name || "Ungrown idea"}</h1>
-      <div class="idea__prompt">
-        <div class="idea__prompt__texts">
-          <p class="idea__prompt__text">{props.idea.prompt}</p>
-          <p class="idea__date caption">{"Planted " + formatDate(props.idea.epoch)}</p>
+      <div class="detail__content">
+        <h1 class="idea__title">{props.idea.name || "Ungrown idea"}</h1>
+        <div class="idea__prompt">
+          <div class="idea__prompt__texts">
+            <p class="idea__prompt__text">{props.idea.prompt}</p>
+            <p class="idea__date caption">{"Planted " + formatDate(props.idea.epoch)}</p>
+          </div>
+        </div>
+
+        {props.idea.result && renderResult()}
+
+        <div class="plant__container">
+          <PlantView
+            class="plant--detail"
+            idea={props.idea}
+            showLeaves={false}
+            showWaterProgress={props.isPlantBeingWatered}
+            waterProgress={props.isLoading ? 1 : props.waterProgress}
+            isLoading={props.isLoading && props.isPlantBeingWatered}
+          />
         </div>
       </div>
 
-      {props.idea.result && renderResult()}
-
-      <div class="plant__container">
-        <PlantView
-          class="plant--detail"
-          idea={props.idea}
-          showLeaves={false}
-          showWaterProgress={props.isPlantBeingWatered}
-          waterProgress={props.isLoading ? 1 : props.waterProgress}
-          isLoading={props.isLoading && props.isPlantBeingWatered}
-        />
-      </div>
+      <footer class="detail__footer">
+        <button class="button--delete caption" onClick={deleteIdeaACB}>Delete idea</button>
+      </footer>
     </div>
   );
 }

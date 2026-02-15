@@ -5,19 +5,35 @@ import { useHead } from "@vueuse/head";
 import { useRoute } from "vue-router";
 
 const DetailPresenter = {
+  data() {
+    return {
+      idea: null,
+    };
+  },
+
   setup() {
     const ideaName = useFlowStore().getIdea(useRoute().params.id)?.name;
-    useHead({title: (ideaName ? ideaName : "Ungrown idea") + " | Ideaflower"});
+    useHead({title: (ideaName ? ideaName : "Idea") + " | Ideaflower"});
   },
 
   render() {
-    const idea = useFlowStore().getIdea(this.$route.params.id);
+    function onDeleteIdeaACB() {
+      useFlowStore().removeIdea(this.idea.epoch);
+      this.$router.push({name: "home"});
+    }
 
-    // loading or invalid id
-    if (!idea) return;
+    if (!this.idea) {
+      const idea = useFlowStore().getIdea(this.$route.params.id);
 
-    if (idea.result) {
-      idea.read = true;
+      // loading or invalid id
+      if (!idea) return;
+
+      useHead({title: (idea.name ? idea.name : "Ungrown idea") + " | Ideaflower"});
+      this.idea = idea;
+    }
+
+    if (this.idea.result) {
+      this.idea.read = true;
     }
 
     if (useFlowStore().canGrowIdea) {
@@ -26,10 +42,11 @@ const DetailPresenter = {
 
     return (
       <DetailView
-        idea={idea}
-        isPlantBeingWatered={idea.epoch === useFlowStore().firstUngrownIdea?.epoch}
+        idea={this.idea}
+        isPlantBeingWatered={this.idea.epoch === useFlowStore().firstUngrownIdea?.epoch}
         waterProgress={useFlowStore().waterProgress}
         isLoading={isPromiseLoading(useFlowStore().chatPromiseState)}
+        onDeleteIdea={onDeleteIdeaACB.bind(this)}
       />
     );
   }

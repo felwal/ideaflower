@@ -15,6 +15,7 @@ body {
 }
 
 main {
+  padding-top: var(--spacing-section);
   padding-bottom: var(--spacing-edge);
 }
 
@@ -26,10 +27,6 @@ main {
 
 
 /* || HEADER */
-
-header {
-  margin-bottom: var(--spacing-section);
-}
 
 .header__content {
   display: flex;

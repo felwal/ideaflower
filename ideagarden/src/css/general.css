@@ -8,7 +8,6 @@
 
 input, button {
   font-family: var(--font);
-  font-weight: 425;
   font-size: var(--font-size-widget);
   padding: var(--spacing-tiny);
   padding-left: var(--spacing-small);
