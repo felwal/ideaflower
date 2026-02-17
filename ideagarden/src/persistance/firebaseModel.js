@@ -47,14 +47,14 @@ export function setUpFirebase() {
   function signedOutACB() {
     disableFirebaseSync();
     useFlowStore().user = null;
-    useFlowStore().ideas = {};
+    useFlowStore().ideas = null;
   }
 
   observeAuthState(signedInACB, signedOutACB);
 }
 
 function loadFirebaseData(loadedACB) {
-  if (!useFlowStore().user) {
+  if (!useFlowStore().isSignedIn) {
     // user should always be logged in when calling this, but check just in case
     console.warn("can't load Firebase data when logged out");
     return;

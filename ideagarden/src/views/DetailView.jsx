@@ -56,7 +56,7 @@ export default function DetailView(props) {
   return (
     <div class="detail-view">
       <div class="detail__content">
-        <h1 class="idea__title">{props.idea.name || "Ungrown idea"}</h1>
+        <h1 class="idea__title">{props.idea.name || "Ungrown Idea"}</h1>
         <div class="idea__prompt">
           <div class="idea__prompt__texts">
             <p class="idea__prompt__text">{props.idea.prompt}</p>

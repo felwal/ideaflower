@@ -1,12 +1,8 @@
 export default function NotFoundView(props) {
-  function returnHomeClickACB() {
-    props.onReturnHome();
-  }
-
   return (
     <div>
       <h1>404 Not Found</h1>
-      <button style="width: 100%" onClick={returnHomeClickACB}>Return home</button>
+      <router-link class="button" style="calc(100% - 2 * var(--spacing-small))" to="/">Return home</router-link>
     </div>
   );
 }

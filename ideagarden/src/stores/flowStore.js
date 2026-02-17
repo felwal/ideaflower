@@ -1,7 +1,7 @@
 import { chatResponseMock, evolveIdea, getCareShapePrompt } from "@/network/chatService";
 import { getChatKey } from "@/persistance/firebaseModel";
 import { randomFloatRounded, roundFloat } from "@/utils/mathUtils";
-import { resolvePromise, resolvePromiseMock } from "@/utils/resolvePromise";
+import { isPromiseLoading, resolvePromise, resolvePromiseMock } from "@/utils/resolvePromise";
 import { defineStore } from "pinia";
 
 const useFlowStore = defineStore("flow", {
@@ -9,16 +9,19 @@ const useFlowStore = defineStore("flow", {
     user: undefined,
     waterProgress: 0,
     isRequesting: false,
-    ideas: {},
+    ideas: null,
     chatPromiseState: {},
   }),
 
   getters: {
+    isSignedIn: (state) => state.user !== null,
+    isInitialized: (state) => state.ideas !== null,
     plantFullyWatered: (state) => state.waterProgress >= 1,
-    ungrownIdeas: (state) => Object.values(state.ideas).filter(idea => !idea.result),
+    ungrownIdeas: (state) => Object.values(state.ideas || {}).filter(idea => !idea.result),
     firstUngrownIdea: (state) => state.ungrownIdeas[0],
-    canGrowIdea: (state) => state.firstUngrownIdea && state.plantFullyWatered && !state.isRequesting,
+    canGrowIdea: (state) => state.isInitialized && state.firstUngrownIdea && state.plantFullyWatered && !state.isRequesting,
     ideasCount: (state) => Object.values(state.ideas).length,
+    isPromiseLoading: (state) => isPromiseLoading(state.chatPromiseState),
   },
 
   actions: {
@@ -90,7 +93,7 @@ const useFlowStore = defineStore("flow", {
     },
 
     getIdea(epoch) {
-      return epoch in this.ideas ? this.ideas[epoch] : null;
+      return this.isInitialized && epoch in this.ideas ? this.ideas[epoch] : null;
     },
 
     manageAPICall() {

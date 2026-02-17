@@ -20,13 +20,13 @@ const router = createRouter({
     },
     {
       path: "/idea/:id",
-      name: "Idea",
+      name: "detail",
       component: DetailPresenter,
       props: true,
     },
     {
       path: "/:pathMatch(.*)*",
-      name: "error",
+      name: "notfound",
       component: NotFoundPresenter,
     },
   ],

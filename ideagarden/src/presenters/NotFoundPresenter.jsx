@@ -3,15 +3,11 @@ import { useHead } from "@vueuse/head";
 
 const NotFoundPresenter = {
   setup() {
-    useHead({title: "404 | Ideaflower"})
+    useHead({title: "Not Found | Ideaflower"})
   },
 
   render() {
-    function returnHomeACB() {
-      this.$router.push({name: "home"});
-    }
-
-    return <NotFoundView onReturnHome={returnHomeACB.bind(this)} />;
+    return <NotFoundView />;
   },
 };
 

@@ -19,7 +19,7 @@ export default function ProfileView(props) {
     <div>
       <h1>Profile</h1>
 
-      <div class="input-btn-row">
+      <div class="input-button-row">
         <input id="username" type="text" placeholder="Enter username ..." value={props.username} onKeydown={signOnKeyACB} disabled={props.username !== ""} />
 
         {props.username

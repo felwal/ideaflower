@@ -4,19 +4,23 @@
   transition: var(--transition);
 }
 
-@keyframes loading {
+@keyframes growing {
   0%, 100% {
-    r: 5px;
-    fill: hsl(from var(--color-seed) h s calc(l * 0.9));
+    r: 4px;
+    color: hsl(from var(--color-seed) h s calc(l * 0.8));
   }
   50% {
-    r: 7px;
-    fill: hsl(from var(--color-seed) h s calc(l * 1.1));
+    r: 8px;
+    color: hsl(from var(--color-seed) h s calc(l * 1.2));
   }
 }
 
+.plant__seed {
+  color: var(--color-seed);
+}
+
 .plant__seed--growing {
-  animation-name: loading;
+  animation-name: growing;
   animation-duration: 2s;
   animation-iteration-count: infinite;
   animation-timing-function: cubic-bezier(0.36, 0.0, 0.64, 1.0); /* sine approximation */

@@ -1,6 +1,8 @@
 import useFlowStore from "@/stores/flowStore";
 import { isPromiseLoading } from "@/utils/resolvePromise";
 import DetailView from "@/views/DetailView";
+import LoadingView from "@/views/LoadingView";
+import NotFoundView from "@/views/NotFoundView";
 import { useHead } from "@vueuse/head";
 import { useRoute } from "vue-router";
 
@@ -19,16 +21,25 @@ const DetailPresenter = {
   render() {
     function onDeleteIdeaACB() {
       useFlowStore().removeIdea(this.idea.epoch);
-      this.$router.push({name: "home"});
+      this.$router.replace({name: "home"});
     }
 
+    if (useFlowStore().isSignedIn && !useFlowStore().isInitialized) {
+      useHead({title: "Idea | Ideaflower"});
+      return <LoadingView />;
+    }
+
+    // loading or invalid id
     if (!this.idea) {
       const idea = useFlowStore().getIdea(this.$route.params.id);
 
-      // loading or invalid id
-      if (!idea) return;
+      // invalid id
+      if (!idea) {
+        useHead({title: "Not Found | Ideaflower"});
+        return <NotFoundView />;
+      }
 
-      useHead({title: (idea.name ? idea.name : "Ungrown idea") + " | Ideaflower"});
+      useHead({title: (idea.name ? idea.name : "Ungrown Idea") + " | Ideaflower"});
       this.idea = idea;
     }
 

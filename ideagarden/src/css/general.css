@@ -1,22 +1,27 @@
 /* INPUT, BUTTON */
 
-.input-btn-row {
+.input-button-row {
   display: flex;
   flex-direction: row;
   gap: var(--spacing-tiny);
 }
 
-input, button {
+input, button, .button {
   font-family: var(--font);
   font-size: var(--font-size-widget);
   padding: var(--spacing-tiny);
   padding-left: var(--spacing-small);
   padding-right: var(--spacing-small);
   border: none;
-  border-radius: var(--corner-radius-small);
+  border-radius: var(--corner-radius-medium);
   background-color: var(--color-surface);
   outline: var(--outline);
   transition: var(--transition-fast);
+}
+
+.button {
+  display: block;
+  text-align: center;
 }
 
 input:disabled, button:disabled {
@@ -33,11 +38,12 @@ input:focus {
   outline-color: var(--color-hover-button);
 }
 
-button {
+button, .button {
   color: var(--color-text-primary);
 }
 
-button:enabled:hover {
+button:enabled:hover,
+.button:hover {
   color: var(--color-text-primary-inverted);
   background-color: var(--color-hover-button);
   outline-color: var(--color-hover-button);

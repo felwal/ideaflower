@@ -10,7 +10,7 @@ const HomePresenter = {
 
   render() {
     function onSendPromptACB(prompt) {
-      if (isPromiseLoading(useFlowStore().chatPromiseState)) {
+      if (useFlowStore().isPromiseLoading) {
         console.log("api call still in progress, ignoring new prompt");
         return;
       }
@@ -24,12 +24,13 @@ const HomePresenter = {
 
     return (
       <HomeView
-        ideas={Object.values(useFlowStore().ideas).sort((a, b) => a.epoch - b.epoch)}
+        ideas={Object.values(useFlowStore().ideas || {}).sort((a, b) => a.epoch - b.epoch)}
         onSendPrompt={onSendPromptACB.bind(this)}
         waterProgress={useFlowStore().waterProgress}
         plantBeingWateredEpoch={useFlowStore().firstUngrownIdea?.epoch}
-        isSignedIn={useFlowStore().user !== null}
-        isLoading={isPromiseLoading(useFlowStore().chatPromiseState)}
+        isSignedIn={useFlowStore().isSignedIn}
+        isLoading={useFlowStore().isPromiseLoading}
+        isInitialized={!useFlowStore().isSignedIn || useFlowStore().isInitialized}
       />
     );
   },
