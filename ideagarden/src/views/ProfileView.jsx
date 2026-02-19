@@ -1,3 +1,5 @@
+import useFlowStore from "@/stores/flowStore";
+
 export default function ProfileView(props) {
 
   function signInACB() {
@@ -15,6 +17,10 @@ export default function ProfileView(props) {
     }
   }
 
+  function regeneratePlantsACB(evt) {
+    props.onRegeneratePlants();
+  }
+
   return (
     <div>
       <h1>Profile</h1>
@@ -25,6 +31,11 @@ export default function ProfileView(props) {
         {props.username
           ? <button onClick={signOutACB}>Sign out</button>
           : <button onClick={signInACB}>Sign in</button>
+        }
+
+        {process.env.NODE_ENV === "development" &&
+          // NOTE: only show in dev
+          <button onClick={regeneratePlantsACB}>Regenerate plants</button>
         }
       </div>
 

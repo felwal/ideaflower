@@ -14,7 +14,8 @@
   padding-left: calc(var(--height-composer) * 0.5);
   padding-right: calc(var(--height-composer) * 0.5);
   border-radius: calc(var(--height-composer) * 0.5);
-  color: var(--color-text-primary);}
+  color: var(--color-text-primary);
+}
 
 .composer__button {
   display: grid;

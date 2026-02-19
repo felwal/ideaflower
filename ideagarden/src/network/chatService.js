@@ -8,7 +8,7 @@ export function evolveIdea(key, idea) {
   const identity = "You are a co-creative intelligence that grows ideas rather than generating them. "
     + "Think slowly and subtly, like something quietly processing in the background. Do not explicitly reference environmental variables.\n\n";
 
-  const task = "Transform the seed idea in a single, striking way. Prioritize bold conceptual shifts over incremental changes. "
+  const task = "Then transform the seed idea in a single, striking way. Prioritize bold conceptual shifts over incremental changes. "
     + "Tilt perspective, reveal an unexpected implication, or combine with an unexpected domain. Growth should be grounded and practical but imaginative. You should surprise and delight the user.\n\n";
 
   const care = "Environmental variables should metaphorically and without explicit mention subtly influence the character of the idea's growth. "
@@ -17,16 +17,16 @@ export function evolveIdea(key, idea) {
   const meta = "Use concise, vivid phrasing. Avoid clichés, obvious 'improvements', restatement, or long explanations. Respond in one paragraph. "
     + "End with one good question to help the user reflect on the idea and be more creative. Provide a 1–3 word summarising title.\n\n";
 
-  const params = "Rate the idea's morphological character, rounded to two decimals, for: "
-    + "energy_orientation (0=inward/private, 1=outward/public), density (0=light/simple, 1=layered/complex), structural_complexity (0=cohesive/unified, 1=hybridized/fragmented), sharpness (0=gentle, 1=disruptive). "
-    + "Do not explain the values. At least one dimension should be clearly dominant (below 0.20 or above 0.80), unless the idea is genuinely balanced. "
-    + "The dimensions are independent; do not assign similar values unless conceptually justified. Do not hesitate to exaggerate the morphological character of the idea. Take into account both seed idea and grown idea."
+  const params = "Rate the seed idea's morphological character, rounded to two decimals, for: "
+    + "novelty (0=everyday/usual/already done, 1=original/unique/new), usefulness (0=fantastical/imaginative, 1=practical/realistic), complexity (0=simple/easy/few parts, 1=complex/layered/many parts), impact (0=incremental/gentle/niche, 1=radical/disruptive/far-reaching). "
+    + "Do not explain the values. At least one dimension should be clearly dominant (below 0.20 or above 0.80), unless the idea is genuinely balanced. Do not hesitate to go all the way to 0.0 or 1.0. "
+    + "The dimensions are independent; do not assign similar values unless conceptually justified."
 
   const prompt = "Seed idea: '" + idea.prompt + "'\n\n" + getCareShapePrompt(idea);
 
   const promise = openai.responses.create({
     model: "gpt-4.1-2025-04-14",
-    instructions: identity + task + care + meta + params,
+    instructions: identity + params + task + care + meta,
     input: prompt,
     text: {
       format: {
@@ -67,53 +67,53 @@ export function getCareShapePrompt(idea) {
 const schema = {
   type: "object",
   properties: {
-    text: {
-      type: "string"
-    },
     title: {
       type: "string"
     },
-    energy_orientation: {
+    text: {
+      type: "string"
+    },
+    novelty: {
       type: "number",
       minimum: 0,
       maximum: 1
     },
-    density: {
+    usefulness: {
       type: "number",
       minimum: 0,
       maximum: 1
     },
-    structural_complexity: {
+    complexity: {
       type: "number",
       minimum: 0,
       maximum: 1
     },
-    sharpness: {
+    impact: {
       type: "number",
       minimum: 0,
       maximum: 1
     }
   },
   required: [
-    "text",
     "title",
-    "energy_orientation",
-    "density",
-    "structural_complexity",
-    "sharpness"
+    "text",
+    "novelty",
+    "usefulness",
+    "complexity",
+    "impact"
   ],
   additionalProperties: false
 }
 
 const chatResponseMock = {
-  output_text: {
-    title: "Lorem Ipsum",
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc erat massa, imperdiet a tincidunt bibendum, tempor nec ipsum. Aliquam eu felis euismod, consectetur ex quis, pellentesque sem. Pellentesque imperdiet ut nisi ac pharetra. Maecenas ornare.",
-    energy_orientation: randomFloatRounded(),
-    density: randomFloatRounded(),
-    structural_complexity: randomFloatRounded(),
-    sharpness: randomFloatRounded()
-  }
-}
+  output_text: `{
+    "title": "Lorem Ipsum",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc erat massa, imperdiet a tincidunt bibendum, tempor nec ipsum. Aliquam eu felis euismod, consectetur ex quis, pellentesque sem. Pellentesque imperdiet ut nisi ac pharetra. Maecenas ornare.",
+    "novelty": ${randomFloatRounded()},
+    "usefulness": ${randomFloatRounded()},
+    "complexity": ${randomFloatRounded()},
+    "impact": ${randomFloatRounded()}
+  }`
+};
 
 export { chatResponseMock };

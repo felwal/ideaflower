@@ -43,8 +43,11 @@ const ProfilePresenter = {
           console.log("user doesn't exist");
 
           this.invalidLogin = true;
+
           // NOTE: only sign up new users in dev
-          //resolvePromise(signUpUser(this.username), this.authPromiseState, signUpResultACB.bind(this));
+          if (process.env.NODE_ENV === "development") {
+            resolvePromise(signUpUser(this.username), this.authPromiseState, signUpResultACB.bind(this));
+          }
 
           return;
         }
@@ -65,11 +68,16 @@ const ProfilePresenter = {
       signOutUser();
     }
 
+    function onRegeneratePlantsACB() {
+      useFlowStore().regeneratePlants();
+    }
+
     return (
       <ProfileView
         username={store.user?.name ?? ""}
         onSignIn={onSignInACB.bind(this)}
         onSignOut={onSignOutACB.bind(this)}
+        onRegeneratePlants={onRegeneratePlantsACB.bind(this)}
         invalidLogin={this.invalidLogin}
       />
     );

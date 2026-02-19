@@ -14,13 +14,14 @@ const useFlowStore = defineStore("flow", {
   }),
 
   getters: {
+    ideasArray: (state) => Object.values(state.ideas || {}),
     isSignedIn: (state) => state.user !== null,
     isInitialized: (state) => state.ideas !== null,
     plantFullyWatered: (state) => state.waterProgress >= 1,
-    ungrownIdeas: (state) => Object.values(state.ideas || {}).filter(idea => !idea.result),
+    ungrownIdeas: (state) => state.ideasArray.filter(idea => !idea.result),
     firstUngrownIdea: (state) => state.ungrownIdeas[0],
     canGrowIdea: (state) => state.isInitialized && state.firstUngrownIdea && state.plantFullyWatered && !state.isRequesting,
-    ideasCount: (state) => Object.values(state.ideas).length,
+    ideasCount: (state) => state.ideasArray.length,
     isPromiseLoading: (state) => isPromiseLoading(state.chatPromiseState),
   },
 
@@ -86,10 +87,10 @@ const useFlowStore = defineStore("flow", {
 
       idea.name = result.title;
       idea.result = result.text;
-      idea.leafHue = roundFloat(1 - result.energy_orientation);
-      idea.leafLightness = roundFloat(1 - result.density);
-      idea.leafEdges = roundFloat(result.structural_complexity);
-      idea.leafRoundness = roundFloat(1 - result.sharpness);
+      idea.leafHue = roundFloat(1 - result.novelty);
+      idea.leafLightness = roundFloat(1 - result.usefulness);
+      idea.leafEdges = roundFloat(result.complexity);
+      idea.leafRoundness = roundFloat(result.impact);
     },
 
     getIdea(epoch) {
@@ -106,6 +107,7 @@ const useFlowStore = defineStore("flow", {
           console.error("api error:", this.chatPromiseState.error);
         }
         else if (this.chatPromiseState.data) {
+          console.log(this.chatPromiseState.data.output_text)
           this.growIdea(JSON.parse(this.chatPromiseState.data.output_text));
         }
 
@@ -114,11 +116,24 @@ const useFlowStore = defineStore("flow", {
 
       this.useWater();
 
+      // NOTE: mock only in dev
       getChatKey(key =>
         resolvePromise(evolveIdea(key, this.firstUngrownIdea), this.chatPromiseState, processAPIResultACB.bind(this))
         //resolvePromiseMock(chatResponseMock, this.chatPromiseState, processAPIResultACB.bind(this))
       );
-    }
+    },
+
+    regeneratePlants() {
+      this.ideasArray.forEach(idea => {
+        idea.potShape = randomFloatRounded();
+        idea.potSaturation = randomFloatRounded();
+        idea.leafPath = null;
+        idea.leafHue ??= randomFloatRounded();
+        idea.leafLightness ??= randomFloatRounded();
+        idea.leafRoundness ??= randomFloatRounded();
+        idea.leafEdges ??= randomFloatRounded();
+      });
+    },
   },
 });
 

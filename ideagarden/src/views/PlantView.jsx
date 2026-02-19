@@ -7,11 +7,11 @@ export default function PlantView(props) {
     const paintId = "gradient_leaf_" + props.idea.epoch;
 
     if (!props.idea.leafPath) {
-      const growthMin = 4;
-      const growthMax = 7;
+      const growthMin = 3;
+      const growthMax = 8;
       const growth = growthMin + Math.round((growthMax - growthMin) * props.idea.leafRoundness);
 
-      const edgesMin = 8;
+      const edgesMin = 4;
       const edgesMax = 15;
       const edges = edgesMin + Math.round((edgesMax - edgesMin) * props.idea.leafEdges);
 
@@ -19,16 +19,23 @@ export default function PlantView(props) {
       props.idea.leafPath = path;
     }
 
+    // edges only affect size if roundness is large and edges is small
+    const visualSizeApprox = (props.idea.leafRoundness + props.idea.leafRoundness * Math.min(0.5, props.idea.leafEdges) * 2) / 2;
+    const marginTop = Math.round(15 * (1 - visualSizeApprox) ** 2);
+    const marginBottom = -33 - marginTop;
+
     return (
-      <svg width="100%" height="auto" viewBox="0 0 100 100">
-        <path d={props.idea.leafPath} fill={"url(#" + paintId + ")"} />
-        <defs>
-          <linearGradient id={paintId} x1="100" y1="0" x2="0" y2="100" gradientUnits="userSpaceOnUse">
-            <stop stop-color={leafColor} />
-            <stop offset="1" stop-color={leafColorDk} />
-          </linearGradient>
-        </defs>
-      </svg>
+      <div class="plant__leaves" style={"margin-bottom: " + marginBottom + "%; margin-top: " + marginTop + "%;"}>
+        <svg width="100%" height="auto" viewBox="0 0 100 100">
+          <path d={props.idea.leafPath} fill={"url(#" + paintId + ")"} />
+          <defs>
+            <linearGradient id={paintId} x1="100" y1="0" x2="0" y2="100" gradientUnits="userSpaceOnUse">
+              <stop stop-color={leafColor} />
+              <stop offset="1" stop-color={leafColorDk} />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
     );
   }
 
@@ -68,10 +75,12 @@ export default function PlantView(props) {
     }
 
     return (
-      <svg width="100%" height="auto" viewBox="0 0 46 46" fill="none">
-        <circle class={"plant__seed" + (props.isLoading ? " plant__seed--growing" : "")} cx="23" cy="35" r="6" fill="currentColor" />
-        {props.showWaterProgress !== false && renderWater()}
-      </svg>
+      <div class="plant__leaves">
+        <svg width="100%" height="auto" viewBox="0 0 46 46" fill="none">
+          <circle class={"plant__seed" + (props.isLoading ? " plant__seed--growing" : "")} cx="23" cy="35" r="6" fill="currentColor" />
+          {props.showWaterProgress !== false && renderWater()}
+        </svg>
+      </div>
     );
   }
 
@@ -106,7 +115,8 @@ export default function PlantView(props) {
       </>,
     ];
 
-    const potShape = potShapes[Math.floor(props.idea.potShape * potShapes.length)];
+    // use Math.min in case potShape=1
+    const potShape = potShapes[Math.min(Math.floor(props.idea.potShape * potShapes.length), potShapes.length - 1)];
 
     return (
       <div class="plant__pot">
@@ -124,9 +134,7 @@ export default function PlantView(props) {
   return (
     <div class="plant">
       {(props.showLeaves !== false || !props.idea.result) &&
-        <div class="plant__leaves">
-          {props.idea.result ? renderLeaves() : renderSeed()}
-        </div>
+        (props.idea.result ? renderLeaves() : renderSeed())
       }
       {renderPot()}
     </div>
@@ -134,7 +142,7 @@ export default function PlantView(props) {
 }
 
 export function getLeafColors(idea) {
-  const hLeafStart = 53;
+  const hLeafStart = 47;
   const hLeafStartDk = 90;
   const hLeafEnd = 163;
   const hLeafEndDk = 200;
@@ -142,8 +150,8 @@ export function getLeafColors(idea) {
   const hLeaf = hLeafStart + (hLeafEnd - hLeafStart) * idea.leafHue;
   const hLeafDk = hLeafStartDk + (hLeafEndDk - hLeafStartDk) * idea.leafHue;
 
-  const lLeafStart = 32;
-  const lLeafStartDk = 25;
+  const lLeafStart = 37;
+  const lLeafStartDk = 20;
   const lLeafEnd = 47;
   const lLeafEndDk = 30;
 

@@ -24,7 +24,7 @@ const HomePresenter = {
 
     return (
       <HomeView
-        ideas={Object.values(useFlowStore().ideas || {}).sort((a, b) => a.epoch - b.epoch)}
+        ideas={useFlowStore().ideasArray.sort((a, b) => a.epoch - b.epoch)}
         onSendPrompt={onSendPromptACB.bind(this)}
         waterProgress={useFlowStore().waterProgress}
         plantBeingWateredEpoch={useFlowStore().firstUngrownIdea?.epoch}
