@@ -52,7 +52,7 @@ export default function HomeView(props) {
         <h1>Your idea garden</h1>
 
         <div class="composer input-button-row column">
-          <input class="composer__input" id="prompt" type="text" placeholder="Plant an idea to grow ..." onKeydown={addPromptOnKeyACB} disabled={!props.isSignedIn} />
+          <input class="composer__input" id="prompt" type="text" autocapitalize="sentences" placeholder="Plant an idea to grow ..." onKeydown={addPromptOnKeyACB} disabled={!props.isSignedIn} />
           <button class="composer__button" onClick={addPromptOnClickACB} disabled={!props.isSignedIn}>
             <ArrowDownToDot color="currentColor" />
           </button>
