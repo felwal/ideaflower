@@ -64,7 +64,8 @@ function loadFirebaseData(loadedACB) {
 
   function commonDataLoadedFromFirebaseACB(data) {
     if (data.exists()) {
-      useFlowStore().waterProgress = data.val() || 0;
+      useFlowStore().waterProgress = data.val().waterProgress || 0;
+      useFlowStore().wateringCount = data.val().wateringCount || 0;
     }
 
     // load user data
@@ -88,7 +89,7 @@ function loadFirebaseData(loadedACB) {
   }
 
   // load data from Firebase, then set up sync
-  get(child(ref(db), REF + "/waterProgress"))
+  get(child(ref(db), REF + "/common"))
     .then(commonDataLoadedFromFirebaseACB)
     .catch((error) => { console.error(error); });
 }
@@ -114,13 +115,18 @@ function updateFirebaseFromStore(store) {
   }
 
   function waterProgressChangedInStoreACB(newWaterProgress) {
-    set(ref(db, REF + "/waterProgress"), newWaterProgress);
+    set(ref(db, REF + "/common/waterProgress"), newWaterProgress);
+  }
+
+  function wateringCountChangedInStoreACB(newWateringCount) {
+    set(ref(db, REF + "/common/wateringCount"), newWateringCount);
   }
 
   unsubscribers = [
     ...unsubscribers,
     watch(() => store.ideas, ideasChangedInStoreACB, {deep: true}),
     watch(() => store.waterProgress, waterProgressChangedInStoreACB),
+    watch(() => store.wateringCount, wateringCountChangedInStoreACB),
   ];
 }
 
@@ -143,11 +149,18 @@ function updateStoreFromFirebase(store) {
     }
   }
 
+  function wateringCountChangedInFirebaseACB(data) {
+    if (store.wateringCount !== data.val()) {
+      store.wateringCount = data.val();
+    }
+  }
+
   unsubscribers = [
     ...unsubscribers,
     onChildAdded(ref(db, REF + "/users/" + store.user.uid + "/ideas"), ideaAddedInFirebaseACB),
     onChildRemoved(ref(db, REF + "/users/" + store.user.uid + "/ideas"), ideaRemovedInFirebaseACB),
     onChildChanged(ref(db, REF + "/users/" + store.user.uid + "/ideas"), ideaChangedInFirebaseACB),
-    onValue(ref(db, REF + "/waterProgress"), waterProgressChangedInFirebaseACB),
+    onValue(ref(db, REF + "/common/waterProgress"), waterProgressChangedInFirebaseACB),
+    onValue(ref(db, REF + "/common/wateringCount"), wateringCountChangedInFirebaseACB),
   ];
 }

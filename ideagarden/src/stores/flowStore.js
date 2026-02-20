@@ -8,6 +8,7 @@ const useFlowStore = defineStore("flow", {
   state: () => ({
     user: undefined,
     waterProgress: 0,
+    wateringCount: 0,
     isRequesting: false,
     ideas: null,
     chatPromiseState: {},
@@ -49,13 +50,17 @@ const useFlowStore = defineStore("flow", {
     },
 
     useWater() {
-      if (this.ungrownIdeas.length <= 1) this.waterProgress = -1;
-      else this.waterProgress = Math.max(this.waterProgress - 1, 0);
+      // count leftover water as a watering if >=5%
+      this.wateringCount = this.waterProgress < 1.05 ? 0 : 1;
+      // set to -1 if no remaining ungrown ideas
+      this.waterProgress = this.ungrownIdeas.length > 1 ? Math.max(this.waterProgress - 1, 0) : -1;
     },
 
     plantIdea(prompt) {
       if (!this.firstUngrownIdea) {
+        // if there is no existing ungrown idea, reset water
         this.waterProgress = 0;
+        this.wateringCount = 0;
       }
 
       const idea = {
@@ -88,7 +93,7 @@ const useFlowStore = defineStore("flow", {
       idea.name = result.title;
       idea.result = result.text;
       idea.leafHue = roundFloat(1 - result.novelty);
-      idea.leafLightness = roundFloat(1 - result.usefulness);
+      idea.leafLightness = roundFloat(result.usefulness);
       idea.leafEdges = roundFloat(result.complexity);
       idea.leafRoundness = roundFloat(result.impact);
     },
@@ -114,11 +119,12 @@ const useFlowStore = defineStore("flow", {
         this.isRequesting = false;
       }
 
+      const wateringCount = this.wateringCount;
       this.useWater();
 
       // NOTE: mock only in dev
       getChatKey(key =>
-        resolvePromise(evolveIdea(key, this.firstUngrownIdea), this.chatPromiseState, processAPIResultACB.bind(this))
+        resolvePromise(evolveIdea(key, this.firstUngrownIdea, wateringCount), this.chatPromiseState, processAPIResultACB.bind(this))
         //resolvePromiseMock(chatResponseMock, this.chatPromiseState, processAPIResultACB.bind(this))
       );
     },

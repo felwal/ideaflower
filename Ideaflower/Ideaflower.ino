@@ -11,13 +11,14 @@ const int PULSE_PER_LITER = 700; // approximate value from testing
 const int AWAIT_WATER = 1000;
 const int AWAIT_IDLE = 1500;
 const int AWAIT_FIREBASE = 10000; // TODO: longer for home study, shorter for user study
-float VOLUME_FULL_LITER = 0.05; // will be set via Firebase on startup
+const float VOLUME_FULL_LITER = 0.05; // 50 ml per avg response with GPT3
 
 bool firebaseSynced = true;
 bool flowDetected = false;
 int flowDetectedMillis = 0;
 float volumeProgress = 0; // -1 for "no ideas to water"
 float volumeProgressStart = 0;
+int wateringCount = 0;
 
 FlowSensor flow(PULSE_PER_LITER, PIN_IN_FLOW);
 Firebase firebase(FIREBASE_URL, FIREBASE_AUTH);
@@ -49,9 +50,10 @@ void loop() {
   else if (volumeProgress < 0 || firebaseSynced) {
     // wait for water progress to be resetted via Firebase / web interface
     // – should only happen when progress >1
-    float volumeProgressInFirebase = getFirebaseFloat("flowModel/waterProgress");
+    float volumeProgressInFirebase = getFirebaseFloat("flowModel/common/waterProgress");
 
     if (volumeProgressInFirebase != volumeProgress) {
+      wateringCount = getFirebaseInt("flowModel/common/wateringCount");
       volumeProgressStart = volumeProgressInFirebase;
       volumeProgress = volumeProgressInFirebase;
 
@@ -83,8 +85,8 @@ void connectWifi() {
 }
 
 void connectFirebase() {
-  VOLUME_FULL_LITER = getFirebaseFloat("flowModel/WATER_FULL_LITER");
-  volumeProgressStart = getFirebaseFloat("flowModel/waterProgress");
+  wateringCount = getFirebaseInt("flowModel/common/wateringCount");
+  volumeProgressStart = getFirebaseFloat("flowModel/common/waterProgress");
   volumeProgress = volumeProgressStart;
 }
 
@@ -97,7 +99,9 @@ void writeFirebase() {
 
     flowDetected = false;
     firebaseSynced = true;
-    setFirebaseFloat("flowModel/waterProgress", volumeProgress);
+    wateringCount++;
+    setFirebaseInt("flowModel/common/wateringCount", wateringCount);
+    setFirebaseFloat("flowModel/common/waterProgress", volumeProgress);
   }
 }
 
@@ -112,10 +116,30 @@ float getFirebaseFloat(String key) {
   return retrievedFloat;
 }
 
+int getFirebaseInt(String key) {
+  Serial.print("get " + key + " ... ");
+
+  int retrievedInt;
+  int responseCode = firebase.getInt(key, retrievedInt);
+  handleFirebaseError(responseCode);
+
+  Serial.println(retrievedInt);
+  return retrievedInt;
+}
+
 void setFirebaseFloat(String key, float val) {
   Serial.print("set " + key + " ... ");
 
   int responseCode = firebase.setFloat(key, val);
+  handleFirebaseError(responseCode);
+
+  Serial.println(val);
+}
+
+void setFirebaseInt(String key, int val) {
+  Serial.print("set " + key + " ... ");
+
+  int responseCode = firebase.setInt(key, val);
   handleFirebaseError(responseCode);
 
   Serial.println(val);
