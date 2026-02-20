@@ -1,7 +1,7 @@
 import { randomFloatRounded } from "@/utils/mathUtils";
 import OpenAI from "openai";
 
-export function evolveIdea(key, idea, wateringCount) {
+export function evolveIdea(key, idea) {
   const openai = new OpenAI({apiKey: key, dangerouslyAllowBrowser: true});
   console.log("calling api ...");
 
@@ -22,7 +22,7 @@ export function evolveIdea(key, idea, wateringCount) {
     + "Explain the values in a separate paragraph. At least one dimension should be clearly dominant (below 0.20 or above 0.80), unless the idea is genuinely balanced. Do not hesitate to go all the way to 0.0 or 1.0. "
     + "The dimensions are independent; do not assign similar values unless conceptually justified.\n\n"
 
-  const prompt = "Seed idea: '" + idea.prompt + "'\n\n" + getCareShapePrompt(idea, wateringCount);
+  const prompt = "Seed idea: '" + idea.prompt + "'\n\n" + getCareShapePrompt(idea);
 
   const promise = openai.responses.create({
     model: "gpt-4.1-2025-04-14",
@@ -41,10 +41,10 @@ export function evolveIdea(key, idea, wateringCount) {
   return promise;
 }
 
-export function getCareShapePrompt(idea, wateringCount) {
-  const now = new Date();
+export function getCareShapePrompt(idea) {
+  idea.epochGrown ??= Date.now();
 
-  const epochPlantedToGrown = Date.now() - idea.epoch;
+  const epochPlantedToGrown = idea.epochGrown - idea.epoch;
   const daysPlantedToGrown = epochPlantedToGrown / 86_400_000;
   const hoursPlantedToGrown = (daysPlantedToGrown % 1) * 24;
   const minutesPlantedToGrown = (hoursPlantedToGrown % 1) * 60;
@@ -56,11 +56,11 @@ export function getCareShapePrompt(idea, wateringCount) {
   else if (minutesPlantedToGrown >= 1) timePlantedToGrown = Math.round(minutesPlantedToGrown) + " minutes"
   else timePlantedToGrown = Math.round(secondsPlantedToGrown) + " seconds"
 
-  const hour = now.getHours();
+  const hour = new Date().getHours();
 
   let carePrompt = "Environmental variables:\n";
   carePrompt += "- Time elapsed since planting: " + timePlantedToGrown + "\n";
-  carePrompt += "- Times watered: " + wateringCount + "\n";
+  carePrompt += "- Times watered: " + idea.wateringCount + "\n";
   carePrompt += "- Hour of day: " + hour;
   return carePrompt;
 }

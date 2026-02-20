@@ -75,7 +75,9 @@ const useFlowStore = defineStore("flow", {
         leafEdges: null,
         leafRoundness: null,
         leafPath: null,
-        epoch: Date.now()
+        wateringCount: null,
+        epoch: Date.now(),
+        epochGrown: null,
       };
 
       this.ideas = {...this.ideas, [idea.epoch]: idea};
@@ -119,12 +121,14 @@ const useFlowStore = defineStore("flow", {
         this.isRequesting = false;
       }
 
-      const wateringCount = this.wateringCount;
+      const idea = this.firstUngrownIdea;
+      idea.epochGrown = Date.now();
+      idea.wateringCount = this.wateringCount;
       this.useWater();
 
       // NOTE: mock only in dev
       getChatKey(key =>
-        resolvePromise(evolveIdea(key, this.firstUngrownIdea, wateringCount), this.chatPromiseState, processAPIResultACB.bind(this))
+        resolvePromise(evolveIdea(key, idea, wateringCount), this.chatPromiseState, processAPIResultACB.bind(this))
         //resolvePromiseMock(chatResponseMock, this.chatPromiseState, processAPIResultACB.bind(this))
       );
     },
