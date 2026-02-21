@@ -1,4 +1,4 @@
-import { chatResponseMock, evolveIdea, getCareShapePrompt } from "@/network/chatService";
+import { chatResponseMock, evolveIdea } from "@/network/chatService";
 import { getChatKey } from "@/persistance/firebaseModel";
 import { randomFloatRounded, roundFloat } from "@/utils/mathUtils";
 import { isPromiseLoading, resolvePromise, resolvePromiseMock } from "@/utils/resolvePromise";
@@ -128,7 +128,7 @@ const useFlowStore = defineStore("flow", {
 
       // NOTE: mock only in dev
       getChatKey(key =>
-        resolvePromise(evolveIdea(key, idea, wateringCount), this.chatPromiseState, processAPIResultACB.bind(this))
+        resolvePromise(evolveIdea(key, idea), this.chatPromiseState, processAPIResultACB.bind(this))
         //resolvePromiseMock(chatResponseMock, this.chatPromiseState, processAPIResultACB.bind(this))
       );
     },

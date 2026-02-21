@@ -1,5 +1,5 @@
 import blobshape from "blobshape";
-import { randomInt } from "@/utils/mathUtils";
+import { elementByProgress } from "@/utils/mathUtils";
 
 export default function PlantView(props) {
   function renderLeaves() {
@@ -115,8 +115,7 @@ export default function PlantView(props) {
       </>,
     ];
 
-    // use Math.min in case potShape=1
-    const potShape = potShapes[Math.min(Math.floor(props.idea.potShape * potShapes.length), potShapes.length - 1)];
+    const potShape = elementByProgress(potShapes, props.idea.potShape);
 
     return (
       <div class="plant__pot">
