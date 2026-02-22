@@ -29,19 +29,20 @@ const DetailPresenter = {
       return <LoadingView />;
     }
 
-    // loading or invalid id
-    if (!this.idea) {
-      const idea = useFlowStore().getIdea(this.$route.params.id);
+    const idea = useFlowStore().getIdea(this.$route.params.id);
 
-      // invalid id
-      if (!idea) {
-        useHead({title: "Not Found | Ideaflower"});
-        return <NotFoundView />;
-      }
-
-      useHead({title: (idea.name ? idea.name : "Ungrown Idea") + " | Ideaflower"});
-      this.idea = idea;
+    // invalid id
+    if (!idea) {
+      useHead({title: "Not Found | Ideaflower"});
+      return <NotFoundView />;
     }
+
+    // set title if this is the first time the idea was loaded
+    if (!this.idea) {
+      useHead({title: (idea.name ? idea.name : "Ungrown Idea") + " | Ideaflower"});
+    }
+
+    this.idea = idea;
 
     if (this.idea.result) {
       this.idea.read = true;

@@ -114,7 +114,7 @@ const useFlowStore = defineStore("flow", {
           console.error("api error:", this.chatPromiseState.error);
         }
         else if (this.chatPromiseState.data) {
-          console.log(this.chatPromiseState.data.output_text)
+          //console.log(this.chatPromiseState.data.output_text)
           this.growIdea(JSON.parse(this.chatPromiseState.data.output_text));
         }
 
