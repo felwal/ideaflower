@@ -1,23 +1,9 @@
-import blobshape from "blobshape";
 import { elementByProgress } from "@/utils/mathUtils";
 
 export default function PlantView(props) {
   function renderLeaves() {
     const {leafColor, leafColorDk} = getLeafColors(props.idea);
     const paintId = "gradient_leaf_" + props.idea.epoch;
-
-    if (!props.idea.leafPath) {
-      const growthMin = 3;
-      const growthMax = 8;
-      const growth = growthMin + Math.round((growthMax - growthMin) * props.idea.leafRoundness);
-
-      const edgesMin = 4;
-      const edgesMax = 15;
-      const edges = edgesMin + Math.round((edgesMax - edgesMin) * props.idea.leafEdges);
-
-      const {path} = blobshape({size: 100, growth: growth, edges: edges});
-      props.idea.leafPath = path;
-    }
 
     // edges only affect size if roundness is large and edges is small
     const visualSizeApprox = (props.idea.leafRoundness + props.idea.leafRoundness * Math.min(0.5, props.idea.leafEdges) * 2) / 2;
@@ -144,7 +130,7 @@ export default function PlantView(props) {
   return (
     <div class="plant">
       {(props.showLeaves !== false || !props.idea.result) &&
-        (props.idea.result ? renderLeaves() : renderSeed())
+        (props.idea.result && props.idea.leafPath ? renderLeaves() : renderSeed())
       }
       {renderPot()}
     </div>

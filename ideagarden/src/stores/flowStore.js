@@ -2,6 +2,7 @@ import { chatResponseMock, evolveIdea } from "@/network/chatService";
 import { getChatKey } from "@/persistance/firebaseModel";
 import { randomFloatRounded, roundFloat } from "@/utils/mathUtils";
 import { isPromiseLoading, resolvePromise, resolvePromiseMock } from "@/utils/resolvePromise";
+import blobshape from "blobshape";
 import { defineStore } from "pinia";
 
 const useFlowStore = defineStore("flow", {
@@ -98,6 +99,7 @@ const useFlowStore = defineStore("flow", {
       idea.leafLightness = roundFloat(result.usefulness);
       idea.leafEdges = roundFloat(result.complexity);
       idea.leafRoundness = roundFloat(result.impact);
+      idea.leafPath = this.generateLeafPath(idea);
     },
 
     getIdea(epoch) {
@@ -137,12 +139,25 @@ const useFlowStore = defineStore("flow", {
       this.ideasArray.forEach(idea => {
         idea.potShape = randomFloatRounded();
         idea.potSaturation = randomFloatRounded();
-        idea.leafPath = null;
         idea.leafHue ??= randomFloatRounded();
         idea.leafLightness ??= randomFloatRounded();
         idea.leafRoundness ??= randomFloatRounded();
         idea.leafEdges ??= randomFloatRounded();
+        idea.leafPath = this.generateLeafPath(idea);
       });
+    },
+
+    generateLeafPath(idea) {
+      const growthMin = 3;
+      const growthMax = 8;
+      const growth = growthMin + Math.round((growthMax - growthMin) * idea.leafRoundness);
+
+      const edgesMin = 4;
+      const edgesMax = 15;
+      const edges = edgesMin + Math.round((edgesMax - edgesMin) * idea.leafEdges);
+
+      const {path} = blobshape({size: 100, growth: growth, edges: edges});
+      return path;
     },
   },
 });
