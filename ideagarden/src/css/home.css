@@ -75,7 +75,7 @@
 .item__unread {
   position: absolute;
   right: var(--spacing-small);
-  background-color: var(--color-unread);
+  background-image: var(--gradient-unread);
   height: var(--size-unread-dot);
   aspect-ratio: 1;
   border-radius: 50%;

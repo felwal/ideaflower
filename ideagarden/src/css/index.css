@@ -19,7 +19,7 @@
 
   --color-success: var(--color-primary-dark);
   --color-error: red;
-  --color-unread: rgb(255, 112, 255);
+  --gradient-unread: linear-gradient(to bottom left, rgb(255, 112, 255), rgb(212, 70, 212));
 
   --color-pot: #D97E00;
   --color-soil: #8E6225;
