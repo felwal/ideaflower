@@ -55,7 +55,7 @@ const DetailPresenter = {
     return (
       <DetailView
         idea={this.idea}
-        isPlantBeingWatered={this.idea.epoch === useFlowStore().firstUngrownIdea?.epoch}
+        isPlantBeingWatered={this.idea.epoch === useFlowStore().plantBeingWateredEpoch}
         waterProgress={useFlowStore().waterProgress}
         isLoading={isPromiseLoading(useFlowStore().chatPromiseState)}
         onDeleteIdea={onDeleteIdeaACB.bind(this)}

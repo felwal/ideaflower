@@ -64,6 +64,7 @@ function loadFirebaseData(loadedACB) {
 
   function commonDataLoadedFromFirebaseACB(data) {
     if (data.exists()) {
+      useFlowStore().carerUsername = data.val().carerUsername;
       useFlowStore().waterProgress = data.val().waterProgress || 0;
       useFlowStore().wateringCount = data.val().wateringCount || 0;
     }
@@ -143,6 +144,12 @@ function updateStoreFromFirebase(store) {
     store.editIdea(data.val());
   }
 
+  function carerChangedInFirebaseACB(data) {
+    if (store.carerUsername !== data.val()) {
+      store.carerUsername = data.val();
+    }
+  }
+
   function waterProgressChangedInFirebaseACB(data) {
     if (store.waterProgress !== data.val()) {
       store.waterProgress = data.val();
@@ -160,6 +167,7 @@ function updateStoreFromFirebase(store) {
     onChildAdded(ref(db, REF + "/users/" + store.user.uid + "/ideas"), ideaAddedInFirebaseACB),
     onChildRemoved(ref(db, REF + "/users/" + store.user.uid + "/ideas"), ideaRemovedInFirebaseACB),
     onChildChanged(ref(db, REF + "/users/" + store.user.uid + "/ideas"), ideaChangedInFirebaseACB),
+    onValue(ref(db, REF + "/common/carerUsername"), carerChangedInFirebaseACB),
     onValue(ref(db, REF + "/common/waterProgress"), waterProgressChangedInFirebaseACB),
     onValue(ref(db, REF + "/common/wateringCount"), wateringCountChangedInFirebaseACB),
   ];

@@ -8,6 +8,7 @@ import { defineStore } from "pinia";
 const useFlowStore = defineStore("flow", {
   state: () => ({
     user: undefined,
+    carerUsername: null,
     waterProgress: 0,
     wateringCount: 0,
     isRequesting: false,
@@ -19,10 +20,12 @@ const useFlowStore = defineStore("flow", {
     ideasArray: (state) => Object.values(state.ideas || {}),
     isSignedIn: (state) => state.user !== null,
     isInitialized: (state) => state.ideas !== null,
+    isUserCarer: (state) => state.user && state.user.name === state.carerUsername,
     plantFullyWatered: (state) => state.waterProgress >= 1,
     ungrownIdeas: (state) => state.ideasArray.filter(idea => !idea.result),
     firstUngrownIdea: (state) => state.ungrownIdeas[0],
-    canGrowIdea: (state) => state.isInitialized && state.firstUngrownIdea && state.plantFullyWatered && !state.isRequesting,
+    plantBeingWateredEpoch: (state) => state.isUserCarer ? state.firstUngrownIdea?.epoch : null,
+    canGrowIdea: (state) => state.isUserCarer && state.isInitialized && state.firstUngrownIdea && state.plantFullyWatered && !state.isRequesting,
     ideasCount: (state) => state.ideasArray.length,
     isPromiseLoading: (state) => isPromiseLoading(state.chatPromiseState),
   },
@@ -130,8 +133,8 @@ const useFlowStore = defineStore("flow", {
 
       // NOTE: mock only in dev
       getChatKey(key =>
-        //resolvePromise(evolveIdea(key, idea), this.chatPromiseState, idea.epoch, processAPIResultACB.bind(this))
-        resolvePromiseMock(chatResponseMock, this.chatPromiseState, idea.epoch, processAPIResultACB.bind(this))
+        resolvePromise(evolveIdea(key, idea), this.chatPromiseState, idea.epoch, processAPIResultACB.bind(this))
+        //resolvePromiseMock(chatResponseMock, this.chatPromiseState, idea.epoch, processAPIResultACB.bind(this))
       );
     },
 

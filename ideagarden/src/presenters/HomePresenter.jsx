@@ -27,7 +27,7 @@ const HomePresenter = {
         ideas={useFlowStore().ideasArray.sort((a, b) => a.epoch - b.epoch)}
         onSendPrompt={onSendPromptACB.bind(this)}
         waterProgress={useFlowStore().waterProgress}
-        plantBeingWateredEpoch={useFlowStore().firstUngrownIdea?.epoch}
+        plantBeingWateredEpoch={useFlowStore().plantBeingWateredEpoch}
         isSignedIn={useFlowStore().isSignedIn}
         isLoading={useFlowStore().isPromiseLoading}
         isInitialized={!useFlowStore().isSignedIn || useFlowStore().isInitialized}
