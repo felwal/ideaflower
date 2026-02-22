@@ -113,6 +113,17 @@ export default function PlantView(props) {
         <path d="M23 11C15.8203 11 10 16.8203 10 24L36 24C36 16.8203 30.1797 11 23 11Z" fill={potColor}/>
         <ellipse cx="23" cy="24" rx="13" ry="3" fill={potColor}/>
       </>,
+      <>
+        <rect width="46" height="16" fill={potColor}/>
+        <rect x="16" y="16" width="14" height="6" fill={potColor}/>
+        <ellipse cx="23" cy="24" rx="18" ry="3" fill={potColor}/>
+        <circle cx="37" cy="16" r="9" fill={potColor}/>
+        <circle cx="9" cy="16" r="9" fill={potColor}/>
+      </>,
+      <>
+        <path d="M45.9863 0C39.9557 5.1378 36 13.7459 36 23.5C36 23.6628 36.0027 23.8252 36.0049 23.9873L36 24H10L9.99414 23.9873C9.99633 23.8252 10 23.6628 10 23.5C10 13.7459 6.04435 5.1378 0.0136719 0H45.9863Z" fill={potColor}/>
+        <ellipse cx="23" cy="24" rx="13" ry="3" fill={potColor}/>
+      </>,
     ];
 
     const potShape = elementByProgress(potShapes, props.idea.potShape);
