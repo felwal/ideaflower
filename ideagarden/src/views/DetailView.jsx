@@ -60,7 +60,7 @@ export default function DetailView(props) {
         <div class="idea__prompt">
           <div class="idea__prompt__texts">
             <p class="idea__prompt__text">{props.idea.prompt}</p>
-            <p class="idea__date caption">{"Planted " + formatDate(props.idea.epoch)}</p>
+            <p class="idea__date caption">{"Planted " + formatDate(props.idea.epoch) + (props.idea.epochGrown ? (" · Grown " + formatDate(props.idea.epochGrown)) : "")}</p>
           </div>
         </div>
 
