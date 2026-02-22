@@ -6,12 +6,12 @@
 
 @keyframes growing {
   0%, 100% {
-    r: 4px;
+    r: 5px;
     color: hsl(from var(--color-seed) h s calc(l * 0.8));
   }
   50% {
     r: 8px;
-    color: hsl(from var(--color-seed) h s calc(l * 1.2));
+    color: hsl(from var(--color-seed) h calc(s * 0.7) calc(l * 2));
   }
 }
 
@@ -20,11 +20,9 @@
 }
 
 .plant__seed--growing {
+  animation: var(--animation-sine);
   animation-name: growing;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  animation-timing-function: cubic-bezier(0.36, 0.0, 0.64, 1.0); /* sine approximation */
-  animation-delay: -0.5s;
+  animation-delay: -0.39s; /* when r=6px */
 }
 
 .plant__leaves {

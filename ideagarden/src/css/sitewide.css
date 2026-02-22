@@ -102,9 +102,7 @@ main {
   aspect-ratio: 1;
   background-color: var(--color-surface);
   border-radius: 50%;
+  animation: var(--animation-sine);
   animation-name: loading;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  animation-timing-function: cubic-bezier(0.36, 0.0, 0.64, 1.0); /* sine approximation */
   animation-delay: -0.5s;
 }

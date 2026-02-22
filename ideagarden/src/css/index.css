@@ -70,4 +70,5 @@
   --transition: 0.1s ease-out;
   --transition-fast: 0;
   --outline: var(--width-border) solid var(--color-border);
+  --animation-sine: 2s cubic-bezier(0.36, 0.0, 0.64, 1.0) infinite; /* sine approximation: https://www.desmos.com/calculator/mtdihhagsx */
 }
