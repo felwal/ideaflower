@@ -86,10 +86,10 @@ const useFlowStore = defineStore("flow", {
     },
 
     growIdea(result) {
-      const idea = this.firstUngrownIdea;
+      const idea = this.getIdea(this.chatPromiseState.id);
 
       if (!idea) {
-        console.warn("no ungrown ideas to receive api result");
+        console.warn("could not find idea " + this.chatPromiseState.id + " to receive api result");
         return;
       }
 
@@ -130,8 +130,8 @@ const useFlowStore = defineStore("flow", {
 
       // NOTE: mock only in dev
       getChatKey(key =>
-        resolvePromise(evolveIdea(key, idea), this.chatPromiseState, processAPIResultACB.bind(this))
-        //resolvePromiseMock(chatResponseMock, this.chatPromiseState, processAPIResultACB.bind(this))
+        //resolvePromise(evolveIdea(key, idea), this.chatPromiseState, idea.epoch, processAPIResultACB.bind(this))
+        resolvePromiseMock(chatResponseMock, this.chatPromiseState, idea.epoch, processAPIResultACB.bind(this))
       );
     },
 

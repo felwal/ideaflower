@@ -1,7 +1,8 @@
-export function resolvePromise(promise, promiseState, notifyACB) {
+export function resolvePromise(promise, promiseState, id, notifyACB) {
   if (!promise) return;
 
   promiseState.promise = promise;
+  promiseState.id = id;
   promiseState.data = null;
   promiseState.error = null;
 
@@ -24,8 +25,9 @@ export function resolvePromise(promise, promiseState, notifyACB) {
   promise.then(saveDataACB).catch(saveErrorACB);
 }
 
-export function resolvePromiseMock(response, promiseState, notifyACB) {
+export function resolvePromiseMock(response, promiseState, id, notifyACB) {
   promiseState.promise = null;
+  promiseState.id = id;
   promiseState.data = response;
   promiseState.error = null;
 

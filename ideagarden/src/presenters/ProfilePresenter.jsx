@@ -46,7 +46,7 @@ const ProfilePresenter = {
 
           // NOTE: only sign up new users in dev
           if (process.env.NODE_ENV === "development") {
-            resolvePromise(signUpUser(this.username), this.authPromiseState, signUpResultACB.bind(this));
+            resolvePromise(signUpUser(this.username), this.authPromiseState, null, signUpResultACB.bind(this));
           }
 
           return;
@@ -61,7 +61,7 @@ const ProfilePresenter = {
 
     function onSignInACB(username) {
       this.username = username;
-      resolvePromise(signInUser(username), this.authPromiseState, signInResultACB.bind(this));
+      resolvePromise(signInUser(username), this.authPromiseState, null, signInResultACB.bind(this));
     }
 
     function onSignOutACB() {
