@@ -19,3 +19,19 @@ export function formatDate(epoch) {
 
   return dateString;
 }
+
+export function formatDuration(epoch1, epoch2) {
+  const epochPlantedToGrown = Math.abs(epoch2 - epoch1);
+  const daysPlantedToGrown = epochPlantedToGrown / 86_400_000;
+  const hoursPlantedToGrown = (daysPlantedToGrown % 1) * 24;
+  const minutesPlantedToGrown = (hoursPlantedToGrown % 1) * 60;
+  const secondsPlantedToGrown = (minutesPlantedToGrown % 1) * 60;
+  let timePlantedToGrown = "";
+
+  if (daysPlantedToGrown >= 1) timePlantedToGrown = Math.round(daysPlantedToGrown) + "d"
+  else if (hoursPlantedToGrown >= 1) timePlantedToGrown = Math.round(hoursPlantedToGrown) + "h"
+  else if (minutesPlantedToGrown >= 1) timePlantedToGrown = Math.round(minutesPlantedToGrown) + "m"
+  else timePlantedToGrown = Math.round(secondsPlantedToGrown) + "s"
+
+  return timePlantedToGrown;
+}
