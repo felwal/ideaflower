@@ -138,17 +138,18 @@ export default function PlantView(props) {
 }
 
 export function getLeafColors(idea) {
-  const hLeafStart = 47;
-  const hLeafStartDk = 90;
-  const hLeafEnd = 163;
+  const hLeafStart = 37;
+  const hLeafStartDk = 75;
+  const hLeafEnd = 162;
   const hLeafEndDk = 200;
 
   const hLeaf = hLeafStart + (hLeafEnd - hLeafStart) * idea.leafHue;
   const hLeafDk = hLeafStartDk + (hLeafEndDk - hLeafStartDk) * idea.leafHue;
 
-  const lLeafStart = 37;
+  // let yellow go a little lighter to make it look more similar to blue
+  const lLeafStart = 37 + 5 * (1 - idea.leafHue);
   const lLeafStartDk = 20;
-  const lLeafEnd = 47;
+  const lLeafEnd = 47 + 10 * (1 - idea.leafHue);
   const lLeafEndDk = 30;
 
   const lLeaf = lLeafStart + (lLeafEnd - lLeafStart) * idea.leafLightness;
