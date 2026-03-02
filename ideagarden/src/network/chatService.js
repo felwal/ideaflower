@@ -6,23 +6,24 @@ export function evolveIdea(key, idea) {
   const openai = new OpenAI({apiKey: key, dangerouslyAllowBrowser: true});
   console.log("calling api ...");
 
-  const role = "You are a co-creative intelligence that grows ideas rather than generating them."
+  const role = "You are a co-creative intelligence that evolves ideas rather than generating them."
 
   const task = "Evolve the idea by developing, refining, or reconfiguring its internal logic and implications."
     + " Make deliberate, insightful changes that remain coherent with the stated constraints and intent.";
 
   const care = getCareShapePrompt(idea);
 
-  const meta = "End with one good question to help the user reflect on the idea and be more creative. Respond in one paragraph. Provide a 1–3 word summarising title.";
+  const meta = "End with one good question to help the user reflect on the idea and be more creative. Respond in one paragraph.";
 
-  const lang = "Use concise, simple phrasing. Avoid clichés, repetition, or explanation. Do not explicitly reference words from the instructions (eg. divergence or abstraction).";
+  const lang = "For the main idea text: use concise, simple phrasing. Avoid clichés, repetition, or explanation. Do not restate the user's idea verbatim, and do not explicitly reference words from the instructions.";
 
-  const morphology = "Rate the original idea's morphological character, rounded to two decimals, for:"
-    + " novelty (0=everyday/usual/already done, 1=original/unique/new), usefulness (0=fantastical/imaginative, 1=practical/realistic/grounded), complexity (0=simple/easy/few interactions, 1=complex/layered/many interactions), impact (0=incremental/gentle/niche, 1=radical/disruptive/far-reaching)."
+  const title = "Provide a concise 1–3 word title summarising the evolved idea. The title should be descriptive, not poetic or explanatory.";
+
+  const morphology = "Provide numeric ratings between 0.00 and 1.00 (two decimals) for the original idea on the following dimensions: novelty, usefulness, complexity, impact."
     + " At least one dimension should be clearly dominant (below 0.20 or above 0.80), unless the idea is genuinely balanced."
     + " The dimensions are independent; do not assign similar values unless conceptually justified.";
 
-  const instructions = [role, task, care, meta, lang, morphology].join("\n\n");
+  const instructions = [role, task, care, meta, title, lang, morphology].join("\n\n");
 
   const promise = openai.responses.create({
     model: "gpt-4.1-2025-04-14",
@@ -45,13 +46,13 @@ function getCareShapePrompt(idea) {
   const divergence = [
     "**Diverge slightly to please the user**: introduce a small variation in framing, emphasis, or interpretation while preserving the core structure.",
     "**Diverge moderately to intrigue the user**: reframe or add one key aspect or assumption, creating a meaningfully different interpretation.",
-    "**Diverge significantly to challenge the user**: replace or add a primary metaphor, perspective, or logic.",
-    "**Diverge radically to provoke the user**: explore a substantially different framing, direction, or domain, and prioritize conceptual novelty over continuity.",
+    "**Diverge significantly to challenge the user**: replace a primary metaphor, perspective, or logic that organizes the idea.",
+    "**Diverge radically to provoke the user**: explore a substantially different framing, direction, or domain, prioritizing conceptual novelty while preserving a recognizable intent.",
   ];
 
   const abstraction = [
-    "**Move down the ladder of abstraction**: express the idea in concrete terms, examples, or specific mechanisms.",
-    "**Lean concrete**: clarify how the idea would manifest in practice or experience.",
+    "**Move down the ladder of abstraction**: express the idea in concrete terms, examples, or mechanisms.",
+    "**Lean concrete**: partially ground the idea by clarifying how it would manifest in practice or experience.",
     "**Lean abstract**: express the idea in more general principles or patterns.",
     "**Move up the ladder of abstraction**: frame the idea as a higher-level concept, rule, or archetype.",
   ];
@@ -76,10 +77,10 @@ function getCareIncubation(idea, promptCount) {
 
   // time corresponding to ↑ progress values
   // NOTE: for 30 min user study; and 1 week home study
-  const t1 = 2; // minutes
-  const t2 = 20;
-  //const t1 = 0.3; // days
-  //const t2 = 1.5;
+  //const t1 = 2; // minutes
+  //const t2 = 20;
+  const t1 = 1; // hours
+  const t2 = 36;
 
   const incubation = expRipening(durationMinutes, t1, progress1, t2, progress2);
   const yellowness = expRipening(durationMinutes, t2, progress2);
