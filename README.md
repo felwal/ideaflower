@@ -23,7 +23,6 @@ Web:
 - [Firebase](https://firebase.google.com/) database and hosting
 - [OpenAI](https://developers.openai.com/api/docs), [GPT-4.1](https://developers.openai.com/api/docs/models/gpt-4.1)
 - [Blobshape](https://github.com/lokesh-coder/blobshape) shape generator
-- [SunCalc](https://github.com/mourner/suncalc) sun position calculator
 - [Lucide](https://lucide.dev/) icons
 
 ## Develop

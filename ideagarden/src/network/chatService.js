@@ -1,26 +1,28 @@
-import { elementByProgress, randomFloatRounded } from "@/utils/mathUtils";
+import useFlowStore from "@/stores/flowStore";
+import { expRipening, elementByProgress, randomFloatRounded, roundFloat } from "@/utils/mathUtils";
 import OpenAI from "openai";
-import { getPosition } from "suncalc";
 
 export function evolveIdea(key, idea) {
   const openai = new OpenAI({apiKey: key, dangerouslyAllowBrowser: true});
   console.log("calling api ...");
 
-  const identity = "You are a co-creative intelligence that grows ideas rather than generating them. "
-    + "Think slowly and subtly, like something quietly processing in the background.\n\n";
+  const role = "You are a co-creative intelligence that grows ideas rather than generating them."
 
-  const task = "Evolve the user's idea by extending, refining, or reconfiguring its internal logic and implications. Changes should be intentional and coherent. "
-    + getCareShapePrompt(idea);
+  const task = "Evolve the idea by developing, refining, or reconfiguring its internal logic and implications."
+    + " Make deliberate, insightful changes that remain coherent with the stated constraints and intent.";
 
-  const meta = "Use concise, vivid phrasing. Avoid clichés, restatement, or long explanations. End with one good question to help the user reflect on the idea and be more creative. "
-    + "Respond in one paragraph. Provide a 1–3 word summarising title.\n\n";
+  const care = getCareShapePrompt(idea);
 
-  const morphology = "Rate the original idea's morphological character, rounded to two decimals, for: "
-    + "novelty (0=everyday/usual/already done, 1=original/unique/new), usefulness (0=fantastical/imaginative, 1=practical/realistic/grounded), complexity (0=simple/easy/few interactions, 1=complex/layered/many interactions), impact (0=incremental/gentle/niche, 1=radical/disruptive/far-reaching). "
-    + "At least one dimension should be clearly dominant (below 0.20 or above 0.80), unless the idea is genuinely balanced. Do not hesitate to go all the way to 0.0 or 1.0. "
-    + "The dimensions are independent; do not assign similar values unless conceptually justified.\n\n"
+  const meta = "End with one good question to help the user reflect on the idea and be more creative. Respond in one paragraph. Provide a 1–3 word summarising title.";
 
-  const instructions = identity + task + meta + morphology;
+  const lang = "Use concise, simple phrasing. Avoid clichés, repetition, or explanation. Do not explicitly reference words from the instructions (eg. divergence or abstraction).";
+
+  const morphology = "Rate the original idea's morphological character, rounded to two decimals, for:"
+    + " novelty (0=everyday/usual/already done, 1=original/unique/new), usefulness (0=fantastical/imaginative, 1=practical/realistic/grounded), complexity (0=simple/easy/few interactions, 1=complex/layered/many interactions), impact (0=incremental/gentle/niche, 1=radical/disruptive/far-reaching)."
+    + " At least one dimension should be clearly dominant (below 0.20 or above 0.80), unless the idea is genuinely balanced."
+    + " The dimensions are independent; do not assign similar values unless conceptually justified.";
+
+  const instructions = [role, task, care, meta, lang, morphology].join("\n\n");
 
   const promise = openai.responses.create({
     model: "gpt-4.1-2025-04-14",
@@ -40,76 +42,58 @@ export function evolveIdea(key, idea) {
 }
 
 function getCareShapePrompt(idea) {
-  const novelty = [
-    "Preserve framing: maintain the core assumptions, domain, and metaphors of the original idea.",
-    "Diverge slightly: introduce a single new analogy or reframing while keeping the core structure intact.",
-    "Diverge moderately: shift the perspective, domain, or framing so the idea is interpreted in a new way.",
-    "Diverge significantly: replace the primary metaphor or domain and prioritize conceptual novelty over continuity.",
-    "Diverge radically: discard core assumptions and reconstruct the idea from a distant or unexpected domain.",
+  const divergence = [
+    "**Diverge slightly to please the user**: introduce a small variation in framing, emphasis, or interpretation while preserving the core structure.",
+    "**Diverge moderately to intrigue the user**: reframe or add one key aspect or assumption, creating a meaningfully different interpretation.",
+    "**Diverge significantly to challenge the user**: replace or add a primary metaphor, perspective, or logic.",
+    "**Diverge radically to provoke the user**: explore a substantially different framing, direction, or domain, and prioritize conceptual novelty over continuity.",
   ];
 
-  const complexity = [
-    "Simplify significantly: collapse the idea to a single rule, mechanism, or interaction that captures its essence.",
-    "Simplify slightly: remove secondary components while preserving the main behavior or intent.",
-    "Increase complexity slightly: introduce a small number of interacting parts, roles, or dependencies.",
-    "Increase complexity significantly: add layered subsystems, roles, or feedback between components.",
-    "Increase complexity radically: introduce multiple interacting feedback loops that produce emergent behavior over time.",
+  const abstraction = [
+    "**Move down the ladder of abstraction**: express the idea in concrete terms, examples, or specific mechanisms.",
+    "**Lean concrete**: clarify how the idea would manifest in practice or experience.",
+    "**Lean abstract**: express the idea in more general principles or patterns.",
+    "**Move up the ladder of abstraction**: frame the idea as a higher-level concept, rule, or archetype.",
   ];
 
-  const usefulness = [
-    "Shift toward the fantastical: treat the idea as symbolic, narrative, or speculative, unconstrained by real-world feasibility.",
-    "Lean fantastical: relax real-world constraints and allow imaginative elements to shape the idea.",
-    "Preserve balance: maintain the current mix of realistic and fantastical elements without shifting the mode.",
-    "Lean grounded: anchor the idea more firmly in real-world constraints, plausibility, and causal logic.",
-    "Shift toward the grounded: make the idea operational, concrete, and implementable within real-world conditions.",
-  ];
+  const incubation = getCareIncubation(idea, divergence.length);
+  const interactivity = getCareInteractivity(idea, abstraction.length);
+  console.log("incubation: " + incubation + "; interactivity: " + interactivity);
 
-  const incubation = getCareIncubation(idea, novelty.length);
-  const interactivity = getCareInteractivity(idea, complexity.length);
-  const energy = getCareEnergy(idea);
+  const divergencePrompt = elementByProgress(divergence, incubation);
+  const abstractionPrompt = abstraction[interactivity];
 
-  console.log("incubation: " + incubation + "; interactivity: " + interactivity + "; energy: " + energy);
-
-  const noveltyPrompt = elementByProgress(novelty, incubation);
-  const complexityPrompt = complexity[interactivity];
-  const usefulnessPrompt = elementByProgress(usefulness, energy);
-
-  return noveltyPrompt + " " + complexityPrompt + " " + usefulnessPrompt + "\n\n";
+  return divergencePrompt + " " + abstractionPrompt;
 }
 
 function getCareIncubation(idea, promptCount) {
-  const epochPlantedToGrown = idea.epochGrown - idea.epoch;
-  const minutesPlantedToGrown = epochPlantedToGrown / 60_000;
+  const durationEpoch = idea.epochGrown - idea.epoch;
+  const durationMinutes = durationEpoch / 60_000;
 
-  // progress thresholds for first and last element
-  const q1 = 1 / promptCount;
-  const q2 = 1 - q1;
+  // thresholds for first and last element
+  const progress1 = 1 / promptCount;
+  const progress2 = 1 - progress1;
 
-  // time corresponding to q1 and q2
-  const t1 = 10; // minutes
-  const t2 = 1.5 * 24 * 60; // 1.5 days
+  // time corresponding to ↑ progress values
+  // NOTE: for 30 min user study; and 1 week home study
+  const t1 = 2; // minutes
+  const t2 = 20;
+  //const t1 = 0.3; // days
+  //const t2 = 1.5;
 
-  const q0 = 1 - Math.abs(q1 - 1) ** (t2 / (t2 - t1)) / Math.abs(q2 - 1) ** (t1 / (t2 - t1));
-  const l = ((q1 - 1) / (q0 - 1)) ** (1 / t1);
-
-  // asymptote at y=1 when x->inf
-  const incubation = Math.max(1 - (1 - q0) * l ** minutesPlantedToGrown, 0);
+  const incubation = expRipening(durationMinutes, t1, progress1, t2, progress2);
+  const yellowness = expRipening(durationMinutes, t2, progress2);
+  useFlowStore().getIdea(idea.epoch).leafHue = roundFloat(1 - yellowness);
 
   return incubation;
 }
 
 function getCareInteractivity(idea, promptCount) {
-  return Math.min(Math.max(idea.wateringCount - 1, 0), promptCount - 1);
-}
+  const interactivity = Math.min(Math.max(idea.wateringCount - 1, 0), promptCount - 1);
+  const edginess = expRipening(idea.wateringCount, 4, 0.75);
+  useFlowStore().getIdea(idea.epoch).leafEdges = roundFloat(edginess);
 
-function getCareEnergy(idea) {
-  const sunPos = getPosition(new Date(idea.epochGrown), 59.347, 18.074);
-  const sunAlt = sunPos.altitude;
-  const sunProgress = (sunAlt + Math.PI / 2) / Math.PI; // 1 at zenith, 0.5 at horizon
-
-  console.log("sunAlt: " + sunAlt);
-
-  return sunProgress;
+  return interactivity;
 }
 
 const schema = {
