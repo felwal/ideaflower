@@ -87,12 +87,6 @@
   outline: var(--outline);
 }
 
-.idea__date {
-  padding-left: var(--spacing-tiny);
-  margin-top: var(--spacing-tiny);
-  width: fit-content;
-}
-
 
 /* BUTTON */
 

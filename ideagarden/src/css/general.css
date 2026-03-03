@@ -6,9 +6,14 @@
   gap: var(--spacing-tiny);
 }
 
+.input-button-row > input {
+  flex: 1;
+}
+
 input, button, .button {
   font-family: var(--font);
   font-size: var(--font-size-widget);
+  line-height: 1.5;
   padding: var(--spacing-tiny);
   padding-left: var(--spacing-small);
   padding-right: var(--spacing-small);
@@ -69,6 +74,11 @@ p, li {
 .caption {
   color: var(--color-text-secondary);
   font-size: var(--font-size-caption);
+}
+
+.caption--indented {
+  margin-top: var(--spacing-tiny);
+  padding-left: var(--spacing-tiny);
 }
 
 .caption--success {
