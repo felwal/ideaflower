@@ -13,7 +13,7 @@ export function evolveIdea(key, idea) {
 
   const care = getCareShapePrompt(idea);
 
-  const meta = "End with one good question to help the user reflect on the idea and be more creative. Respond in one paragraph.";
+  const meta = "End with one good question to help the user reflect on the idea and be more creative. Respond in 1–3 shorter paragraphs.";
 
   const lang = "For the main idea text: use concise, simple phrasing. Avoid clichés, repetition, or explanation. Do not restate the user's idea verbatim, and do not explicitly reference words from the instructions.";
 
@@ -44,17 +44,17 @@ export function evolveIdea(key, idea) {
 
 function getCareShapePrompt(idea) {
   const divergence = [
-    "**Diverge slightly to please the user**: introduce a small variation in framing, emphasis, or interpretation while preserving the core structure.",
-    "**Diverge moderately to intrigue the user**: reframe or add one key aspect or assumption, creating a meaningfully different interpretation.",
-    "**Diverge significantly to challenge the user**: replace a primary metaphor, perspective, or logic that organizes the idea.",
-    "**Diverge radically to provoke the user**: explore a substantially different framing, direction, or domain, prioritizing conceptual novelty while preserving a recognizable intent.",
+    "First **diverge slightly to please the user**: introduce a small variation in framing, emphasis, or interpretation while preserving the core structure.",
+    "First **diverge moderately to intrigue the user**: reframe or add one key aspect or assumption, creating a meaningfully different interpretation.",
+    "First **diverge significantly to challenge the user**: replace a primary metaphor, perspective, or logic that organizes the idea.",
+    "First **diverge radically to provoke the user**: explore a substantially different framing, direction, or domain, prioritizing conceptual novelty while preserving a recognizable intent.",
   ];
 
   const abstraction = [
-    "**Move down the ladder of abstraction**: express the idea in concrete terms, examples, or mechanisms.",
-    "**Lean concrete**: partially ground the idea by clarifying how it would manifest in practice or experience.",
-    "**Lean abstract**: express the idea in more general principles or patterns.",
-    "**Move up the ladder of abstraction**: frame the idea as a higher-level concept, rule, or archetype.",
+    "Then **move down the ladder of abstraction**: express the new idea in concrete terms, examples, or mechanisms.",
+    "Then **lean concrete**: partially ground the new idea by clarifying how it would manifest in practice or experience.",
+    "Then **lean abstract**: express the new idea in more general principles or patterns.",
+    "Then **move up the ladder of abstraction**: frame the new idea as a higher-level concept, rule, or archetype.",
   ];
 
   const incubation = getCareIncubation(idea, divergence.length);
@@ -79,8 +79,8 @@ function getCareIncubation(idea, promptCount) {
   // NOTE: for 30 min user study; and 1 week home study
   //const t1 = 2; // minutes
   //const t2 = 20;
-  const t1 = 1; // hours
-  const t2 = 36;
+  const t1 = 1 * 60;
+  const t2 = 36 * 60;
 
   const incubation = expRipening(durationMinutes, t1, progress1, t2, progress2);
   const yellowness = expRipening(durationMinutes, t2, progress2);
