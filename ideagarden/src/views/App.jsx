@@ -1,6 +1,7 @@
 import "@/css/index.css";
 import "@/css/general.css";
 import "@/css/sitewide.css";
+import { useRoute } from "vue-router";
 
 export default function App() {
   return (
@@ -12,12 +13,16 @@ export default function App() {
               <img src="/favicon.svg" class="header__logo__image" />
             </div>
           </router-link>
+
           <nav class="header__nav">
-            <router-link to="/">Home</router-link>
-            <router-link to="/profile">Profile</router-link>
+            {useRoute().name === "home"
+              ? <router-link to="/profile">Profile</router-link>
+              : <router-link to="/">Home</router-link>
+            }
           </nav>
         </div>
       </header>
+
       <main class="column">
         <router-view />
       </main>
