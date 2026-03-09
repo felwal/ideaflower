@@ -75,12 +75,13 @@ function getCareIncubation(idea, promptCount) {
   const progress1 = 1 / promptCount;
   const progress2 = 1 - progress1;
 
-  // time corresponding to ↑ progress values
-  // NOTE: for 30 min user study; and 1 week home study
-  //const t1 = 2; // minutes
-  //const t2 = 20;
-  const t1 = 1 * 60;
-  const t2 = 36 * 60;
+  // time (minutes) corresponding to ↑ progress values
+  // NOTE: for 30 min user study
+  const t1 = 2;
+  const t2 = 20;
+  // NOTE: for 1 week home study
+  //const t1 = 1 * 60;
+  //const t2 = 36 * 60;
 
   const incubation = expRipening(durationMinutes, t1, progress1, t2, progress2);
   const yellowness = expRipening(durationMinutes, t2, progress2);

@@ -7,10 +7,10 @@
 
 const int PIN_IN_FLOW = 2; // must be D2
 
-const int PULSE_PER_LITER = 650; // approximate value from testing
+const int PULSE_PER_LITER = 600; // approximate value from testing
 const int AWAIT_WATER = 1000;
-const int AWAIT_IDLE = 1500;
-const int AWAIT_FIREBASE = 10000; // NOTE: longer for home study, shorter for user study
+const int AWAIT_IDLE = 1000;
+const int AWAIT_FIREBASE = 5000; // NOTE: longer for home study, shorter for user study
 const float VOLUME_FULL_LITER = 0.05; // 50 ml per avg response with GPT3
 
 bool firebaseSynced = true;
