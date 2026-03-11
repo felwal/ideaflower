@@ -19,9 +19,8 @@ export function evolveIdea(key, idea) {
 
   const title = "Provide a concise 1–3 word title summarising the evolved idea. The title should be descriptive, not poetic or explanatory.";
 
-  const morphology = "Provide numeric ratings between 0.00 and 1.00 (two decimals) for the original idea on the following dimensions: novelty, usefulness, complexity, impact."
-    + " At least one dimension should be clearly dominant (below 0.20 or above 0.80), unless the idea is genuinely balanced."
-    + " The dimensions are independent; do not assign similar values unless conceptually justified.";
+  const morphology = "Provide numeric ratings between 0.00 and 1.00 (two decimals) for the original idea on the following dimensions: realism, scale."
+    + " At least one dimension should be clearly dominant (below 0.20 or above 0.80), unless the idea is genuinely balanced.";
 
   const instructions = [role, task, care, meta, title, lang, morphology].join("\n\n");
 
@@ -44,22 +43,22 @@ export function evolveIdea(key, idea) {
 
 function getCareShapePrompt(idea) {
   const divergence = [
-    "First **diverge slightly to please the user**: introduce a small variation in framing, emphasis, or interpretation while preserving the core structure.",
-    "First **diverge moderately to intrigue the user**: reframe or add one key aspect or assumption, creating a meaningfully different interpretation.",
-    "First **diverge significantly to challenge the user**: replace a primary metaphor, perspective, or logic that organizes the idea.",
-    "First **diverge radically to provoke the user**: explore a substantially different framing, direction, or domain, prioritizing conceptual novelty while preserving a recognizable intent.",
+    "**Diverge slightly to please the user**: introduce a small variation in framing, emphasis, or interpretation while preserving the core structure.",
+    "**Diverge moderately to intrigue the user**: reframe or add one key aspect or assumption, creating a meaningfully different interpretation.",
+    "**Diverge significantly to challenge the user**: replace a primary metaphor, perspective, or logic that organizes the idea.",
+    "**Diverge radically to provoke the user**: explore a substantially different framing, direction, or domain, prioritizing conceptual novelty while preserving a recognizable intent.",
   ];
 
   const abstraction = [
-    "Then **move down the ladder of abstraction**: express the new idea in concrete terms, examples, or mechanisms.",
-    "Then **lean concrete**: partially ground the new idea by clarifying how it would manifest in practice or experience.",
-    "Then **lean abstract**: express the new idea in more general principles or patterns.",
-    "Then **move up the ladder of abstraction**: frame the new idea as a higher-level concept, rule, or archetype.",
+    "**Then move down the ladder of abstraction**: express the new idea in concrete terms, mechanisms, or implementation details.",
+    "**Then lean concrete**: partially ground the new idea by clarifying how it would manifest in practice or experience.",
+    "**Then lean abstract**: express the new idea in more general principles or patterns.",
+    "**Then move up the ladder of abstraction**: frame the new idea as a higher-level concept, rule, or archetype.",
   ];
 
   const incubation = getCareIncubation(idea, divergence.length);
   const interactivity = getCareInteractivity(idea, abstraction.length);
-  console.log("incubation: " + incubation + "; interactivity: " + interactivity);
+  //console.log("incubation: " + incubation + "; interactivity: " + interactivity);
 
   const divergencePrompt = elementByProgress(divergence, incubation);
   const abstractionPrompt = abstraction[interactivity];
@@ -107,22 +106,12 @@ const schema = {
     text: {
       type: "string"
     },
-    novelty: {
+    realism: {
       type: "number",
       minimum: 0,
       maximum: 1
     },
-    usefulness: {
-      type: "number",
-      minimum: 0,
-      maximum: 1
-    },
-    complexity: {
-      type: "number",
-      minimum: 0,
-      maximum: 1
-    },
-    impact: {
+    scale: {
       type: "number",
       minimum: 0,
       maximum: 1
@@ -131,10 +120,8 @@ const schema = {
   required: [
     "title",
     "text",
-    "novelty",
-    "usefulness",
-    "complexity",
-    "impact"
+    "realism",
+    "scale"
   ],
   additionalProperties: false
 }
@@ -143,10 +130,8 @@ const chatResponseMock = {
   output_text: `{
     "title": "Lorem Ipsum",
     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc erat massa, imperdiet a tincidunt bibendum, tempor nec ipsum. Aliquam eu felis euismod, consectetur ex quis, pellentesque sem. Pellentesque imperdiet ut nisi ac pharetra. Maecenas ornare.",
-    "novelty": ${randomFloatRounded()},
-    "usefulness": ${randomFloatRounded()},
-    "complexity": ${randomFloatRounded()},
-    "impact": ${randomFloatRounded()}
+    "realism": ${randomFloatRounded()},
+    "scale": ${randomFloatRounded()}
   }`
 };
 
