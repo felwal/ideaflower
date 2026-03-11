@@ -80,6 +80,10 @@
   border-radius: 50%;
 }
 
+.item__name {
+  overflow-wrap: break-word;
+}
+
 .item > :first-child {
   margin-top: 0;
 }
