@@ -61,7 +61,8 @@ export default function DetailView(props) {
           <div class="idea__prompt__texts">
             <p class="idea__prompt__text">{props.idea.prompt}</p>
             <p class="caption caption--indented">{"Planted " + formatDate(props.idea.epoch)
-                + (props.idea.epochGrown ? (" · Grown after " + formatDuration(props.idea.epochGrown, props.idea.epoch)) : "")}
+                + (props.idea.epochGrown ? (" · Grown after " + formatDuration(props.idea.epochGrown, props.idea.epoch)) : "")
+                + (props.idea.wateringCount ? (" · Watered " + props.idea.wateringCount + " times") : "")}
             </p>
           </div>
         </div>
