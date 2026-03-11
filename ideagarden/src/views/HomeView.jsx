@@ -7,12 +7,12 @@ import LoadingView from "./LoadingView";
 
 export default function HomeView(props) {
   function sendPrompt() {
-    const promptInput = document.getElementById("prompt");
-    const prompt = promptInput.value.trim();
+    const composerEl = document.getElementById("prompt");
+    const prompt = composerEl.innerText.trim();
 
     if (prompt === "") return;
 
-    promptInput.value = "";
+    composerEl.innerText = "";
     props.onSendPrompt(prompt);
   }
 
@@ -24,6 +24,17 @@ export default function HomeView(props) {
 
   function addPromptOnClickACB(evt) {
     sendPrompt();
+  }
+
+  function onPromptEditACB(evt) {
+    const composerEl = evt.target;
+
+    if (!composerEl.innerText) {
+      // remove the <br> that appears and prevents placeholder from reappearing after deleting all text
+      composerEl.removeChild(composerEl.lastChild);
+      // avoid cursor jumping to end after ctrl-a + delete
+      composerEl.innerText = "";
+    }
   }
 
   function renderIdea(idea) {
@@ -52,7 +63,18 @@ export default function HomeView(props) {
         <h1>Your idea garden</h1>
 
         <div class="composer input-button-row column">
-          <input class="composer__input" id="prompt" type="text" autocapitalize="sentences" placeholder="Plant an idea to grow ..." onKeydown={addPromptOnKeyACB} disabled={!props.isSignedIn} />
+          <p
+            class="input composer__input"
+            id="prompt"
+            type="text"
+            contenteditable="plaintext-only"
+            autocapitalize="sentences"
+            data-placeholder="Plant an idea to grow ..."
+            onInput={onPromptEditACB.bind(this)}
+            onKeydown={addPromptOnKeyACB}
+            disabled={!props.isSignedIn}>
+          </p>
+
           <button class="composer__button" onClick={addPromptOnClickACB} disabled={!props.isSignedIn}>
             <ArrowDownToDot color="currentColor" />
           </button>

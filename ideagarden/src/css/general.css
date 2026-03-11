@@ -6,17 +6,20 @@
   gap: var(--spacing-tiny);
 }
 
-.input-button-row > input {
+.input-button-row > input,
+.input-button-row > .input {
   flex: 1;
 }
 
-input, button, .button {
+input, .input,
+button, .button {
   font-family: var(--font);
   font-size: var(--font-size-widget);
   line-height: 1.5;
   padding: var(--spacing-tiny);
   padding-left: var(--spacing-small);
   padding-right: var(--spacing-small);
+  margin: 0;
   border: none;
   border-radius: var(--corner-radius-medium);
   background-color: var(--color-surface);
@@ -35,8 +38,19 @@ input:disabled, button:disabled {
   outline: none;
 }
 
-input::placeholder {
+input::placeholder,
+[contenteditable]:empty::before {
   color: var(--color-text-secondary);
+}
+
+[contenteditable]:empty::before {
+  content: attr(data-placeholder);
+  pointer-events: none;
+  display: block;
+}
+
+[contenteditable] > br {
+  display: none;
 }
 
 input:focus {

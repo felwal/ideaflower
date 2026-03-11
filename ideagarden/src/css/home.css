@@ -4,12 +4,10 @@
   width: 100%;
   height: auto;
   margin-bottom: var(--spacing-section);
-  align-items: center;
+  align-items: start;
 }
 
 .composer__input {
-  height: var(--height-composer);
-  padding: 0;
   padding-left: calc(var(--height-composer) * 0.5);
   padding-right: calc(var(--height-composer) * 0.5);
   border-radius: calc(var(--height-composer) * 0.5);
