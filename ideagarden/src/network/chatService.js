@@ -77,7 +77,7 @@ function getCareIncubation(idea, promptCount) {
   // time (minutes) corresponding to ↑ progress values
   // NOTE: for 30 min user study
   const t1 = 2;
-  const t2 = 20;
+  const t2 = 10;
   // NOTE: for 1 week home study
   //const t1 = 1 * 60;
   //const t2 = 36 * 60;
