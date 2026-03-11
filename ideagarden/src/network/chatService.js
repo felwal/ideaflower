@@ -6,26 +6,27 @@ export function evolveIdea(key, idea) {
   const openai = new OpenAI({apiKey: key, dangerouslyAllowBrowser: true});
   console.log("calling api ...");
 
-  const role = "You are a co-creative intelligence that evolves ideas rather than generating them."
+  const [divergence, temperature] = getDivergenceAndTemperature(idea);
+  const targetWordCount = getTargetWordCount(idea);
+
+  const role = "You are a co-creative intelligence that evolves ideas rather than generating them.";
 
   const task = "Evolve the idea by developing, refining, or reconfiguring its internal logic and implications."
-    + " Make deliberate, insightful changes that remain coherent with the stated constraints and intent.";
+    + " Make deliberate, insightful changes that remain coherent."
+    + divergence;
 
-  const care = getCareShapePrompt(idea);
+  const question = "End with one thought-provoking question to spark ideas for further or alternative evolutions.";
 
-  const meta = "End with one good question to help the user reflect on the idea and be more creative. Respond in 1–3 shorter paragraphs.";
+  const meta = "Respond in around " + targetWordCount + " words.";
 
-  const lang = "For the main idea text: use concise, simple phrasing. Avoid clichés, repetition, or explanation. Do not restate the user's idea verbatim, and do not explicitly reference words from the instructions.";
+  const misc = "Provide a concise 1–3 word title summarising the evolved idea."
+    + " Rate the morphological character of the original idea between 0.00 and 1.00 for the following dimensions: realism, complexity.";
 
-  const title = "Provide a concise 1–3 word title summarising the evolved idea. The title should be descriptive, not poetic or explanatory.";
-
-  const morphology = "Provide numeric ratings between 0.00 and 1.00 (two decimals) for the original idea on the following dimensions: realism, scale."
-    + " At least one dimension should be clearly dominant (below 0.20 or above 0.80), unless the idea is genuinely balanced.";
-
-  const instructions = [role, task, care, meta, title, lang, morphology].join("\n\n");
+  const instructions = [role, task, question, meta, misc].join("\n\n");
 
   const promise = openai.responses.create({
     model: "gpt-4.1-2025-04-14",
+    temperature: temperature,
     instructions: instructions,
     input: idea.prompt,
     text: {
@@ -41,37 +42,19 @@ export function evolveIdea(key, idea) {
   return promise;
 }
 
-function getCareShapePrompt(idea) {
-  const divergence = [
-    "**Diverge slightly to please the user**: introduce a small variation in framing, emphasis, or interpretation while preserving the core structure.",
-    "**Diverge moderately to intrigue the user**: reframe or add one key aspect or assumption, creating a meaningfully different interpretation.",
-    "**Diverge significantly to challenge the user**: replace a primary metaphor, perspective, or logic that organizes the idea.",
-    "**Diverge radically to provoke the user**: explore a substantially different framing, direction, or domain, prioritizing conceptual novelty while preserving a recognizable intent.",
+function getDivergenceAndTemperature(idea) {
+  const prompts = [
+    " **Diverge slightly to please the user**: introduce a small variation in framing, emphasis, or interpretation while preserving the core structure.",
+    " **Diverge moderately to intrigue the user**: reframe or add one key aspect or assumption, creating a meaningfully different interpretation.",
+    " **Diverge significantly to challenge the user**: replace a primary metaphor, perspective, or logic that organizes the idea.",
+    " **Diverge radically to provoke the user**: explore a substantially different framing, direction, or domain, prioritizing conceptual novelty while preserving a recognizable intent.",
   ];
 
-  const abstraction = [
-    "**Then move down the ladder of abstraction**: express the new idea in concrete terms, mechanisms, or implementation details.",
-    "**Then lean concrete**: partially ground the new idea by clarifying how it would manifest in practice or experience.",
-    "**Then lean abstract**: express the new idea in more general principles or patterns.",
-    "**Then move up the ladder of abstraction**: frame the new idea as a higher-level concept, rule, or archetype.",
-  ];
-
-  const incubation = getCareIncubation(idea, divergence.length);
-  const interactivity = getCareInteractivity(idea, abstraction.length);
-  //console.log("incubation: " + incubation + "; interactivity: " + interactivity);
-
-  const divergencePrompt = elementByProgress(divergence, incubation);
-  const abstractionPrompt = abstraction[interactivity];
-
-  return divergencePrompt + " " + abstractionPrompt;
-}
-
-function getCareIncubation(idea, promptCount) {
   const durationEpoch = idea.epochGrown - idea.epoch;
   const durationMinutes = durationEpoch / 60_000;
 
   // thresholds for first and last element
-  const progress1 = 1 / promptCount;
+  const progress1 = 1 / prompts.length;
   const progress2 = 1 - progress1;
 
   // time (minutes) corresponding to ↑ progress values
@@ -84,17 +67,29 @@ function getCareIncubation(idea, promptCount) {
 
   const incubation = expRipening(durationMinutes, t1, progress1, t2, progress2);
   const yellowness = expRipening(durationMinutes, t2, progress2);
+  const divergence = elementByProgress(prompts, incubation);
   useFlowStore().getIdea(idea.epoch).leafHue = roundFloat(1 - yellowness);
 
-  return incubation;
+  const tempMax = 1.1;
+  const temp = parseFloat((tempMax * yellowness).toFixed(2));
+
+  return [divergence, temp];
 }
 
-function getCareInteractivity(idea, promptCount) {
-  const interactivity = Math.min(Math.max(idea.wateringCount - 1, 0), promptCount - 1);
-  const edginess = expRipening(idea.wateringCount, 4, 0.75);
-  useFlowStore().getIdea(idea.epoch).leafEdges = roundFloat(edginess);
+function getTargetWordCount(idea) {
+  const n1 = 1;
+  const progress1 = 0;
+  const n2 = 4;
+  const progress2 = 0.8;
 
-  return interactivity;
+  const carefulness = expRipening(idea.wateringCount, n1, progress1, n2, progress2);
+  useFlowStore().getIdea(idea.epoch).leafRoundness = roundFloat(1 - carefulness);
+
+  const wordCountMin = 30;
+  const wordCountMax =  180;
+  const wordCount = wordCountMax - carefulness * (wordCountMax - wordCountMin);
+
+  return Math.round(wordCount / 10) * 10;
 }
 
 const schema = {
@@ -111,7 +106,7 @@ const schema = {
       minimum: 0,
       maximum: 1
     },
-    scale: {
+    complexity: {
       type: "number",
       minimum: 0,
       maximum: 1
@@ -121,7 +116,7 @@ const schema = {
     "title",
     "text",
     "realism",
-    "scale"
+    "complexity"
   ],
   additionalProperties: false
 }
@@ -131,7 +126,7 @@ const chatResponseMock = {
     "title": "Lorem Ipsum",
     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc erat massa, imperdiet a tincidunt bibendum, tempor nec ipsum. Aliquam eu felis euismod, consectetur ex quis, pellentesque sem. Pellentesque imperdiet ut nisi ac pharetra. Maecenas ornare.",
     "realism": ${randomFloatRounded()},
-    "scale": ${randomFloatRounded()}
+    "complexity": ${randomFloatRounded()}
   }`
 };
 
