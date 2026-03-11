@@ -70,6 +70,7 @@
 .idea__result {
   margin-top: 0;
   margin-bottom: 0;
+  white-space: pre-wrap;
 }
 
 .idea__prompt {
