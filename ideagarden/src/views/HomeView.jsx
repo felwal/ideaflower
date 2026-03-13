@@ -72,7 +72,7 @@ export default function HomeView(props) {
             data-placeholder="Plant an idea to grow ..."
             onInput={onPromptEditACB.bind(this)}
             onKeydown={addPromptOnKeyACB}
-            disabled={!props.isSignedIn}>
+            aria-disabled={!props.isSignedIn}>
           </p>
 
           <button class="composer__button" onClick={addPromptOnClickACB} disabled={!props.isSignedIn}>

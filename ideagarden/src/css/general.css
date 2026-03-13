@@ -32,10 +32,15 @@ button, .button {
   text-align: center;
 }
 
-input:disabled, button:disabled {
+input:disabled, .input[aria-disabled="true"],
+button:disabled {
   background-color: var(--color-hover);
   color: var(--color-text-secondary);
   outline: none;
+}
+
+.input[aria-disabled="true"] {
+  pointer-events: none;
 }
 
 input::placeholder,
@@ -53,7 +58,8 @@ input::placeholder,
   display: none;
 }
 
-input:focus {
+input:focus,
+.input:focus {
   outline-color: var(--color-hover-button);
 }
 
