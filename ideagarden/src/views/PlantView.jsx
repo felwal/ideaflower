@@ -147,9 +147,9 @@ export function getLeafColors(idea) {
   const hLeafDk = hLeafStartDk + (hLeafEndDk - hLeafStartDk) * idea.leafHue;
 
   // let yellow go a little lighter to make it look more similar to blue
-  const lLeafStart = 32 + 5 * (1 - idea.leafHue);
+  const lLeafStart = 32 + 10 * (1 - idea.leafHue);
   const lLeafStartDk = 15;
-  const lLeafEnd = 47 + 10 * (1 - idea.leafHue);
+  const lLeafEnd = 47 + 15 * (1 - idea.leafHue);
   const lLeafEndDk = 30;
 
   const lLeaf = lLeafStart + (lLeafEnd - lLeafStart) * idea.leafLightness;

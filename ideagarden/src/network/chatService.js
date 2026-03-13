@@ -79,7 +79,7 @@ function getDivergenceAndTemperature(idea) {
 function getTargetWordCount(idea) {
   const n1 = 1;
   const progress1 = 0;
-  const n2 = 4;
+  const n2 = 5;
   const progress2 = 0.8;
 
   const carefulness = expRipening(idea.wateringCount, n1, progress1, n2, progress2);

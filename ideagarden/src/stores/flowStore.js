@@ -149,7 +149,7 @@ const useFlowStore = defineStore("flow", {
     },
 
     generateLeafPath(idea) {
-      const growthMin = 3;
+      const growthMin = 2;
       const growthMax = 8;
       const growth = growthMin + Math.round((growthMax - growthMin) * idea.leafRoundness);
 
