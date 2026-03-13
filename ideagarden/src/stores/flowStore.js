@@ -98,8 +98,8 @@ const useFlowStore = defineStore("flow", {
 
       idea.name = result.title;
       idea.result = result.text;
-      idea.leafLightness = roundFloat(result.realism);
       idea.leafEdges = roundFloat(result.complexity);
+      idea.leafLightness = roundFloat(1 - result.impact);
       idea.leafPath = this.generateLeafPath(idea);
     },
 

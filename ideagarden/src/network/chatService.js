@@ -20,7 +20,7 @@ export function evolveIdea(key, idea) {
   const meta = "Respond in around " + targetWordCount + " words.";
 
   const misc = "Provide a concise 1–3 word title summarising the evolved idea."
-    + " Rate the morphological character of the original idea between 0.00 and 1.00 for the following dimensions: realism, complexity.";
+    + " Rate the morphological character of the idea between 0.00 and 1.00 (two decimals) for the following dimensions: complexity, impact.";
 
   const instructions = [role, task, question, meta, misc].join("\n\n");
 
@@ -101,12 +101,12 @@ const schema = {
     text: {
       type: "string"
     },
-    realism: {
+    complexity: {
       type: "number",
       minimum: 0,
       maximum: 1
     },
-    complexity: {
+    impact: {
       type: "number",
       minimum: 0,
       maximum: 1
@@ -115,8 +115,8 @@ const schema = {
   required: [
     "title",
     "text",
-    "realism",
-    "complexity"
+    "complexity",
+    "impact"
   ],
   additionalProperties: false
 }
@@ -125,8 +125,8 @@ const chatResponseMock = {
   output_text: `{
     "title": "Lorem Ipsum",
     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc erat massa, imperdiet a tincidunt bibendum, tempor nec ipsum. Aliquam eu felis euismod, consectetur ex quis, pellentesque sem. Pellentesque imperdiet ut nisi ac pharetra. Maecenas ornare.",
-    "realism": ${randomFloatRounded()},
-    "complexity": ${randomFloatRounded()}
+    "complexity": ${randomFloatRounded()},
+    "impact": ${randomFloatRounded()}
   }`
 };
 
