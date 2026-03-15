@@ -59,8 +59,8 @@ function getDivergenceAndTemperature(idea) {
 
   // time (minutes) corresponding to ↑ progress values
   // NOTE: for 30 min user study
-  const t1 = 2;
-  const t2 = 10;
+  const t1 = 1;
+  const t2 = 6;
   // NOTE: for 1 week home study
   //const t1 = 1 * 60;
   //const t2 = 36 * 60;
@@ -86,7 +86,7 @@ function getTargetWordCount(idea) {
   useFlowStore().getIdea(idea.epoch).leafRoundness = roundFloat(1 - carefulness);
 
   const wordCountMin = 30;
-  const wordCountMax =  180;
+  const wordCountMax =  150;
   const wordCount = wordCountMax - carefulness * (wordCountMax - wordCountMin);
 
   return Math.round(wordCount / 10) * 10;
