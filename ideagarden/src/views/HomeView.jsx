@@ -51,7 +51,7 @@ export default function HomeView(props) {
           isLoading={props.isLoading && idea.epoch === props.plantBeingWateredEpoch}
         />
 
-        <h3 class="item__name">{idea.name || "???"}</h3>
+        <h3 class="item__name">{idea.name || "Ungrown Idea"}</h3>
         <p class="caption item__date">{"Planted " + formatDate(idea.epoch)}</p>
       </RouterLink>
     );
