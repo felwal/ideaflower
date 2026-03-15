@@ -39,7 +39,7 @@ const DetailPresenter = {
 
     // set title if this is the first time the idea was loaded
     if (!this.idea) {
-      useHead({title: (idea.name ? idea.name : "Ungrown Idea") + " | Ideaflower"});
+      useHead({title: (idea.name ? idea.name : "Unwatered Idea") + " | Ideaflower"});
     }
 
     this.idea = idea;
