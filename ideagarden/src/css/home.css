@@ -72,10 +72,22 @@
 .item__unread {
   position: absolute;
   right: var(--spacing-small);
+  padding: var(--spacing-diminutive);
+  padding-top: 0;
+  padding-bottom: 0;
+  font-weight: bold;
+  color: var(--color-text-secondary-inverted);
   background-image: var(--gradient-unread);
-  height: var(--size-unread-dot);
-  aspect-ratio: 1;
-  border-radius: 50%;
+  border-radius: var(--corner-radius-small);
+  outline: var(--outline);
+  outline-color: var(--color-bg);
+  opacity: 0.9;
+  transition: var(--transition);
+  z-index: 2;
+}
+
+.item:hover > .item__unread {
+  outline-color: var(--color-hover);
 }
 
 .item__name {

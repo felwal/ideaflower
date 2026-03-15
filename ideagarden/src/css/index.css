@@ -12,6 +12,7 @@
   --color-text-primary: rgba(0, 0, 0, 0.8);
   --color-text-secondary: rgba(0, 0, 0, 0.5);
   --color-text-primary-inverted: white;
+  --color-text-secondary-inverted: rgba(255, 255, 255, 0.8);
 
   --color-primary: #41A800;
   --color-primary-light: #83D500;
@@ -27,6 +28,7 @@
   --color-water: #3687FF;
   --color-water-light: #52ABFF;
   --color-water-dark: #1A64FF;
+  --gradient-water: linear-gradient(to bottom left, var(--color-water-light), var(--color-water-dark));
 
   --saturation-leaf: 100%;
   --hue-pot: 35;
@@ -48,7 +50,6 @@
   --spacing-edge: var(--spacing-small);
 
   --size-logo-header: 2.1rem;
-  --size-unread-dot: 1.3rem;
   --width-border: 0.1rem;
   --width-border-wide: 0.2rem;
   --width-column: 46rem;

@@ -41,7 +41,7 @@ export default function HomeView(props) {
     return (
       <RouterLink to={"/idea/" + idea.epoch} class="item">
         {idea.result && !idea.read &&
-          <div class="item__unread"></div>
+          <p class="item__unread caption">New</p>
         }
 
         <PlantView
