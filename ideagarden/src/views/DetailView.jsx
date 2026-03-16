@@ -53,6 +53,10 @@ export default function DetailView(props) {
     );
   }
 
+  const wateredCaption = " · Watered " + props.idea.wateringCount
+    + (props.idea.wateringCount > 1 ? " times" : " time")
+    + " after " + formatDuration(props.idea.epochGrown, props.idea.epoch);
+
   return (
     <div class="detail-view">
       <div class="detail__content">
@@ -61,7 +65,7 @@ export default function DetailView(props) {
           <div class="idea__prompt__texts">
             <p class="idea__prompt__text">{props.idea.prompt}</p>
             <p class="caption caption--indented">{"Planted " + formatDate(props.idea.epoch)
-                + (props.idea.epochGrown ? (" · Grown after " + formatDuration(props.idea.epochGrown, props.idea.epoch)) : "")}
+              + (props.idea.epochGrown ? wateredCaption : "")}
             </p>
           </div>
         </div>
