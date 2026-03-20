@@ -59,11 +59,11 @@ function getDivergenceAndTemperature(idea) {
 
   // time (minutes) corresponding to ↑ progress values
   // NOTE: for 30 min user study
-  const t1 = 1;
-  const t2 = 15;
+  //const t1 = 1;
+  //const t2 = 15;
   // NOTE: for 1 week home study
-  //const t1 = 1 * 60;
-  //const t2 = 60 * 60;
+  const t1 = 1 * 60;
+  const t2 = 60 * 60;
 
   const incubation = expRipening(durationMinutes, t1, progress1, t2, progress2);
   const yellowness = expRipening(durationMinutes, t2, progress2);
