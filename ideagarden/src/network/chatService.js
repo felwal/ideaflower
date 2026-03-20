@@ -17,10 +17,10 @@ export function evolveIdea(key, idea) {
 
   const question = "End with one thought-provoking question to spark ideas for further or alternative evolutions.";
 
-  const meta = "Respond in around " + targetWordCount + " words.";
+  const meta = "Respond in around " + targetWordCount + " words. Split into multiple paragraphs if appropriate.";
 
   const misc = "Provide a concise 1–3 word title summarising the evolved idea."
-    + " Rate the morphological character of the idea between 0.00 and 1.00 (two decimals) for the following dimensions: complexity, impact.";
+    + " Rate the morphological character of the user's original idea between 0.00 and 1.00 (two decimals) for the following dimensions: complexity, impact.";
 
   const instructions = [role, task, question, meta, misc].join("\n\n");
 
@@ -47,7 +47,7 @@ function getDivergenceAndTemperature(idea) {
     " **Diverge slightly to please the user**: introduce a small variation in framing, emphasis, or interpretation while preserving the core structure.",
     " **Diverge moderately to intrigue the user**: reframe or add one key aspect or assumption, creating a meaningfully different interpretation.",
     " **Diverge significantly to challenge the user**: replace a primary metaphor, perspective, or logic that organizes the idea.",
-    " **Diverge radically to provoke the user**: explore a substantially different framing, direction, or domain, prioritizing conceptual novelty while preserving a recognizable intent.",
+    " **Diverge radically to provoke the user**: explore a substantially different framing or direction, prioritizing conceptual novelty while preserving a recognizable intent.",
   ];
 
   const durationEpoch = idea.epochGrown - idea.epoch;
@@ -60,10 +60,10 @@ function getDivergenceAndTemperature(idea) {
   // time (minutes) corresponding to ↑ progress values
   // NOTE: for 30 min user study
   const t1 = 1;
-  const t2 = 6;
+  const t2 = 15;
   // NOTE: for 1 week home study
   //const t1 = 1 * 60;
-  //const t2 = 36 * 60;
+  //const t2 = 60 * 60;
 
   const incubation = expRipening(durationMinutes, t1, progress1, t2, progress2);
   const yellowness = expRipening(durationMinutes, t2, progress2);
@@ -80,7 +80,7 @@ function getTargetWordCount(idea) {
   const n1 = 1;
   const progress1 = 0;
   const n2 = 5;
-  const progress2 = 0.8;
+  const progress2 = 0.9;
 
   const carefulness = expRipening(idea.wateringCount, n1, progress1, n2, progress2);
   useFlowStore().getIdea(idea.epoch).leafRoundness = roundFloat(1 - carefulness);
