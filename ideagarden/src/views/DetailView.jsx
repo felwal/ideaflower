@@ -53,8 +53,8 @@ export default function DetailView(props) {
     );
   }
 
-  const wateredCaption = " · Watered " + props.idea.wateringCount
-    + (props.idea.wateringCount > 1 ? " times" : " time")
+  const wateredCaption = " · Watered "
+    + (props.idea.wateringCount === 1 ? " once" : props.idea.wateringCount + " times")
     + " after " + formatDuration(props.idea.epochGrown, props.idea.epoch);
 
   return (
