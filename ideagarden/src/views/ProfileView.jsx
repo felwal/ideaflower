@@ -17,6 +17,10 @@ export default function ProfileView(props) {
     }
   }
 
+  function exportDataACB(evt) {
+    props.onExportData();
+  }
+
   function regeneratePlantsACB(evt) {
     props.onRegeneratePlants();
   }
@@ -32,16 +36,22 @@ export default function ProfileView(props) {
           ? <button onClick={signOutACB}>Sign out</button>
           : <button onClick={signInACB}>Sign in</button>
         }
-
-        {process.env.NODE_ENV === "development" &&
-          // NOTE: only show in dev
-          <button onClick={regeneratePlantsACB}>Regenerate plants</button>
-        }
       </div>
 
       {props.invalidLogin
         ? <p class="caption caption--indented caption--error">Invalid username</p>
         : props.username && <p class="caption caption--indented caption--success">{"Signed in as " + props.username}</p>
+      }
+
+      {props.username &&
+        <div class="input-button-row">
+          <button onClick={exportDataACB}>Export data</button>
+
+          {process.env.NODE_ENV === "development" &&
+            // NOTE: only show in dev
+            <button onClick={regeneratePlantsACB}>Regenerate plants</button>
+          }
+        </div>
       }
     </div>
   );

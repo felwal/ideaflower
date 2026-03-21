@@ -72,11 +72,27 @@ const ProfilePresenter = {
       useFlowStore().regeneratePlants();
     }
 
+    function onExportDataACB() {
+      // create file
+      const content = useFlowStore().exportIdeasContent();
+      const file = new Blob([content], { type: 'text/markdown' });
+
+      // create link to download
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(file);
+      link.download = "ideaflower.md";
+
+      // save file
+      link.click();
+      URL.revokeObjectURL(link.href);
+    }
+
     return (
       <ProfileView
         username={store.user?.name ?? ""}
         onSignIn={onSignInACB.bind(this)}
         onSignOut={onSignOutACB.bind(this)}
+        onExportData={onExportDataACB}
         onRegeneratePlants={onRegeneratePlantsACB.bind(this)}
         invalidLogin={this.invalidLogin}
       />

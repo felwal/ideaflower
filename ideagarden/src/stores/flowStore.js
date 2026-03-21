@@ -160,6 +160,14 @@ const useFlowStore = defineStore("flow", {
       const {path} = blobshape({size: 100, growth: growth, edges: edges});
       return path;
     },
+
+    exportIdeasContent() {
+      return this.ideasArray
+        .reduce((acc, idea) =>
+          [acc, "## " + (idea.name || "Unwatered Idea"), idea.prompt, idea.result && "***", idea.result].filter(it => it).join("\n\n"),
+          "# Ideaflower export"
+        ) + "\n";
+    },
   },
 });
 
