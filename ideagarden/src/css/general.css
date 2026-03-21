@@ -23,6 +23,7 @@ button, .button {
   margin: 0;
   border: none;
   border-radius: var(--corner-radius-medium);
+  color: var(--color-text-primary);
   background-color: var(--color-surface);
   outline: var(--outline);
   transition: var(--transition-fast);
@@ -35,13 +36,8 @@ button, .button {
 
 input:disabled, .input[aria-disabled="true"],
 button:disabled {
-  background-color: var(--color-hover);
-  color: var(--color-text-secondary);
+  opacity: var(--alpha-disabled);
   outline: none;
-}
-
-.input[aria-disabled="true"] {
-  pointer-events: none;
 }
 
 input::placeholder,
@@ -62,10 +58,6 @@ input::placeholder,
 input:focus,
 .input:focus {
   outline-color: var(--color-hover-button);
-}
-
-button, .button {
-  color: var(--color-text-primary);
 }
 
 button:enabled:hover,

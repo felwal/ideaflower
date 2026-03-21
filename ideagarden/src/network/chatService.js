@@ -57,11 +57,11 @@ function getDivergenceAndTemperature(idea) {
   const progress1 = 1 / prompts.length;
   const progress2 = 1 - progress1;
 
-  // time (minutes) corresponding to ↑ progress values
-  // NOTE: for 30 min user study
+  // time corresponding to ↑ progress values
+  // NOTE: for 30 min user study (minutes)
   //const t1 = 1;
   //const t2 = 15;
-  // NOTE: for 1 week home study
+  // NOTE: for 1 week home study (hours)
   const t1 = 1 * 60;
   const t2 = 60 * 60;
 

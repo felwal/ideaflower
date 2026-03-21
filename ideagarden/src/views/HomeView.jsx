@@ -67,7 +67,7 @@ export default function HomeView(props) {
             class="input composer__input"
             id="prompt"
             type="text"
-            contenteditable="plaintext-only"
+            contenteditable={props.isSignedIn ? "plaintext-only" : "false"}
             autocapitalize="sentences"
             data-placeholder="Plant an idea to grow ..."
             onInput={onPromptEditACB.bind(this)}

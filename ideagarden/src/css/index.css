@@ -5,9 +5,9 @@
   --color-surface: white;
   --color-border: rgba(128, 128, 128, 0.15);
 
-  --color-hover: hsl(36, 20%, 98%); /* from color-bg */
+  --color-hover: hsl(30, 20%, 98%); /* from color-bg + color-surface * alpha-disabled */
   --color-hover-button: rgba(92, 73, 22, 0.4); /* from color-seed */
-  --color-hover-growth: hsla(36, 20%, 98%, 0.98); /* from color-hover */
+  --color-hover-growth: hsla(30, 20%, 98%, 0.98); /* from color-hover */
 
   --color-text-primary: rgba(0, 0, 0, 0.8);
   --color-text-secondary: rgba(0, 0, 0, 0.5);
@@ -33,6 +33,7 @@
   --saturation-leaf: 100%;
   --hue-pot: 35;
   --alpha-water-empty: 0.4;
+  --alpha-disabled: 0.625; /* text-primary * this = text-secondary */
 
   /* dimen */
 
