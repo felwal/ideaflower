@@ -150,11 +150,11 @@ const useFlowStore = defineStore("flow", {
 
     generateLeafPath(idea) {
       const growthMin = 2;
-      const growthMax = 8;
+      const growthMax = 7;
       const growth = growthMin + Math.round((growthMax - growthMin) * idea.leafRoundness);
 
       const edgesMin = 4;
-      const edgesMax = 15;
+      const edgesMax = 16;
       const edges = edgesMin + Math.round((edgesMax - edgesMin) * idea.leafEdges);
 
       const {path} = blobshape({size: 100, growth: growth, edges: edges});
