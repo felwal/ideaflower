@@ -4,21 +4,19 @@
 #include <WiFiNINA.h>
 #include <FlowSensor.h>
 #include <Firebase.h>
+#include <ArduinoJson.h>
 
 const int PIN_IN_FLOW = 2; // must be D2
 
 const int PULSE_PER_LITER = 600; // approximate value from testing
-const int AWAIT_WATER = 1000;
+const int AWAIT_WIFI = 500;
+const int AWAIT_WATER = 800; // must be shorter than AWAIT_IDLE
 const int AWAIT_IDLE = 1000;
-const int AWAIT_FIREBASE = 10000; // NOTE: longer for home study, shorter for user study
 const float VOLUME_FULL_LITER = 0.05; // 50 ml per avg response with GPT3
 
-bool firebaseSynced = true;
 bool flowDetected = false;
 int flowDetectedMillis = 0;
-float volumeProgress = 0; // -1 for "no ideas to water"
-float volumeProgressStart = 0;
-int wateringCount = 0;
+float volumeProgress = 0;
 
 FlowSensor flow(PULSE_PER_LITER, PIN_IN_FLOW);
 Firebase firebase(FIREBASE_URL, FIREBASE_AUTH);
@@ -29,41 +27,19 @@ void setup() {
   Serial.begin(9600);
   Serial.println("\n\n--- NEW RUN ---");
 
-  flow.begin(onFlowCount, false); // use internal pull-up resistor
-
+  flow.begin(onFlowCount, false); // false = use internal pull-up resistor
   connectWifi();
   connectFirebase();
 }
 
 void loop() {
-  if (volumeProgress >= 0 && (volumeProgress < 1 || !firebaseSynced)) {
-    // only measure flow if not already fully watered
-    // TODO: contintue to accumulate, if user has multiple ungrown seeds?
+  if (flowDetected) {
     readFlow();
     writeFirebase();
-
-    if (!flowDetected) {
-      Serial.print(".");
-      delay(AWAIT_WATER);
-    }
   }
-  else if (volumeProgress < 0 || firebaseSynced) {
-    // wait for water progress to be resetted via Firebase / web interface
-    // – should only happen when progress >1
-    float volumeProgressInFirebase = getFirebaseFloat("flowModel/common/waterProgress");
-
-    if (volumeProgressInFirebase != volumeProgress) {
-      wateringCount = getFirebaseInt("flowModel/common/wateringCount");
-      volumeProgressStart = volumeProgressInFirebase;
-      volumeProgress = volumeProgressInFirebase;
-
-      flow.resetVolume();
-      flow.resetPulse();
-    }
-    else {
-      Serial.print("…");
-      delay(AWAIT_FIREBASE);
-    }
+  else {
+    Serial.print(".");
+    delay(AWAIT_WATER);
   }
 }
 
@@ -78,88 +54,92 @@ void connectWifi() {
 
   while (WiFi.status() != WL_CONNECTED) {
     Serial.print(".");
-    delay(500);
+    delay(AWAIT_WIFI);
   }
 
   Serial.println(" ✓");
 }
 
 void connectFirebase() {
-  wateringCount = getFirebaseInt("flowModel/common/wateringCount");
-  volumeProgressStart = getFirebaseFloat("flowModel/common/waterProgress");
-  volumeProgress = volumeProgressStart;
+  // check that it connects successfully
+  getFirebaseJson("flowModel/common");
 }
 
 void writeFirebase() {
   int idleDuration = millis() - flowDetectedMillis;
 
-  if (flowDetected && idleDuration >= AWAIT_IDLE) {
+  if (idleDuration >= AWAIT_IDLE) {
     // only send to Firebase when watering has stopped
-    Serial.println();
+    // – since waiting for connection pauses sensor reading
 
+    Serial.println();
     flowDetected = false;
-    firebaseSynced = true;
-    wateringCount++;
-    setFirebaseInt("flowModel/common/wateringCount", wateringCount);
-    setFirebaseFloat("flowModel/common/waterProgress", volumeProgress);
+
+    JsonDocument commonOld = getFirebaseJson("flowModel/common");
+    int wateringCountCloud = commonOld["wateringCount"];
+    float volumeProgressCloud = commonOld["waterProgress"];
+
+    if (volumeProgressCloud < 1) {
+      JsonDocument commonNew;
+      commonNew["wateringCount"] = wateringCountCloud + 1;
+      commonNew["waterProgress"] = volumeProgressCloud + volumeProgress;
+      setFirebaseJson("flowModel/common", commonNew);
+    }
+
+    volumeProgress = 0;
+    flow.resetVolume();
+    flow.resetPulse();
   }
 }
 
-float getFirebaseFloat(String key) {
+JsonDocument getFirebaseJson(String key) {
   Serial.print("get " + key + " ... ");
 
-  float retrievedFloat;
-  int responseCode = firebase.getFloat(key, retrievedFloat);
+  String retrievedString;
+  int responseCode = firebase.getJson(key, retrievedString);
   handleFirebaseError(responseCode);
 
-  Serial.println(retrievedFloat);
-  return retrievedFloat;
+  JsonDocument retrievedJson;
+  DeserializationError error = deserializeJson(retrievedJson, retrievedString);
+  handleJsonError(error);
+
+  Serial.println(retrievedString);
+  return retrievedJson;
 }
 
-int getFirebaseInt(String key) {
-  Serial.print("get " + key + " ... ");
-
-  int retrievedInt;
-  int responseCode = firebase.getInt(key, retrievedInt);
-  handleFirebaseError(responseCode);
-
-  Serial.println(retrievedInt);
-  return retrievedInt;
-}
-
-void setFirebaseFloat(String key, float val) {
+void setFirebaseJson(String key, JsonDocument val) {
   Serial.print("set " + key + " ... ");
 
-  int responseCode = firebase.setFloat(key, val);
+  val.shrinkToFit();
+  String valString;
+  serializeJson(val, valString);
+
+  int responseCode = firebase.setJson(key, valString);
   handleFirebaseError(responseCode);
 
-  Serial.println(val);
-}
-
-void setFirebaseInt(String key, int val) {
-  Serial.print("set " + key + " ... ");
-
-  int responseCode = firebase.setInt(key, val);
-  handleFirebaseError(responseCode);
-
-  Serial.println(val);
+  Serial.println(valString);
 }
 
 void handleFirebaseError(int responseCode) {
   if (responseCode != 200) {
-    Serial.println("Firebase get/set failed with code " + String(responseCode));
+    Serial.println("Firebase get/set failed: " + String(responseCode));
   }
 }
 
-// sensors
+void handleJsonError(DeserializationError error) {
+  if (error) {
+    Serial.println("Json deserialization failed: " + String(error.c_str()));
+  }
+}
+
+// sensor
 
 void readFlow() {
   flow.read();
   float volume = flow.getVolume();
-  volumeProgress = volumeProgressStart + volume / VOLUME_FULL_LITER;
-  firebaseSynced = false;
+  volumeProgress = volume / VOLUME_FULL_LITER;
 
-  // for callibration
+  // for PULSE_PER_LITER calibration
   //int pulse = flow.getPulse();
   //Serial.println("pulse: " + String(pulse) + "; volume: " + String(volume) + " L; progress: " + String(volumeProgress));
 }

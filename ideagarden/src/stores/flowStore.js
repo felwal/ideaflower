@@ -56,8 +56,7 @@ const useFlowStore = defineStore("flow", {
     useWater() {
       // count leftover water as a watering if >=5%
       this.wateringCount = this.waterProgress < 1.05 ? 0 : 1;
-      // set to -1 if no remaining ungrown ideas
-      this.waterProgress = this.ungrownIdeas.length > 1 ? Math.max(this.waterProgress - 1, 0) : -1;
+      this.waterProgress = Math.max(this.waterProgress - 1, 0);
     },
 
     plantIdea(prompt) {
