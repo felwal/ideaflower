@@ -11,7 +11,6 @@ const int PIN_IN_FLOW = 2; // must be D2
 const float WATER_FULL_LITER = 0.05; // 50 ml per avg response with GPT3
 const int PULSE_PER_LITER = 600; // approximate value from testing
 const int AWAIT_WIFI = 500;
-const int AWAIT_WATER = 800; // must be shorter than AWAIT_IDLE
 const int AWAIT_IDLE = 1000;
 
 bool flowDetected = false;
@@ -36,10 +35,6 @@ void loop() {
   if (flowDetected) {
     readFlow();
     writeFirebase();
-  }
-  else {
-    Serial.print(".");
-    delay(AWAIT_WATER);
   }
 }
 
