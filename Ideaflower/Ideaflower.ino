@@ -74,12 +74,10 @@ void writeFirebase() {
     int wateringCountCloud = commonOld["wateringCount"];
     float waterProgressCloud = commonOld["waterProgress"];
 
-    if (waterProgressCloud < 1) {
-      JsonDocument commonNew;
-      commonNew["wateringCount"] = wateringCountCloud + 1;
-      commonNew["waterProgress"] = waterProgressCloud + waterProgress;
-      setFirebaseJson("flowModel/common", commonNew);
-    }
+    JsonDocument commonNew;
+    commonNew["wateringCount"] = wateringCountCloud + 1;
+    commonNew["waterProgress"] = waterProgressCloud + waterProgress;
+    setFirebaseJson("flowModel/common", commonNew);
 
     waterProgress = 0;
     flow.resetVolume();

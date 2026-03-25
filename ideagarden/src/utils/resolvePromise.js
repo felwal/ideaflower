@@ -6,8 +6,6 @@ export function resolvePromise(promise, promiseState, id, notifyACB) {
   promiseState.data = null;
   promiseState.error = null;
 
-  if (notifyACB) notifyACB();
-
   function saveDataACB(result) {
     if (promiseState.promise !== promise) return;
 

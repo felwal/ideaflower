@@ -53,14 +53,8 @@ const useFlowStore = defineStore("flow", {
       this.ideas[idea.epoch] = idea;
     },
 
-    useWater() {
-      // count leftover water as a watering if >=5%
-      this.wateringCount = this.waterProgress < 1.05 ? 0 : 1;
-      this.waterProgress = Math.max(this.waterProgress - 1, 0);
-    },
-
     plantIdea(prompt) {
-      if (!this.firstUngrownIdea) {
+      if (this.isUserCarer && !this.firstUngrownIdea) {
         // if there is no existing ungrown idea, reset water
         this.waterProgress = 0;
         this.wateringCount = 0;
@@ -125,8 +119,16 @@ const useFlowStore = defineStore("flow", {
 
       const idea = this.firstUngrownIdea;
       idea.epochGrown = Date.now();
-      idea.wateringCount = this.wateringCount;
-      this.useWater();
+
+      // since we allow watering in background even when progress >1,
+      // we need to use an average count
+      const avgWateringCountPerIdea = this.wateringCount / this.waterProgress;
+      idea.wateringCount = Math.ceil(avgWateringCountPerIdea);
+      this.wateringCount = Math.max(this.wateringCount - Math.floor(avgWateringCountPerIdea), 0);
+      this.waterProgress = Math.max(this.waterProgress - 1, 0);
+
+      console.log(this.wateringCount)
+      console.log(this.waterProgress)
 
       // NOTE: mock only in dev
       getChatKey(key =>
