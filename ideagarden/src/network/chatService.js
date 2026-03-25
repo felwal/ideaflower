@@ -57,16 +57,16 @@ function getDivergenceAndTemperature(idea) {
   const progress1 = 1 / prompts.length;
   const progress2 = 1 - progress1;
 
-  // time corresponding to ↑ progress values
-  // NOTE: for 30 min user study (minutes)
+  // time (minutes) corresponding to ↑ progress values
+  // NOTE: for 30 min user study
   //const t1 = 1;
   //const t2 = 15;
-  // NOTE: for 1 week home study (hours)
+  // NOTE: for 1 week home study
   const t1 = 1 * 60;
-  const t2 = 60 * 60;
+  const t2 = 60 * 60; // 60h = 2.5d
 
   const incubation = expRipening(durationMinutes, t1, progress1, t2, progress2);
-  const yellowness = expRipening(durationMinutes, t2, progress2);
+  const yellowness = expRipening(durationMinutes, t2, progress2 + 0.1);
   const divergence = elementByProgress(prompts, incubation);
   useFlowStore().getIdea(idea.epoch).leafHue = roundFloat(1 - yellowness);
 
