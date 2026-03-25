@@ -8,15 +8,15 @@
 
 const int PIN_IN_FLOW = 2; // must be D2
 
+const float WATER_FULL_LITER = 0.05; // 50 ml per avg response with GPT3
 const int PULSE_PER_LITER = 600; // approximate value from testing
 const int AWAIT_WIFI = 500;
 const int AWAIT_WATER = 800; // must be shorter than AWAIT_IDLE
 const int AWAIT_IDLE = 1000;
-const float VOLUME_FULL_LITER = 0.05; // 50 ml per avg response with GPT3
 
 bool flowDetected = false;
 int flowDetectedMillis = 0;
-float volumeProgress = 0;
+float waterProgress = 0;
 
 FlowSensor flow(PULSE_PER_LITER, PIN_IN_FLOW);
 Firebase firebase(FIREBASE_URL, FIREBASE_AUTH);
@@ -77,16 +77,16 @@ void writeFirebase() {
 
     JsonDocument commonOld = getFirebaseJson("flowModel/common");
     int wateringCountCloud = commonOld["wateringCount"];
-    float volumeProgressCloud = commonOld["waterProgress"];
+    float waterProgressCloud = commonOld["waterProgress"];
 
-    if (volumeProgressCloud < 1) {
+    if (waterProgressCloud < 1) {
       JsonDocument commonNew;
       commonNew["wateringCount"] = wateringCountCloud + 1;
-      commonNew["waterProgress"] = volumeProgressCloud + volumeProgress;
+      commonNew["waterProgress"] = waterProgressCloud + waterProgress;
       setFirebaseJson("flowModel/common", commonNew);
     }
 
-    volumeProgress = 0;
+    waterProgress = 0;
     flow.resetVolume();
     flow.resetPulse();
   }
@@ -137,11 +137,11 @@ void handleJsonError(DeserializationError error) {
 void readFlow() {
   flow.read();
   float volume = flow.getVolume();
-  volumeProgress = volume / VOLUME_FULL_LITER;
+  waterProgress = volume / WATER_FULL_LITER;
 
   // for PULSE_PER_LITER calibration
   //int pulse = flow.getPulse();
-  //Serial.println("pulse: " + String(pulse) + "; volume: " + String(volume) + " L; progress: " + String(volumeProgress));
+  //Serial.println("pulse: " + String(pulse) + "; volume: " + String(volume) + " L; progress: " + String(waterProgress));
 }
 
 void onFlowCount() {
