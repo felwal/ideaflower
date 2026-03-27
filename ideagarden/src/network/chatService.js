@@ -47,7 +47,7 @@ function getDivergenceAndTemperature(idea) {
     " **Diverge slightly to please the user**: introduce a small variation in framing, emphasis, or interpretation while preserving the core structure.",
     " **Diverge moderately to intrigue the user**: reframe or add one key aspect or assumption, creating a meaningfully different interpretation.",
     " **Diverge significantly to challenge the user**: replace a primary metaphor, perspective, or logic that organizes the idea.",
-    " **Diverge radically to provoke the user**: explore a substantially different framing or direction, prioritizing conceptual novelty while preserving a recognizable intent.",
+    " **Diverge radically to provoke the user**: explore a substantially different framing or direction, prioritizing conceptual novelty while preserving a recognizable core.",
   ];
 
   const durationEpoch = idea.epochGrown - idea.epoch;
