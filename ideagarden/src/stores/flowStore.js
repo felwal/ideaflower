@@ -123,12 +123,9 @@ const useFlowStore = defineStore("flow", {
       // since we allow watering in background even when progress >1,
       // we need to use an average count
       const avgWateringCountPerIdea = this.wateringCount / this.waterProgress;
-      idea.wateringCount = Math.ceil(avgWateringCountPerIdea);
+      idea.wateringCount = Math.ceil(avgWateringCountPerIdea) + 1;
       this.wateringCount = Math.max(this.wateringCount - Math.floor(avgWateringCountPerIdea), 0);
       this.waterProgress = Math.max(this.waterProgress - 1, 0);
-
-      console.log(this.wateringCount)
-      console.log(this.waterProgress)
 
       // NOTE: mock only in dev
       getChatKey(key =>

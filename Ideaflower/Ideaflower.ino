@@ -70,14 +70,13 @@ void writeFirebase() {
     Serial.println();
     flowDetected = false;
 
-    JsonDocument commonOld = getFirebaseJson("flowModel/common");
-    int wateringCountCloud = commonOld["wateringCount"];
-    float waterProgressCloud = commonOld["waterProgress"];
+    JsonDocument common = getFirebaseJson("flowModel/common");
+    int wateringCountCloud = common["wateringCount"];
+    float waterProgressCloud = common["waterProgress"];
 
-    JsonDocument commonNew;
-    commonNew["wateringCount"] = wateringCountCloud + 1;
-    commonNew["waterProgress"] = waterProgressCloud + waterProgress;
-    setFirebaseJson("flowModel/common", commonNew);
+    common["wateringCount"] = wateringCountCloud + 1;
+    common["waterProgress"] = waterProgressCloud + waterProgress;
+    setFirebaseJson("flowModel/common", common);
 
     waterProgress = 0;
     flow.resetVolume();
