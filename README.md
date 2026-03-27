@@ -33,6 +33,25 @@ firebase init
 npm run dev
 ```
 
+Add your Firebase keys to `ideagarden/persistance/firebaseConfig.js` and `Ideaflower/firebaseSecrets.h`:
+
+```js
+const firebaseConfig = {...};
+export default firebaseConfig;
+```
+
+```cpp
+#define FIREBASE_URL "<KEY>"
+#define FIREBASE_AUTH "<KEY>"
+```
+
+Add your wifi keys to `Ideaflower/wifiSecrets.h`:
+
+```cpp
+#define WIFI_SSID "<KEY>"
+#define WIFI_PASSWORD "<KEY>"
+```
+
 ## Deploy
 
 ```
