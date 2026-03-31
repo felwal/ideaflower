@@ -33,12 +33,14 @@ firebase init
 npm run dev
 ```
 
-Add your Firebase keys to `ideagarden/persistance/firebaseConfig.js` and `Ideaflower/firebaseSecrets.h`:
+Add your Firebase keys to `ideagarden/persistance/firebaseConfig.js`:
 
 ```js
 const firebaseConfig = {...};
 export default firebaseConfig;
 ```
+
+and `Ideaflower/firebaseSecrets.h`:
 
 ```cpp
 #define FIREBASE_URL "<KEY>"
