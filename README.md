@@ -1,8 +1,15 @@
-<p align="center"><img width="128" src="logo.svg"></p>
+<p align="center"><img width="128" src="presentation/logo.svg"></p>
 
 <h1 align="center">Ideaflower</h1>
 
-Human-plant interaction for speculative slow care in co-creative AI
+Research through Design for my master's thesis "Human-plant interaction for speculative slow care in co-creative AI".
+
+The user waters a houseplant the same amount as an AI response consumes. I use an estimate of [50 ml](https://doi.org/10.1145/3724499) for an average medium-sized response with ChatGPT3, not including model training.
+
+<p>
+  <img src="presentation/da232x-azalea.jpg" width="35.5%" />
+  <img src="presentation/da232x-box.jpg" width="63.1%" />
+</p>
 
 ## Hardware
 
