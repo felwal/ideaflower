@@ -8,7 +8,12 @@ The user waters a houseplant the same amount as an AI response consumes. I use a
 
 <p>
   <img src="presentation/da232x-azalea.jpg" width="35.5%" />
+  <img src="presentation/da232x-usage.jpg" width="63.1%" />
+</p>
+
+<p>
   <img src="presentation/da232x-box.jpg" width="63.1%" />
+  <img src="presentation/da232x-sensor.jpg" width="35.5%" />
 </p>
 
 ## Hardware
