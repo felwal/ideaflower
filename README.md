@@ -2,9 +2,13 @@
 
 <h1 align="center">Ideaflower</h1>
 
-Research through Design for my master's thesis "Human-plant interaction for speculative slow care in co-creative AI".
+Research through Design for my master's thesis in interactive media technology: "Human-plant interaction for speculative slow care in co-creative AI"
 
-The user waters a houseplant the same amount as an AI response consumes. I use an estimate of [50 ml](https://doi.org/10.1145/3724499) for an average medium-sized response with ChatGPT3, not including model training.
+The purpose of the project is to explore how plants can be incorporated in interaction with creative AI, in order to make it more caring and grounded in natural rhythms.
+
+Practically, the user waters a houseplant the same amount as an AI response consumes, in order to get the response. I use an estimate of [50 ml](https://doi.org/10.1145/3724499) for an average medium-sized response with ChatGPT3, not including model training.
+
+## Preview
 
 <p>
   <img src="presentation/da232x-azalea.jpg" width="35.5%" />
