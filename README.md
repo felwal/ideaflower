@@ -4,9 +4,9 @@
 
 Research through Design for my master's thesis in interactive media technology: "Human-plant interaction for speculative slow care in co-creative AI"
 
-The purpose of the project is to explore how plants can be incorporated in interaction with creative AI, in order to make it more caring and grounded in natural rhythms.
+Practically, the user waters a houseplant the same amount as an AI response consumes, in order to get the response. I use an estimate of [50 ml](https://doi.org/10.1145/3724499) for an average medium-sized response with ChatGPT3, excluding model training.
 
-Practically, the user waters a houseplant the same amount as an AI response consumes, in order to get the response. I use an estimate of [50 ml](https://doi.org/10.1145/3724499) for an average medium-sized response with ChatGPT3, not including model training.
+The purpose of the project was to explore how plants can be incorporated in interaction with creative AI, in order to make the interaction more caring and grounded in natural rhythms. It led to a design concept I call _phytomorphic AI interaction_: designing the interaction form of AI systems with plant-based qualities and relations.
 
 ## Preview
 
