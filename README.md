@@ -21,14 +21,13 @@ The purpose of the project was to explore how plants can be incorporated in inte
 </p>
 
 <p>
-  <img src="presentation/da232x-home.png" width="49.3%" />
-  <img src="presentation/da232x-detail.png" width="49.3%" />
+  <img src="presentation/da232x-home.png" width="76.2%" />
+  <img src="presentation/da232x-detail-water-m.png" width="22.7%" />
 </p>
 
 <p>
-  <img src="presentation/da232x-home-m.png" width="32.5%" />
-  <img src="presentation/da232x-detail-water-m.png" width="32.5%" />
-  <img src="presentation/da232x-detail-m.png" width="32.5%" />
+  <img src="presentation/da232x-detail-m.png" width="22.7%" />
+  <img src="presentation/da232x-detail.png" width="76.2%" />
 </p>
 
 ## Hardware
