@@ -1,9 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { nextTick } from "vue";
-import HomePresenter from "@/presenters/HomePresenter";
-import ProfilePresenter from "@/presenters/ProfilePresenter";
 import DetailPresenter from "@/presenters/DetailPresenter";
+import HomePresenter from "@/presenters/HomePresenter";
 import NotFoundPresenter from "@/presenters/NotFoundPresenter";
+import ProfilePresenter from "@/presenters/ProfilePresenter";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

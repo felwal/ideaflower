@@ -1,9 +1,9 @@
+import { useHead } from "@vueuse/head";
 import { signOutUser, signUpUser, signInUser } from "@/persistance/firebaseAuth";
 import { createUserData } from "@/persistance/firebaseModel.js";
 import useFlowStore from "@/stores/flowStore";
-import ProfileView from "@/views/ProfileView";
 import { resolvePromise } from "@/utils/resolvePromise";
-import { useHead } from "@vueuse/head";
+import ProfileView from "@/views/ProfileView";
 
 const ProfilePresenter = {
   data() {

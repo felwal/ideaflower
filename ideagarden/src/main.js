@@ -1,9 +1,12 @@
-import { createApp } from "vue";
+import "@/css/index.css";
+import "@/css/general.css";
+import "@/css/sitewide.css";
 import { createPinia } from "pinia";
-import { setUpFirebase } from "./persistance/firebaseModel";
-import App from "./views/App";
-import router from "./router";
+import { createApp } from "vue";
 import { createHead } from "@vueuse/head";
+import { setUpFirebase } from "@/persistance/firebaseModel";
+import router from "@/router";
+import App from "@/views/App";
 
 const app = createApp(App)
   .use(createHead())

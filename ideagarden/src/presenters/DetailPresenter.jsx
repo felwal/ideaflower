@@ -1,10 +1,10 @@
+import { useHead } from "@vueuse/head";
+import { useRoute } from "vue-router";
 import useFlowStore from "@/stores/flowStore";
 import { isPromiseLoading } from "@/utils/resolvePromise";
 import DetailView from "@/views/DetailView";
 import LoadingView from "@/views/LoadingView";
 import NotFoundView from "@/views/NotFoundView";
-import { useHead } from "@vueuse/head";
-import { useRoute } from "vue-router";
 
 const DetailPresenter = {
   data() {

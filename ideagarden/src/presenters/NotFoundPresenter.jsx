@@ -1,5 +1,5 @@
-import NotFoundView from "@/views/NotFoundView";
 import { useHead } from "@vueuse/head";
+import NotFoundView from "@/views/NotFoundView";
 
 const NotFoundPresenter = {
   setup() {

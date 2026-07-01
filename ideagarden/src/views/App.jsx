@@ -1,6 +1,3 @@
-import "@/css/index.css";
-import "@/css/general.css";
-import "@/css/sitewide.css";
 import { useRoute } from "vue-router";
 
 export default function App() {

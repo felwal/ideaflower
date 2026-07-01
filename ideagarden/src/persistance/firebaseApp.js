@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import firebaseConfig from "./firebaseConfig";
+import firebaseConfig from "@/persistance/firebaseConfig";
 
 console.log("initializing Firebase ...");
 const app = initializeApp(firebaseConfig);

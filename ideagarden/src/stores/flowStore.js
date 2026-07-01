@@ -1,9 +1,9 @@
+import blobshape from "blobshape";
+import { defineStore } from "pinia";
 import { chatResponseMock, growIdea } from "@/network/chatService";
 import { getChatKey } from "@/persistance/firebaseModel";
 import { randomFloatRounded, roundFloat } from "@/utils/mathUtils";
 import { isPromiseLoading, resolvePromise, resolvePromiseMock } from "@/utils/resolvePromise";
-import blobshape from "blobshape";
-import { defineStore } from "pinia";
 
 const useFlowStore = defineStore("flow", {
   state: () => ({

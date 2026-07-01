@@ -1,6 +1,6 @@
 import { getDatabase, ref, set, onChildAdded, onChildRemoved, get, child, onValue, onChildChanged } from "firebase/database";
 import { watch } from "vue";
-import { observeAuthState } from "./firebaseAuth";
+import { observeAuthState } from "@/persistance/firebaseAuth";
 import useFlowStore from "@/stores/flowStore";
 
 const db = getDatabase();

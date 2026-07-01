@@ -1,7 +1,7 @@
-import "@/css/detail.css";
 import "@/css/plant.css";
-import PlantView, { getLeafColors } from "./PlantView";
+import "@/css/detail.css";
 import { formatDate, formatDuration } from "@/utils/dateUtils";
+import PlantView, { getLeafColors } from "@/views/PlantView";
 
 export default function DetailView(props) {
   function deleteIdeaACB() {

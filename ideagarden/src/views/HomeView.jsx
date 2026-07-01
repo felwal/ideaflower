@@ -1,9 +1,9 @@
-import "@/css/home.css";
 import "@/css/plant.css";
+import "@/css/home.css";
 import { ArrowDownToDot } from 'lucide-vue-next';
-import PlantView from "./PlantView";
 import { formatDate } from "@/utils/dateUtils";
-import LoadingView from "./LoadingView";
+import LoadingView from "@/views/LoadingView";
+import PlantView from "@/views/PlantView";
 
 export default function HomeView(props) {
   function sendPrompt() {

@@ -1,6 +1,6 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { USER_PASSWORD } from "./firebaseConfig";
-import app from "./firebaseApp";
+import app from "@/persistance/firebaseApp";
+import { USER_PASSWORD } from "@/persistance/firebaseConfig";
 
 const auth = getAuth(app);
 
