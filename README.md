@@ -2,11 +2,11 @@
 
 <h1 align="center">Ideaflower</h1>
 
-Research through design for my master's thesis in interactive media technology: "Human-plant interaction for speculative slow care in co-creative AI"
+Research through design for my master's thesis in interactive media technology.
 
-Practically, the user waters a houseplant the same amount as an AI response consumes, in order to get the response. I use an estimate of [50 ml](https://doi.org/10.1145/3724499) for an average medium-sized response with ChatGPT3, excluding model training.
+I use water as a conceptual link between plant, AI, and broader ecologies. Practically, the user waters a houseplant the same amount as an AI response consumes, in order to get the response. I use an estimate of [50 ml](https://doi.org/10.1145/3724499) for an average medium-sized response with ChatGPT-3, excluding model training. The user "plants" ideas, and the AI responses constitute "growth" of these, allowing for a process of "gardening ideas".
 
-The purpose of the project was to explore how plants can be incorporated in interaction with creative AI, in order to make the interaction more caring and grounded in natural rhythms. It led to a design concept I call _phytomorphic AI interaction_: designing the interaction form of AI systems with plant-based qualities and relations.
+The purpose of the project was to explore how plants can be incorporated in interaction with creative AI, in order to make the interaction more caring and grounded in natural rhythms. It led to a design concept I call _phytomorphic AI interaction_: designing the interaction form of AI systems with plant-based qualities, relations, and temporalities.
 
 ## Preview
 
@@ -21,13 +21,13 @@ The purpose of the project was to explore how plants can be incorporated in inte
 </p>
 
 <p>
-  <img src="presentation/ideaflower-home.png" width="76.2%" />
-  <img src="presentation/ideaflower-detail-water-m.png" width="22.7%" />
+  <img src="presentation/ideaflower-home.png" width="76.1%" />
+  <img src="presentation/ideaflower-detail-water-m.png" width="22.6%" />
 </p>
 
 <p>
-  <img src="presentation/ideaflower-detail-m.png" width="22.7%" />
-  <img src="presentation/ideaflower-detail.png" width="76.2%" />
+  <img src="presentation/ideaflower-detail-m.png" width="22.6%" />
+  <img src="presentation/ideaflower-detail.png" width="76.1%" />
 </p>
 
 ## Hardware
@@ -50,6 +50,10 @@ Web:
 - [OpenAI](https://developers.openai.com/api/docs), [GPT-4.1](https://developers.openai.com/api/docs/models/gpt-4.1)
 - [Blobshape](https://github.com/lokesh-coder/blobshape) shape generator
 - [Lucide](https://lucide.dev/) icons
+
+## Usage
+
+Note that the prototype currently only supports one user at a time as active carer, set via Firebase `flowModel/common/carerUsername`.
 
 ## Develop
 

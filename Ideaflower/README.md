@@ -1,6 +1,6 @@
 # Ideaflower Arduino
 
-## Make FirebaseArduino compatible with Arduino Uno WiFi Rev2
+## Make [FirebaseArduino](https://github.com/Rupakpoddar/FirebaseArduino/) compatible with Arduino Uno WiFi Rev2
 
 In `Firebase.h`, add:
 
