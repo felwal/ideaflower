@@ -1,5 +1,5 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { PASSWORD } from "./firebaseConfig";
+import { USER_PASSWORD } from "./firebaseConfig";
 import app from "./firebaseApp";
 
 const auth = getAuth(app);
@@ -14,12 +14,12 @@ function username(email) {
 
 export function signUpUser(username) {
   console.log("signing up as " + username + " ...");
-  return createUserWithEmailAndPassword(auth, email(username), PASSWORD);
+  return createUserWithEmailAndPassword(auth, email(username), USER_PASSWORD);
 }
 
 export function signInUser(username) {
   console.log("signing in as " + username + " ...");
-  return signInWithEmailAndPassword(auth, email(username), PASSWORD);
+  return signInWithEmailAndPassword(auth, email(username), USER_PASSWORD);
 }
 
 export function signOutUser() {

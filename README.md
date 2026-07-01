@@ -63,6 +63,7 @@ Add your Firebase keys to `ideagarden/persistance/firebaseConfig.js`:
 
 ```js
 const firebaseConfig = {...};
+export const USER_PASSWORD = "<PASSWORD>";
 export default firebaseConfig;
 ```
 
