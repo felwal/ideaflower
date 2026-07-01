@@ -23,7 +23,7 @@ export default function DetailView(props) {
         </div>
 
         <div class="idea-growth__bg__hang">
-          <svg class="idea-growth__bg__hang__svg--desktop" width="100%" height="auto" viewBox="0 0 32 8">
+          <svg class="idea-growth__bg__hang__svg--desktop" width="100%" viewBox="0 0 32 8">
             <path
               d="M2 8C3.10457 8 4 7.10457 4 6C4 7.10457 4.89543 8 6 8C7.10457 8 8 7.10457 8 6C8 7.10457 8.89543 8 10 8C11.1046 8 12 7.10457 12 6C12 7.10457 12.8954 8 14 8C15.1046 8 16 7.10457 16 6C16 7.10457 16.8954 8 18 8C19.1046 8 20 7.10457 20 6C20 7.10457 20.8954 8 22 8C23.1046 8 24 7.10457 24 6C24 7.10457 24.8954 8 26 8C27.1046 8 28 7.10457 28 6C28 7.10457 28.8954 8 30 8C31.1046 8 32 7.10457 32 6V0H0V6C0 7.10457 0.89543 8 2 8Z"
               fill={"url(#" + paintId + ")"}
@@ -36,7 +36,7 @@ export default function DetailView(props) {
             </defs>
           </svg>
 
-          <svg class="idea-growth__bg__hang__svg--mobile" width="100%" height="auto" viewBox="0 0 20 8">
+          <svg class="idea-growth__bg__hang__svg--mobile" width="100%" viewBox="0 0 20 8">
             <path
               d="M2 8C3.10457 8 4 7.10457 4 6C4 7.10457 4.89543 8 6 8C7.10457 8 8 7.10457 8 6C8 7.10457 8.89543 8 10 8C11.1046 8 12 7.10457 12 6C12 7.10457 12.8954 8 14 8C15.1046 8 16 7.10457 16 6C16 7.10457 16.8954 8 18 8C19.1046 8 20 7.10457 20 6V0H0V6C0 7.10457 0.89543 8 2 8Z"
               fill={"url(#" + paintIdMobile + ")"}

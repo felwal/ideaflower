@@ -12,7 +12,7 @@ export default function PlantView(props) {
 
     return (
       <div class="plant__leaves" style={"margin-bottom: " + marginBottom + "%; margin-top: " + marginTop + "%;"}>
-        <svg width="100%" height="auto" viewBox="0 0 100 100">
+        <svg width="100%" viewBox="0 0 100 100">
           <path d={props.idea.leafPath} fill={"url(#" + paintId + ")"} />
           <defs>
             <linearGradient id={paintId} x1="100" y1="0" x2="0" y2="100" gradientUnits="userSpaceOnUse">
@@ -62,7 +62,7 @@ export default function PlantView(props) {
 
     return (
       <div class="plant__leaves">
-        <svg width="100%" height="auto" viewBox="0 0 46 46" fill="none">
+        <svg width="100%" viewBox="0 0 46 46" fill="none">
           <circle class={"plant__seed" + (props.isLoading ? " plant__seed--growing" : "")} cx="23" cy="35" r="6" fill="currentColor" />
           {props.showWaterProgress !== false && renderWater()}
         </svg>
@@ -116,10 +116,10 @@ export default function PlantView(props) {
 
     return (
       <div class="plant__pot">
-        <svg class="plant__pot__back" width="100%" height="auto" viewBox="0 0 46 3" fill="none">
+        <svg class="plant__pot__back" width="100%" viewBox="0 0 46 3" fill="none">
           <path d="M23 0C35.7025 0 46 1.34315 46 3H0C0 1.34315 10.2975 0 23 0Z" fill="var(--color-soil)" />
         </svg>
-        <svg class="plant__pot__front" width="100%" height="auto" viewBox="0 0 46 27" fill="none">
+        <svg class="plant__pot__front" width="100%" viewBox="0 0 46 27" fill="none">
           {potShape}
           <path d="M46 0C46 1.65685 35.7025 3 23 3C10.2975 3 0 1.65685 0 0H46Z" fill="var(--color-soil)" />
         </svg>
