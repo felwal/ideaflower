@@ -64,17 +64,13 @@
 
 .item:hover > .plant {
   width: 105%;
-  margin: -2.5%;
-  margin-top: -5%;
-  margin-bottom: -1.6%;
+  margin: -5% -2.5% -1.6%;
 }
 
 .item__unread {
   position: absolute;
   right: var(--spacing-small);
-  padding: var(--spacing-diminutive);
-  padding-top: 0;
-  padding-bottom: 0;
+  padding: 0 var(--spacing-diminutive);
   font-weight: bold;
   color: var(--color-text-secondary-inverted);
   background-image: var(--gradient-unread);

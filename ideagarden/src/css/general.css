@@ -17,9 +17,7 @@ button, .button {
   font-family: var(--font);
   font-size: var(--font-size-widget);
   line-height: 1.5;
-  padding: var(--spacing-tiny);
-  padding-left: var(--spacing-small);
-  padding-right: var(--spacing-small);
+  padding: var(--spacing-tiny) var(--spacing-small);
   margin: 0;
   border: none;
   border-radius: var(--corner-radius-medium);
