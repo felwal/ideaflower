@@ -38,7 +38,7 @@ export default function ProfileView(props) {
         }
       </div>
 
-      {props.invalidLogin
+      {props.isLoginInvalid
         ? <p class="caption caption--indented caption--error">Invalid username</p>
         : props.username && <p class="caption caption--indented caption--success">{"Signed in as " + props.username}</p>
       }

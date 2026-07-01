@@ -1,4 +1,4 @@
-import { chatResponseMock, evolveIdea } from "@/network/chatService";
+import { chatResponseMock, growIdea } from "@/network/chatService";
 import { getChatKey } from "@/persistance/firebaseModel";
 import { randomFloatRounded, roundFloat } from "@/utils/mathUtils";
 import { isPromiseLoading, resolvePromise, resolvePromiseMock } from "@/utils/resolvePromise";
@@ -21,11 +21,11 @@ const useFlowStore = defineStore("flow", {
     isSignedIn: (state) => state.user !== null,
     isInitialized: (state) => state.ideas !== null,
     isUserCarer: (state) => state.user && state.user.name === state.carerUsername,
-    plantFullyWatered: (state) => state.waterProgress >= 1,
+    isPlantFullyWatered: (state) => state.waterProgress >= 1,
     ungrownIdeas: (state) => state.ideasArray.filter(idea => !idea.result),
     firstUngrownIdea: (state) => state.ungrownIdeas[0],
     plantBeingWateredEpoch: (state) => state.isUserCarer ? state.firstUngrownIdea?.epoch : null,
-    canGrowIdea: (state) => state.isUserCarer && state.isInitialized && state.firstUngrownIdea && state.plantFullyWatered && !state.isRequesting,
+    canGrowIdea: (state) => state.isUserCarer && state.isInitialized && state.firstUngrownIdea && state.isPlantFullyWatered && !state.isRequesting,
     ideasCount: (state) => state.ideasArray.length,
     isPromiseLoading: (state) => isPromiseLoading(state.chatPromiseState),
   },
@@ -53,7 +53,13 @@ const useFlowStore = defineStore("flow", {
       this.ideas[idea.epoch] = idea;
     },
 
-    plantIdea(prompt) {
+    getIdea(epoch) {
+      return this.isInitialized && epoch in this.ideas ? this.ideas[epoch] : null;
+    },
+
+    // main
+
+    plantIdeaSeed(prompt) {
       if (this.isUserCarer && !this.firstUngrownIdea) {
         // if there is no existing ungrown idea, reset water
         this.waterProgress = 0;
@@ -81,26 +87,7 @@ const useFlowStore = defineStore("flow", {
       return idea;
     },
 
-    growIdea(result) {
-      const idea = this.getIdea(this.chatPromiseState.id);
-
-      if (!idea) {
-        console.warn("could not find idea " + this.chatPromiseState.id + " to receive api result");
-        return;
-      }
-
-      idea.name = result.title;
-      idea.result = result.text;
-      idea.leafEdges = roundFloat(result.complexity);
-      idea.leafLightness = roundFloat(1 - result.impact);
-      idea.leafPath = this.generateLeafPath(idea);
-    },
-
-    getIdea(epoch) {
-      return this.isInitialized && epoch in this.ideas ? this.ideas[epoch] : null;
-    },
-
-    manageAPICall() {
+    requestIdeaGrowth() {
       this.isRequesting = true;
 
       function processAPIResultACB() {
@@ -110,7 +97,7 @@ const useFlowStore = defineStore("flow", {
           console.error("api error:", this.chatPromiseState.error);
         }
         else if (this.chatPromiseState.data) {
-          this.growIdea(JSON.parse(this.chatPromiseState.data.output_text));
+          this.addIdeaGrowth(JSON.parse(this.chatPromiseState.data.output_text));
         }
 
         this.isRequesting = false;
@@ -128,10 +115,27 @@ const useFlowStore = defineStore("flow", {
 
       // NOTE: mock only in dev
       getChatKey(key =>
-        resolvePromise(evolveIdea(key, idea), this.chatPromiseState, idea.epoch, processAPIResultACB.bind(this))
+        resolvePromise(growIdea(key, idea), this.chatPromiseState, idea.epoch, processAPIResultACB.bind(this))
         //resolvePromiseMock(chatResponseMock, this.chatPromiseState, idea.epoch, processAPIResultACB.bind(this))
       );
     },
+
+    addIdeaGrowth(result) {
+      const idea = this.getIdea(this.chatPromiseState.id);
+
+      if (!idea) {
+        console.warn("could not find idea " + this.chatPromiseState.id + " to receive api result");
+        return;
+      }
+
+      idea.name = result.title;
+      idea.result = result.text;
+      idea.leafEdges = roundFloat(result.complexity);
+      idea.leafLightness = roundFloat(1 - result.impact);
+      idea.leafPath = this.generateLeafPath(idea);
+    },
+
+    // utils
 
     regeneratePlants() {
       this.ideasArray.forEach(idea => {

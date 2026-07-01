@@ -33,7 +33,7 @@
   --saturation-leaf: 100%;
   --hue-pot: 35;
   --alpha-water-empty: 0.4;
-  --alpha-disabled: 0.625; /* text-primary * this = text-secondary */
+  --alpha-disabled: 0.625; /* text-primary * alpha-disabled = text-secondary */
 
   /* dimen */
 

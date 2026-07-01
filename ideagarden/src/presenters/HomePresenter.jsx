@@ -15,11 +15,11 @@ const HomePresenter = {
         return;
       }
 
-      useFlowStore().plantIdea(prompt);
+      useFlowStore().plantIdeaSeed(prompt);
     }
 
     if (useFlowStore().canGrowIdea) {
-      useFlowStore().manageAPICall();
+      useFlowStore().requestIdeaGrowth();
     }
 
     return (

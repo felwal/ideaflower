@@ -49,7 +49,7 @@ const DetailPresenter = {
     }
 
     if (useFlowStore().canGrowIdea) {
-      useFlowStore().manageAPICall();
+      useFlowStore().requestIdeaGrowth();
     }
 
     return (

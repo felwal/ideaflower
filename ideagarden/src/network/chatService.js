@@ -2,7 +2,7 @@ import useFlowStore from "@/stores/flowStore";
 import { expRipening, elementByProgress, randomFloatRounded, roundFloat } from "@/utils/mathUtils";
 import OpenAI from "openai";
 
-export function evolveIdea(key, idea) {
+export function growIdea(key, idea) {
   const openai = new OpenAI({apiKey: key, dangerouslyAllowBrowser: true});
   console.log("calling api ...");
 

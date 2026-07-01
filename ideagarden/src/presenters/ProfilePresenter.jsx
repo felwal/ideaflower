@@ -10,7 +10,7 @@ const ProfilePresenter = {
     return {
       username: "",
       authPromiseState: {},
-      invalidLogin: false,
+      isLoginInvalid: false,
     };
   },
 
@@ -32,7 +32,7 @@ const ProfilePresenter = {
       }
 
       if (this.authPromiseState.data !== null) {
-        this.invalidLogin = false;
+        this.isLoginInvalid = false;
         createUserData(store.user);
       }
     }
@@ -42,7 +42,7 @@ const ProfilePresenter = {
         if (this.authPromiseState.error.code === "auth/invalid-credential") {
           console.log("user doesn't exist");
 
-          this.invalidLogin = true;
+          this.isLoginInvalid = true;
 
           // NOTE: only sign up new users in dev
           if (process.env.NODE_ENV === "development") {
@@ -55,7 +55,7 @@ const ProfilePresenter = {
         console.error(this.authPromiseState.error.code);
       }
       else {
-        this.invalidLogin = false;
+        this.isLoginInvalid = false;
       }
     }
 
@@ -94,7 +94,7 @@ const ProfilePresenter = {
         onSignOut={onSignOutACB.bind(this)}
         onExportData={onExportDataACB}
         onRegeneratePlants={onRegeneratePlantsACB.bind(this)}
-        invalidLogin={this.invalidLogin}
+        isLoginInvalid={this.isLoginInvalid}
       />
     );
   },

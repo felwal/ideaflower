@@ -1,4 +1,4 @@
-<p align="center"><img width="128" src="presentation/logo.svg"></p>
+<p align="center"><img width="128" src="presentation/ideaflower-logo.svg"></p>
 
 <h1 align="center">Ideaflower</h1>
 
@@ -11,23 +11,23 @@ The purpose of the project was to explore how plants can be incorporated in inte
 ## Preview
 
 <p>
-  <img src="presentation/da232x-azalea.jpg" width="35.5%" />
-  <img src="presentation/da232x-usage.jpg" width="63.1%" />
+  <img src="presentation/ideaflower-azalea.jpg" width="35.5%" />
+  <img src="presentation/ideaflower-usage.jpg" width="63.1%" />
 </p>
 
 <p>
-  <img src="presentation/da232x-box.jpg" width="63.1%" />
-  <img src="presentation/da232x-sensor.jpg" width="35.5%" />
+  <img src="presentation/ideaflower-box.jpg" width="63.1%" />
+  <img src="presentation/ideaflower-sensor.jpg" width="35.5%" />
 </p>
 
 <p>
-  <img src="presentation/da232x-home.png" width="76.2%" />
-  <img src="presentation/da232x-detail-water-m.png" width="22.7%" />
+  <img src="presentation/ideaflower-home.png" width="76.2%" />
+  <img src="presentation/ideaflower-detail-water-m.png" width="22.7%" />
 </p>
 
 <p>
-  <img src="presentation/da232x-detail-m.png" width="22.7%" />
-  <img src="presentation/da232x-detail.png" width="76.2%" />
+  <img src="presentation/ideaflower-detail-m.png" width="22.7%" />
+  <img src="presentation/ideaflower-detail.png" width="76.2%" />
 </p>
 
 ## Hardware
