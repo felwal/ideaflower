@@ -1,4 +1,4 @@
-<p align="center"><img width="128" src="presentation/ideaflower-logo.svg"></p>
+<p align="center"><img width="128" src="presentation/glyph.svg"></p>
 
 <h1 align="center">Ideaflower</h1>
 

@@ -6,8 +6,8 @@ export default function App() {
       <header>
         <div class="header__content column">
           <router-link to="/">
-            <div class="header__logo">
-              <img src="/favicon.svg" class="header__logo__image" />
+            <div class="header__glyph">
+              <img src="/glyph.svg" class="header__glyph__image" />
             </div>
           </router-link>
 

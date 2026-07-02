@@ -1,6 +1,6 @@
 .detail-view {
   /* footer to bottom */
-  min-height: calc(100vh - var(--spacing-section) - var(--spacing-edge) - var(--size-logo-header) - 4 * var(--spacing-tiny));
+  min-height: calc(100vh - var(--spacing-section) - var(--spacing-edge) - var(--size-glyph-header) - 4 * var(--spacing-tiny));
   display: flex;
   flex-direction: column;
 }

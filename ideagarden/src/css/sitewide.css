@@ -59,22 +59,22 @@ main {
   margin-right: calc(-1 * var(--spacing-tiny));
 }
 
-.header__logo {
+.header__glyph {
   border-radius: var(--corner-radius-medium);
-  width: var(--size-logo-header);
-  height: var(--size-logo-header);
+  width: var(--size-glyph-header);
+  height: var(--size-glyph-header);
   padding: var(--spacing-tiny);
   margin-left: calc(-1 * var(--spacing-tiny));
   transition: var(--transition-fast);
 }
 
-.header__logo:hover {
+.header__glyph:hover {
   background-color: var(--color-hover);
 }
 
-.header__logo__image {
-  width: var(--size-logo-header);
-  height: var(--size-logo-header);
+.header__glyph__image {
+  width: var(--size-glyph-header);
+  height: var(--size-glyph-header);
 }
 
 
