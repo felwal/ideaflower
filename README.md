@@ -11,23 +11,23 @@ The purpose of the project was to explore how plants can be incorporated in inte
 ## Preview
 
 <p>
-  <img src="presentation/ideaflower-azalea.jpg" width="35.5%" />
-  <img src="presentation/ideaflower-usage.jpg" width="63.1%" />
+  <img src="presentation/physical-azalea.jpg" width="35.5%" />
+  <img src="presentation/physical-usage.jpg" width="63.1%" />
 </p>
 
 <p>
-  <img src="presentation/ideaflower-box.jpg" width="63.1%" />
-  <img src="presentation/ideaflower-sensor.jpg" width="35.5%" />
+  <img src="presentation/physical-box.jpg" width="63.1%" />
+  <img src="presentation/physical-sensor.jpg" width="35.5%" />
 </p>
 
 <p>
-  <img src="presentation/ideaflower-home.png" width="76.1%" />
-  <img src="presentation/ideaflower-detail-water-m.png" width="22.6%" />
+  <img src="presentation/view-home.png" width="76.1%" />
+  <img src="presentation/view-detail-water-m.png" width="22.6%" />
 </p>
 
 <p>
-  <img src="presentation/ideaflower-detail-m.png" width="22.6%" />
-  <img src="presentation/ideaflower-detail.png" width="76.1%" />
+  <img src="presentation/view-detail-m.png" width="22.6%" />
+  <img src="presentation/view-detail.png" width="76.1%" />
 </p>
 
 ## Hardware
